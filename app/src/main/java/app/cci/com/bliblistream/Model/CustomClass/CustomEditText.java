@@ -16,7 +16,7 @@ import android.widget.EditText;
  */
 public class CustomEditText extends EditText {
 
-    int test = 10;
+
 
 
     final Drawable imgX = getResources().getDrawable(android.R.drawable.presence_offline ); // X image
