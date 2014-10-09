@@ -24,7 +24,7 @@ public class ToolKit {
                 .setMessage(inMessage)
                 .setIcon(android.R.drawable.presence_online)
                 .show();
-     
+            int saucisse = 55;
                      /*                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         //
