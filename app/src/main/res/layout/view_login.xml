@@ -120,6 +120,16 @@
             android:layout_marginTop="50dp"
             android:background="@drawable/style_button_login"
             android:text="@string/se_connecter" />
+        <TextView
+
+            android:layout_marginTop="5dp"
+            android:padding="15dp"
+            android:visibility="invisible"
+            android:id="@+id/layout_login_mauvais_identifiant"
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/style_toast"
+            style="@style/FontToast"/>
 
     </LinearLayout>
 
