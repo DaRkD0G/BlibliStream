@@ -1,11 +1,31 @@
 package app.cci.com.bliblistream;
 
+import android.app.ActionBar;
 import android.app.Activity;
+import android.graphics.Point;
+import android.graphics.drawable.Animatable;
 import android.os.Bundle;
+import android.transition.ChangeBounds;
+import android.transition.Scene;
+import android.transition.Transition;
+import android.transition.TransitionManager;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.Transformation;
+import android.view.animation.TranslateAnimation;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.ViewFlipper;
 
+
+import java.util.ArrayList;
 
 import app.cci.com.bliblistream.Controleur.Control;
-
+import app.cci.com.bliblistream.Outil.ToolKit;
 
 
 /**
@@ -17,6 +37,7 @@ public class MainActivity extends Activity {
     //Le controleur de l application
     private Control control;
 
+
     /**
      * Lancement de l'application
      * @param savedInstanceState Bundle
@@ -27,6 +48,9 @@ public class MainActivity extends Activity {
 
         //initialisation de lattribut controleur
         this.control =  new Control(this);
+
+
+
     }
 
     /**
@@ -37,8 +61,19 @@ public class MainActivity extends Activity {
     protected void onResume() {
         super.onResume();
 
-        //TODO Ici faire un check up avec le control pour savoir on ce situe l application
+
+        /* TODO TEMP */
         this.control.loadViewAndSetListener(R.layout.view_login);
+
+
+        //TODO Ici faire un check up avec le control pour savoir on ce situe l application
+       /* this.animFadein = AnimationUtils.loadAnimation(getApplicationContext(),
+                );
+
+        // set animation listener
+        View btn = (View) findViewById(R.id.layout_login);
+        btn.startAnimation(animFadein);*/
+
     }
     /**
      * Mise en pause de l'application
@@ -57,6 +92,11 @@ public class MainActivity extends Activity {
         super.onDestroy();
     }
 
+
+    /**
+     * getSize and
+     */
+    /******/
 
 }
 

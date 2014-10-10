@@ -1,8 +1,12 @@
 package app.cci.com.bliblistream.Controleur;
 
 import android.app.Activity;
+import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.Button;
 
 import app.cci.com.bliblistream.R;
 import app.cci.com.bliblistream.Controleur.ListenerView.ListenerViewAccueil;
@@ -20,7 +24,7 @@ public class Control {
     private Activity activity;
     private Object instantListener;
     private View view;
-
+    private Animation animation;
     /**
      * Constructeur
      *
@@ -40,12 +44,34 @@ public class Control {
         /* selection la vue */
         LayoutInflater inflater = (LayoutInflater) this.activity.getSystemService(android.app.Activity.LAYOUT_INFLATER_SERVICE);
         try {
+
+
+
+
+
+
+            /* Animation transition */
+
+            Animation animFadein;
+            switch (inRLayoutId) {
+                case R.layout.view_accueil:
+
+
+                        this.animationThis(R.anim.animation_translateensortiegauche,this.view);
+                    break;
+                case R.layout.view_listfilm:
+                        animFadein = AnimationUtils.loadAnimation(this.getActivity().getApplicationContext(),
+                            R.anim.animation_fadin);
+                    this.view.startAnimation(animFadein);
+                    break;
+                default:
+            }
+
+
+
             this.view = null;
             this.instantListener = null;
-            /* selectionne la vue */
             this.view = inflater.inflate(inRLayoutId, null);
-
-            /* charge la view */
             this.getActivity().setContentView(this.view);
 
             /* Celon la vue il ajoute lecouteur qui lui est specifique */
@@ -62,6 +88,9 @@ public class Control {
                     if (this.instantListener == null || !(this.instantListener instanceof ListenerViewAccueil)) {
                         ToolKit.log(" view_accueil  Activer");
                         this.instantListener = new ListenerViewAccueil(this);
+
+
+
                     }
                     break;
 
@@ -103,5 +132,11 @@ public class Control {
         return this.instantListener;
     }
 
+    public void animationThis(int inTypeAnimation, View inView) {
+         this.animation = AnimationUtils.loadAnimation(this.getActivity().getApplicationContext(),
+                 inTypeAnimation);
+        inView.startAnimation(this.animation);
+
+    }
 
 }

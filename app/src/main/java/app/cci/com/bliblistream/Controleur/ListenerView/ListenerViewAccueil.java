@@ -46,7 +46,8 @@ public class ListenerViewAccueil {
 
                 switch (v.getId()) {
                     case R.id.button_nouveaute:
-                        ToolKit.showMessage("Clic sur nouveauté !"," A venir!",control.getActivity());
+                        ToolKit.showMessage(-1,"Bouton Nouveauté ou mot de passe erroné",control.getActivity(),-1,-1);
+
                         ToolKit.log("clique button_nouveaute");
                         break;
 

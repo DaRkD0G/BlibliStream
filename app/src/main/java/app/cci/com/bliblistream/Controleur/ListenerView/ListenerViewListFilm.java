@@ -60,7 +60,7 @@ public class ListenerViewListFilm {
             @Override
             public long getItemId(int position) {
                 if(valeurClic == position) {
-                    ToolKit.showMessage("Double CLic !","Bien ta cliquer",control.getActivity());
+                    ToolKit.showMessage(-1,"Clic",control.getActivity(),-1,-1);
                 } else {
                     valeurClic = position;
                 }
