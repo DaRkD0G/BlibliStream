@@ -62,9 +62,11 @@ public class MainActivity extends Activity {
     protected void onResume() {
         super.onResume();
 
-
+        if(this.control.getListener() == null) {
+            this.control.loadViewAndSetListener(R.layout.view_login);
+        }
         /* TODO TEMP */
-        this.control.loadViewAndSetListener(R.layout.view_login);
+
 
 
         //TODO Ici faire un check up avec le control pour savoir on ce situe l application

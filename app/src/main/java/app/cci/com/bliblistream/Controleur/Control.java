@@ -170,5 +170,11 @@ public class Control {
         }
     }
 
+    public void resumeView() {
+
+            this.loadViewAndSetListener(this.getLastWayViewID());
+
+    }
+
 
 }
