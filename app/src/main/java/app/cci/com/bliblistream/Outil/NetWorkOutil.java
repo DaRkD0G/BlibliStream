@@ -1,0 +1,69 @@
+package app.cci.com.bliblistream.Outil;
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+
+/**
+ * Class static pour tester la connection du telephone
+ *
+ * @author dark_d0g
+ */
+public class NetWorkOutil {
+
+    public static int TYPE_WIFI = 1;
+    public static int TYPE_MOBILE = 2;
+    public static int TYPE_NOT_CONNECTED = 0;
+    /**
+     * Obtenir le type de connection au r\u00E9seau internet
+     * @param context Context
+     * @return Type
+     *
+     */
+    public static int getConnectivityStatus(Context context) {
+        ConnectivityManager cm = (ConnectivityManager) context
+                .getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        if (null != activeNetwork) {
+            if(activeNetwork.getType() == ConnectivityManager.TYPE_WIFI)
+                return TYPE_WIFI;
+
+            if(activeNetwork.getType() == ConnectivityManager.TYPE_MOBILE)
+                return TYPE_MOBILE;
+        }
+        return TYPE_NOT_CONNECTED;
+    }
+
+    /**
+     * Obtenir le type de connection au reseau en string
+     * @param context Context
+     * @return String
+     *
+     */
+    public static String getConnectivityStatusString(Context context) {
+        int conn = NetWorkOutil.getConnectivityStatus(context);
+        String status = null;
+        if (conn == NetWorkOutil.TYPE_WIFI) {
+            status = "Wifi Activer";
+        } else if (conn == NetWorkOutil.TYPE_MOBILE) {
+            status = "Données mobile enabled";
+        } else if (conn == NetWorkOutil.TYPE_NOT_CONNECTED) {
+            status = "Pas de connection";
+        }
+        return status;
+    }
+
+    /**
+     * Savoir si il existe un connection internet en boolean
+     * @param context Context
+     * @return boolean
+     *
+     */
+    public static boolean isConnectionOK(Context context) {
+        int retourConnection = getConnectivityStatus(context);
+        if(retourConnection != 0) {
+            return true;
+        }
+        return false;
+    }
+}
