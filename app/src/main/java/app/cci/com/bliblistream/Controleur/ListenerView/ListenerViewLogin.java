@@ -90,6 +90,9 @@ public class ListenerViewLogin {
                         /* TODO Exemple Pour checked les login est mot de passe */
                        // ToolKit.showMessage("Je sais ton SPeudo et MDP"," c'est -->"+arrayEditText.get(0).getText()+"--"+arrayEditText.get(1).getText(),control.getActivity());
                         if(arrayEditText.get(0).getText().toString().equals("speudo")   && arrayEditText.get(1).getText().toString().equals("MDP")){
+
+
+
                             control.loadViewAndSetListener(R.layout.view_accueil);
                         } else {
                             /*int[][] sizeScreen = ToolKit.sizeScreen(control.getActivity());

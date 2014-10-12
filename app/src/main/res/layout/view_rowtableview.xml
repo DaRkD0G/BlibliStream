@@ -1,19 +1,28 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="?android:attr/listPreferredItemHeight"
-    android:padding="6dip"
+    android:layout_height="@dimen/listPreferredItemHeightdp"
+    android:padding="@dimen/ecart_list_film"
     android:id="@+id/listListener">
 
-    <ImageView
-        android:id="@+id/icon"
-        android:layout_width="wrap_content"
-        android:layout_height="fill_parent"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentTop="true"
+    <TableRow
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <ImageView
+            android:id="@+id/icon"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentTop="true"
         android:layout_marginRight="6dip"
-        android:contentDescription="TODO"
-        android:src="@drawable/ic_launcher" />
+            android:contentDescription="TODO"
+            android:src="@drawable/ic_launcher"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+    </TableRow>
 
     <TextView
         android:id="@+id/secondLine"
@@ -27,17 +36,51 @@
         android:text="Description"
         android:textSize="12sp" />
 
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/secondLine"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:id="@+id/titre"
-        android:layout_alignWithParentIfMissing="true"
-        android:layout_toRightOf="@id/icon"
-        android:gravity="center_vertical"
-        android:text="Example application"
-        android:textSize="16sp" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_height="@dimen/listPreferredItemDescriptionHeightdp"
+        android:layout_gravity="right">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/listPreferredItemDescriptionHeightdp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_gravity="center"
+            android:layout_alignParentBottom="true"
+            android:weightSum="1"
+            android:padding="@dimen/ecart_list_film">
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:id="@+id/titre"
+                android:layout_alignWithParentIfMissing="true"
+                android:gravity="center_vertical"
+                android:text="Iron-man 4"
+                android:textSize="16sp"
+                android:textColor="@color/film_titre_color"
+                android:paddingBottom="@dimen/ecart_list_film" />
+
+            <TextView
+                android:id="@+id/secondLine"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:ellipsize="marquee"
+                android:singleLine="true"
+                android:text="Genre : Action, Marvel | Durée : 120min"
+                android:textSize="12sp"
+                android:layout_toStartOf="@+id/titre"
+                android:layout_alignRight="@+id/icon"
+                android:layout_alignEnd="@+id/icon" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
 
 </RelativeLayout> 

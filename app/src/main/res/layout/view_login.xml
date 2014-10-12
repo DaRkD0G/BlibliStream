@@ -43,10 +43,11 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:alpha="0.6"
-        android:background="#ffffffff"
+        android:background="@color/transp_fond_color"
         android:orientation="vertical"
         android:padding="@dimen/activity_vertical_margin"
-        android:visibility="invisible">
+        android:visibility="invisible"
+        android:baselineAligned="true">
 
     </LinearLayout>
 

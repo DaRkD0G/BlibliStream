@@ -25,12 +25,14 @@ import android.widget.ViewFlipper;
 import java.util.ArrayList;
 
 import app.cci.com.bliblistream.Controleur.Control;
+import app.cci.com.bliblistream.Controleur.ListenerView.ListenerViewAccueil;
+import app.cci.com.bliblistream.Controleur.ListenerView.ListenerViewListFilm;
+import app.cci.com.bliblistream.Controleur.ListenerView.ListenerViewLogin;
 import app.cci.com.bliblistream.Outil.ToolKit;
 
 
 /**
  * Class de l\u0027activite principale de l\u0027application, Herite de Activity
- *
  */
 public class MainActivity extends Activity {
 
@@ -40,6 +42,7 @@ public class MainActivity extends Activity {
 
     /**
      * Lancement de l'application
+     *
      * @param savedInstanceState Bundle
      */
     @Override
@@ -47,15 +50,13 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
 
         //initialisation de lattribut controleur
-        this.control =  new Control(this);
-
+        this.control = new Control(this);
 
 
     }
 
     /**
      * Restauration de l'application
-     *
      */
     @Override
     protected void onResume() {
@@ -75,24 +76,31 @@ public class MainActivity extends Activity {
         btn.startAnimation(animFadein);*/
 
     }
+
     /**
      * Mise en pause de l'application
-     *
      */
     @Override
     protected void onPause() {
         super.onPause();
     }
+
     /**
      * Fermeture l'application
-     *
      */
     @Override
     protected void onDestroy() {
         super.onDestroy();
     }
 
+    @Override
+    public void onBackPressed() {
+        ToolKit.log("OK");
 
+        this.control.LoadLastViewAndSetListener();
+
+
+    }
     /**
      * getSize and
      */

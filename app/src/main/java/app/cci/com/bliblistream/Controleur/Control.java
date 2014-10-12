@@ -1,12 +1,12 @@
 package app.cci.com.bliblistream.Controleur;
 
 import android.app.Activity;
-import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.Button;
+
+import java.util.ArrayList;
 
 import app.cci.com.bliblistream.R;
 import app.cci.com.bliblistream.Controleur.ListenerView.ListenerViewAccueil;
@@ -25,13 +25,19 @@ public class Control {
     private Object instantListener;
     private View view;
     private Animation animation;
+    private ArrayList<Integer> wayViewID;
+
+    //TODO CLASS USER
+    public boolean LOGINTEMP = false;
     /**
      * Constructeur
      *
      * @param uActivity Activity
      */
     public Control(Activity uActivity) {
+
         this.activity = uActivity;
+        this.wayViewID = new ArrayList<Integer>();
     }
 
     /**
@@ -39,70 +45,65 @@ public class Control {
      *
      * @param view View
      */
-    public void loadViewAndSetListener(int inRLayoutId) {
+    public void loadViewAndSetListener(int inRidLayout) {
+
 
         /* selection la vue */
         LayoutInflater inflater = (LayoutInflater) this.activity.getSystemService(android.app.Activity.LAYOUT_INFLATER_SERVICE);
         try {
+            //ajout id layout pour le chemin de lutilisateur
+            this.wayViewID.add(inRidLayout);
 
-
-
-
-
-
-            /* Animation transition */
-
-            Animation animFadein;
-            switch (inRLayoutId) {
-                case R.layout.view_accueil:
-
-
-                        this.animationThis(R.anim.animation_translateensortiegauche,this.view);
-                    break;
-                case R.layout.view_listfilm:
-                        animFadein = AnimationUtils.loadAnimation(this.getActivity().getApplicationContext(),
-                            R.anim.animation_fadin);
-                    this.view.startAnimation(animFadein);
-                    break;
-                default:
-            }
-
-
+            //on creer un variable temps pour la sauvegarde de la view maintenant pour lanimation
+            View saveViewNow = this.view;
 
             this.view = null;
-            this.instantListener = null;
-            this.view = inflater.inflate(inRLayoutId, null);
-            this.getActivity().setContentView(this.view);
+            this.view = inflater.inflate(this.getLastWayViewID(), null);
 
             /* Celon la vue il ajoute lecouteur qui lui est specifique */
-            switch (inRLayoutId) {
+            switch (this.getLastWayViewID()) {
 
                 case R.layout.view_login:
-                    if (this.instantListener == null || !(this.instantListener instanceof ListenerViewLogin)) {
+
                         ToolKit.log("Listener view_login  Activer");
+                        //Animation
+                        if(saveViewNow != null) {
+                            this.animationThis(R.anim.animation_fadin,saveViewNow);
+                        }
+
+                        //Set a lactivite la view et faire lanimation + listener
+                        this.getActivity().setContentView(this.view);
                         this.instantListener = new ListenerViewLogin(this);
-                    }
                     break;
 
                 case R.layout.view_accueil:
-                    if (this.instantListener == null || !(this.instantListener instanceof ListenerViewAccueil)) {
+
                         ToolKit.log(" view_accueil  Activer");
+                        //Animation
+                        if(this.instantListener instanceof  ListenerViewLogin) {
+                            this.animationThis(R.anim.animation_translateensortiegauche,saveViewNow);
+                        } else {
+                            this.animationThis(R.anim.animation_fadin,saveViewNow);
+                        }
+                        //Set a lactivite la view et faire lanimation + listener
+                        this.getActivity().setContentView(this.view);
                         this.instantListener = new ListenerViewAccueil(this);
-
-
-
-                    }
                     break;
 
                 case R.layout.view_listfilm:
-                    if (this.instantListener == null || !(this.instantListener instanceof ListenerViewListFilm)) {
+
                         ToolKit.log("Listener view_listfilm Activer");
+                        //Animation
+                        this.animationThis(R.anim.animation_fadin,saveViewNow);
+                        //Set a lactivite la view et faire lanimation + listener
+                        this.getActivity().setContentView(this.view);
                         this.instantListener = new ListenerViewListFilm(this);
-                    }
                     break;
             }
-        } catch (NullPointerException e) { ToolKit.log("!! ERREUR VIEW NON EXISTANTE -> inRLayoutId !!");}
-        if(this.instantListener == null) { ToolKit.log("!! instantListener -> NULL !!"); }
+        } catch (NullPointerException e) {
+            ToolKit.log("!! ERREUR VIEW NON EXISTANTE -> inRLayoutId !!");
+        }
+
     }
 
     /**
@@ -135,8 +136,39 @@ public class Control {
     public void animationThis(int inTypeAnimation, View inView) {
          this.animation = AnimationUtils.loadAnimation(this.getActivity().getApplicationContext(),
                  inTypeAnimation);
+
+        this.animation.setAnimationListener(new Animation.AnimationListener(){
+            @Override
+            public void onAnimationStart(Animation arg0) {
+
+            }
+            @Override
+            public void onAnimationRepeat(Animation arg0) {
+
+            }
+            @Override
+            public void onAnimationEnd(Animation arg0) {
+
+            }
+        });
         inView.startAnimation(this.animation);
 
     }
+
+    private int getLastWayViewID(){
+        return this.wayViewID.get(this.wayViewID.size() -1);
+    }
+
+    private void removeLastWayViewID(){
+        this.wayViewID.remove(this.wayViewID.size() -1);
+    }
+
+    public void LoadLastViewAndSetListener() {
+        if(this.wayViewID.size() > 2) {
+            this.removeLastWayViewID();
+            this.loadViewAndSetListener(this.getLastWayViewID());
+        }
+    }
+
 
 }
