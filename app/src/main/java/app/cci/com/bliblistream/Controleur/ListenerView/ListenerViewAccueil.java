@@ -2,6 +2,7 @@ package app.cci.com.bliblistream.Controleur.ListenerView;
 
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 
 import java.util.ArrayList;
 
@@ -19,6 +20,7 @@ public class ListenerViewAccueil {
     private Control control;
     //ArrayList de button de la vue Acceuil
     private ArrayList<Button> arrayButton;
+    private ArrayList<LinearLayout> arrayLinearLayout;
 
     /**
      * Constructeur
@@ -33,7 +35,7 @@ public class ListenerViewAccueil {
         /* Ajoute des boutons de la vue à l attribut */
         this.arrayButton.add((Button) this.control.getActivity().findViewById(R.id.button_nouveaute));
         this.arrayButton.add((Button) this.control.getActivity().findViewById(R.id.button_categorie));
-
+        this.arrayButton.add((Button) this.control.getActivity().findViewById(R.id.button_moncompte));
         /* On redefinit l ecouteur du clic sur les boutons */
         new AbstractButton(this.control.getActivity().getBaseContext(), this.arrayButton) {
             /**
@@ -45,7 +47,7 @@ public class ListenerViewAccueil {
                 super.onClick(v);
 
                 switch (v.getId()) {
-                    case R.id.button_nouveaute:
+                   case R.id.button_nouveaute:
                         ToolKit.showMessage(-1,"Bouton Nouveauté ou mot de passe erroné",control.getActivity(),-1,-1);
 
                         ToolKit.log("clique button_nouveaute");
@@ -54,6 +56,10 @@ public class ListenerViewAccueil {
                     case R.id.button_categorie:
                         ToolKit.log("Clique  button_categorie");
                         control.loadViewAndSetListener(R.layout.view_listfilm);
+                        break;
+                    case R.id.button_moncompte:
+                        ToolKit.log("Clique  Button_moncompte");
+
                         break;
                 }
             }
