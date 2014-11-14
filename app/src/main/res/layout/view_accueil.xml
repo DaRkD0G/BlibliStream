@@ -16,7 +16,7 @@
         android:orientation="vertical"
         android:layout_weight = "0.45"
 
-        android:background="@android:drawable/dialog_holo_light_frame"
+        android:background="@android:drawable/dialog_holo_dark_frame"
 
         >
         <RelativeLayout

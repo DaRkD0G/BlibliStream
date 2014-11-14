@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/layout_accueil"
+    android:weightSum="1"
+
+    android:background="@android:color/white">
+
+    <app.cci.com.bliblistream.Model.CustomClass.CustomEditText
+        android:id="@+id/editTextLogin"
+        android:name="app.cci.com.bliblistream.Model.Class.CustomEditText"
+
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+
+        android:background="@android:drawable/dialog_holo_light_frame"
+        android:textColor="@color/film_titre_color"
+        android:inputType="textAutoComplete"
+        android:text="@string/address_email" />
+
+</LinearLayout>

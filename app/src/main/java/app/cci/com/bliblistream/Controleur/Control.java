@@ -6,8 +6,15 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+
 import java.util.ArrayList;
 
+import app.cci.com.bliblistream.Model.Class.User;
+import app.cci.com.bliblistream.Model.Service.JSONParser;
 import app.cci.com.bliblistream.R;
 import app.cci.com.bliblistream.Controleur.ListenerView.ListenerViewAccueil;
 import app.cci.com.bliblistream.Controleur.ListenerView.ListenerViewListFilm;
@@ -26,7 +33,9 @@ public class Control {
     private View view;
     private Animation animation;
     private ArrayList<Integer> wayViewID;
-
+    private JSONParser json;
+    private DefaultHttpClient httpClient;
+    public User user;
     //TODO CLASS USER
     public boolean LOGINTEMP = false;
     /**
@@ -35,6 +44,19 @@ public class Control {
      * @param uActivity Activity
      */
     public Control(Activity uActivity) {
+       /*TODO JSON json = new JSONParser();
+        Thread thread = new Thread(new Runnable(){
+            @Override
+            public void run() {
+                try {
+                    json.getJSONFromUrl("http://echo.jsontest.com/key/value/one/two");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        thread.start();*/
 
         this.activity = uActivity;
         this.wayViewID = new ArrayList<Integer>();
@@ -175,6 +197,8 @@ public class Control {
             this.loadViewAndSetListener(this.getLastWayViewID());
 
     }
+
+
 
 
 }

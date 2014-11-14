@@ -16,6 +16,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 
 import app.cci.com.bliblistream.R;
@@ -33,9 +35,9 @@ public class ToolKit {
         Log.i("test1", "##################################");
     }
     public static void logWTF(String inParam) {
-        Log.wtf("test1", "##################################");
-        Log.wtf("test1", inParam);
-        Log.wtf("test1", "##################################");
+        Log.w("test1", "##################################");
+        Log.w("test1", inParam);
+        Log.w("test1", "##################################");
     }
     public static void showMessage(int inImage, String inMessage, final Activity inActivity, int x, int y) {
 
@@ -111,5 +113,48 @@ public class ToolKit {
 
         return relations;
     }
+
+
+    /**
+     * Enables/Disables all child views in a view group.
+     *
+     * @param viewGroup the view group
+     * @param enabled <code>true</code> to enable, <code>false</code> to disable
+     * the views.
+     */
+    public static void enableDisableViewGroup(ViewGroup viewGroup, boolean enabled) {
+        int childCount = viewGroup.getChildCount();
+        for (int i = 0; i < childCount; i++) {
+            View view = viewGroup.getChildAt(i);
+            view.setEnabled(enabled);
+            if (view instanceof ViewGroup) {
+                enableDisableViewGroup((ViewGroup) view, enabled);
+            }
+        }
+    }
+
+  /*  static public void uiTrhead(Activity uActivity,final Object objectReception, final Method uMethod,final Object uParameters) throws Exception {
+        uActivity.runOnUiThread(new Runnable() {
+            public void run() {
+                try {
+                    uMethod.invoke(objectReception, uParameters);
+                } catch (IllegalAccessException e) {
+
+                } catch (InvocationTargetException e) {
+
+                }
+
+               /* if(validationLogin) {
+                    control.loadViewAndSetListener(R.layout.view_accueil);
+                } else {
+                    setEnableElement(true);
+                    animateErrorLogin();
+                    view3.setVisibility(View.INVISIBLE);
+                    control.animationThis(R.anim.animation_fadin,view3);
+                }
+            }
+        });
+
+    }*/
 
 }
