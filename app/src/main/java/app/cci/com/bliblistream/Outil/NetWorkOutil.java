@@ -4,7 +4,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
 /**
- * Class static pour tester la connection du telephone
+ * Class static pour tester la execute du telephone
  *
  * @author dark_d0g
  */
@@ -14,7 +14,7 @@ public class NetWorkOutil {
     public static int TYPE_MOBILE = 2;
     public static int TYPE_NOT_CONNECTED = 0;
     /**
-     * Obtenir le type de connection au r\u00E9seau internet
+     * Obtenir le type de execute au r\u00E9seau internet
      * @param context Context
      * @return Type
      *
@@ -35,7 +35,7 @@ public class NetWorkOutil {
     }
 
     /**
-     * Obtenir le type de connection au reseau en string
+     * Obtenir le type de execute au reseau en string
      * @param context Context
      * @return String
      *
@@ -48,13 +48,13 @@ public class NetWorkOutil {
         } else if (conn == NetWorkOutil.TYPE_MOBILE) {
             status = "Données mobile enabled";
         } else if (conn == NetWorkOutil.TYPE_NOT_CONNECTED) {
-            status = "Pas de connection";
+            status = "Pas de execute";
         }
         return status;
     }
 
     /**
-     * Savoir si il existe un connection internet en boolean
+     * Savoir si il existe un execute internet en boolean
      * @param context Context
      * @return boolean
      *

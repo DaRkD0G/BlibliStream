@@ -23,17 +23,7 @@
             android:layout_alignParentStart="true" />
 
 
-    <TextView
 
-        android:layout_width="fill_parent"
-        android:layout_height="26dip"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-
-        android:ellipsize="marquee"
-        android:singleLine="true"
-        android:text="Description"
-        android:textSize="12sp" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -57,30 +47,22 @@
             android:padding="@dimen/ecart_list_film">
 
             <TextView
+                android:id="@+id/titreFilm"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentTop="true"
-                android:id="@+id/titre"
-                android:layout_alignWithParentIfMissing="true"
+
                 android:gravity="center_vertical"
-                android:text="Iron-man 4"
+                android:text="NOM FILM"
                 android:textSize="16sp"
-                android:textColor="@color/film_titre_color"
-                android:paddingBottom="@dimen/ecart_list_film" />
+                android:textColor="@color/film_titre_color"/>
 
             <TextView
-                android:id="@+id/secondLine"
+                android:id="@+id/descriptionFilm"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
                 android:ellipsize="marquee"
-                android:singleLine="true"
-                android:text="Genre : Action, Marvel | Durée : 120min"
-                android:textSize="12sp"
-
-                android:layout_alignRight="@+id/icon"
-                android:layout_alignEnd="@+id/icon" />
+                android:text="DESCRIPTION FILM"
+                android:textSize="10sp" />
 
         </LinearLayout>
 
