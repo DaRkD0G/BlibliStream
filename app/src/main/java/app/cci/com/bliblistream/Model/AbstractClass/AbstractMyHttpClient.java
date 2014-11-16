@@ -1,19 +1,14 @@
-package app.cci.com.bliblistream.Model.Service;
+package app.cci.com.bliblistream.Model.AbstractClass;
 
 import android.app.Activity;
 import android.os.AsyncTask;
 
 import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -21,64 +16,65 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
 
 import app.cci.com.bliblistream.Model.Class.User;
 import app.cci.com.bliblistream.Outil.ToolKit;
+import app.cci.com.bliblistream.Outil.ToolKitNetWork;
 
 /**
  * Class pour la connection au WebService pour recuperer les données ou envoyer ou les deux
  *
  *
  */
-public abstract class MyHttpClient {
+public abstract class AbstractMyHttpClient {
 
-    final public HttpClient httpclient;
-    final public String url;
-    final public Object objectClass;
+     public HttpClient httpclient;
+     public String url;
+     public Object objectClass;
      private HttpAsyncTask httpAsyncTask;
+    private Activity activity;
     public enum  TYPEDEMANDE {
         GET_URL_INFO, GET_SET_URL_PARAM, GET_SET_JSON_PARAM
     }
     /**
      * Constructeur
      * @param uActivity l'activité de l'application
+     */
+    public AbstractMyHttpClient(Activity uActivity) {
+            this.activity = uActivity;
+            this.httpclient = new DefaultHttpClient();
+            this.httpAsyncTask = new HttpAsyncTask();
+
+    }
+
+    /**
+     * Setter les paramettres d'execution
      * @param uUrlInformation Url vers les informations
      * @param uTypeDemande Type de demande
      * @param uObjectsClass Object à traiter
      */
-    public MyHttpClient(Activity uActivity, String uUrlInformation, TYPEDEMANDE uTypeDemande, Object uObjectsClass) {
-
-            this.httpclient = new DefaultHttpClient();
-
-            //default URL
-            if(uUrlInformation.equals("")) {
-                uUrlInformation = "http://yannickstephan.com/json/user.json";
-            }
-            this.url = uUrlInformation;
-
-            this.objectClass = uObjectsClass;
-            this.httpAsyncTask = new HttpAsyncTask();
-            this.httpAsyncTask.setTypeDemande(uTypeDemande);
-    }
-
-    public MyHttpClient(Activity uActivity) {
-        this(uActivity,"",TYPEDEMANDE.GET_URL_INFO,null);
-    }
-    /**
-     * Execute la demande de connection pour chercher les informations d'un lien avec des param URL / Json
-     *
-     */
-    public void execute() {
-        //Execute
-        this.httpAsyncTask.execute(this.url);
+    public void setParams(String uUrlInformation, TYPEDEMANDE uTypeDemande, Object uObjectsClass) {
+        this.url = uUrlInformation;
+        this.objectClass = uObjectsClass;
+        this.httpAsyncTask.setTypeDemande(uTypeDemande);
     }
 
     /**
      * Execute la demande de connection pour chercher les informations d'un lien avec des param URL / Json
      *
      */
+    public boolean execute() {
+
+        if(ToolKitNetWork.isConnectionOK(this.activity.getBaseContext())){
+            this.httpAsyncTask.execute(this.url);
+            return true;
+        } return  false;
+    }
+
+    /**
+     * Execute la demande de connection pour chercher les informations d'un lien avec des param URL / Json
+     *
+     *
     public boolean check() {
         //Execute
         if(this.url.equals("")) {
@@ -89,7 +85,7 @@ public abstract class MyHttpClient {
             return false;
         }
         return true;
-    }
+    }*/
     /**
      * Donne ce que retourne une URL en format STRING
      *
@@ -112,15 +108,7 @@ public abstract class MyHttpClient {
         }
         return result;
     }
-    /**
-     * Envoi dans URL au format GET les demandes dans retourne
-     * @param url Une URL
-     * TODO DEFINIT LES PARAMATRES EST LES OBJECT
-     */
-    public JSONObject getInfoForUrlByParam() {
-        // Create httpost
-        return null;
-    }
+
     /**
      * Envoi d'un objet au formation JSON
      *
@@ -298,8 +286,21 @@ public abstract class MyHttpClient {
         return jObj;
     }
 
-    public boolean loadJsonWeb() {
+    /**
+     * Envoi dans URL au format GET les demandes dans retourne
+     * @param url Une URL
+     * TODO DEFINIT LES PARAMATRES EST LES OBJECT
+     */
+    public JSONObject getInfoForUrlByParam() {
+        // Create httpost
+        return null;
+    }
 
+    /**
+     * Traitement du fichier Json
+     * @return Boolean une validation du traitement
+     */
+    public boolean loadJsonWeb() {
         return false;
     }
 }

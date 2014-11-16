@@ -8,7 +8,7 @@ import android.net.NetworkInfo;
  *
  * @author dark_d0g
  */
-public class NetWorkOutil {
+public class ToolKitNetWork {
 
     public static int TYPE_WIFI = 1;
     public static int TYPE_MOBILE = 2;
@@ -41,13 +41,13 @@ public class NetWorkOutil {
      *
      */
     public static String getConnectivityStatusString(Context context) {
-        int conn = NetWorkOutil.getConnectivityStatus(context);
+        int conn = ToolKitNetWork.getConnectivityStatus(context);
         String status = null;
-        if (conn == NetWorkOutil.TYPE_WIFI) {
+        if (conn == ToolKitNetWork.TYPE_WIFI) {
             status = "Wifi Activer";
-        } else if (conn == NetWorkOutil.TYPE_MOBILE) {
+        } else if (conn == ToolKitNetWork.TYPE_MOBILE) {
             status = "Données mobile enabled";
-        } else if (conn == NetWorkOutil.TYPE_NOT_CONNECTED) {
+        } else if (conn == ToolKitNetWork.TYPE_NOT_CONNECTED) {
             status = "Pas de execute";
         }
         return status;

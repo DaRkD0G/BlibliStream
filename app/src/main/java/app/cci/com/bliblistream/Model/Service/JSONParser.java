@@ -1,3 +1,6 @@
+/**
+ *
+
 package app.cci.com.bliblistream.Model.Service;
 
 import org.apache.http.HttpEntity;
@@ -17,10 +20,10 @@ import java.io.UnsupportedEncodingException;
 import app.cci.com.bliblistream.Outil.ToolKit;
 
 
-/**
+
  * Created by DaRk-_-D0G
  * Class Parser du JSON
- */
+
 public class JSONParser {
     static InputStream is = null;
     static JSONObject jObj = null;
@@ -28,7 +31,7 @@ public class JSONParser {
 
     /**
      * Constructeur
-     */
+     *
     public JSONParser() {}
 
 
@@ -36,7 +39,7 @@ public class JSONParser {
      * Obtenir l'URL
      * @param url String
      * @return jSONObject JSONObject
-     */
+     *
     public JSONObject getJSONFromUrl(String url) {
 
 
@@ -68,15 +71,16 @@ public class JSONParser {
             is.close();
             json = sb.toString();
         } catch (Exception e) {
-          /*  ToolKit.log("");*/
+          /*  ToolKit.log("");*
         }
 
         try {
             jObj = new JSONObject(json);
         } catch (JSONException e) {
-            /*Log.e( e.toString());*/
+            /*Log.e( e.toString());*
         }
 
         return jObj;
     }
 }
+*/
