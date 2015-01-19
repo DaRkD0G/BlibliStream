@@ -1,50 +1,23 @@
 package app.cci.com.bliblistream.Controleur.ListenerView;
 
-import android.app.Activity;
-import android.app.ProgressDialog;
-import android.graphics.Bitmap;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.message.BasicNameValuePair;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.List;
-
-import app.cci.com.bliblistream.Model.AbstractClass.AbstractButton;
-import app.cci.com.bliblistream.Model.AbstractClass.AbstractMyHttpClient;
-import app.cci.com.bliblistream.Model.AbstractClass.AbstractTableViewListFilm;
-import app.cci.com.bliblistream.Model.Class.CollectionFilm;
-import app.cci.com.bliblistream.Model.Class.DownloadImageTask;
-import app.cci.com.bliblistream.Model.Class.Film;
-import app.cci.com.bliblistream.Model.Class.ImagesCache;
-import app.cci.com.bliblistream.Model.Class.MyHttpClientListFilm;
-import app.cci.com.bliblistream.Model.Class.User;
-import app.cci.com.bliblistream.Model.Service.MyHttpClientConnection;
-import app.cci.com.bliblistream.R;
 import app.cci.com.bliblistream.Controleur.Control;
+import app.cci.com.bliblistream.Model.AbstractClass.AbstractTableViewListFilm;
+import app.cci.com.bliblistream.Model.AbstractClass.AbstractTableViewListFilmNouveaute;
+import app.cci.com.bliblistream.Model.Class.MyHttpClientListFilm;
 import app.cci.com.bliblistream.Outil.ToolKit;
+import app.cci.com.bliblistream.R;
 
 /**
  * Ecouteur de la View Acceuil
  *
  * @author DaRk-_-D0G on 30/09/2014.
  */
-public class ListenerViewListFilm {
+public class ListenerViewListFilmnouveaute {
     private Control control;
     int valeurClic = -2;
 
@@ -57,7 +30,7 @@ public class ListenerViewListFilm {
      *
      * @param inControl Control
      */
-    public ListenerViewListFilm(Control inControl) {
+    public ListenerViewListFilmnouveaute(Control inControl) {
         ToolKit.log("Class init  --> ListenerViewListFilm");
 
 
@@ -95,17 +68,12 @@ public class ListenerViewListFilm {
         control.getActivity().runOnUiThread(new Runnable() {
             public void run() {
 
-                AbstractTableViewListFilm abstractTableViewListFilm = new AbstractTableViewListFilm(control,
+                AbstractTableViewListFilmNouveaute abstractTableViewListFilm = new AbstractTableViewListFilmNouveaute(control,
                         R.layout.view_rowtableview, 5) {
 
                 };
 
-
-
-
                 listView.setAdapter(abstractTableViewListFilm);
-
-
             }
 
 

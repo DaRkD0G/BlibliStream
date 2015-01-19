@@ -1,7 +1,7 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="150dp"
+    android:layout_height="200dp"
 
     android:padding="@dimen/ecart_list_film"
     android:background="@android:drawable/dialog_holo_light_frame"
@@ -13,7 +13,7 @@
     <ImageView
         android:id="@+id/icon2"
         android:layout_width="fill_parent"
-        android:layout_height="150dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentTop="true"
         android:adjustViewBounds="true"
@@ -36,7 +36,7 @@
     <ImageView
         android:id="@+id/icon"
         android:layout_width="fill_parent"
-        android:layout_height="150dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentTop="true"
 

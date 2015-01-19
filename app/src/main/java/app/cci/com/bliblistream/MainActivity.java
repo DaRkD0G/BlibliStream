@@ -2,8 +2,11 @@ package app.cci.com.bliblistream;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Point;
 import android.graphics.drawable.Animatable;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.transition.ChangeBounds;
 import android.transition.Scene;
@@ -97,7 +100,7 @@ public class MainActivity extends Activity {
 
     @Override
     public void onBackPressed() {
-        ToolKit.log("OK");
+    //    ToolKit.log("OK");
 
         this.control.LoadLastViewAndSetListener();
 

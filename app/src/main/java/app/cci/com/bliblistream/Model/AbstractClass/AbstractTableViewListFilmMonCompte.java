@@ -1,33 +1,17 @@
 package app.cci.com.bliblistream.Model.AbstractClass;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.util.Log;
-import android.util.SparseIntArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.view.animation.TranslateAnimation;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Objects;
-import java.util.concurrent.CompletionService;
 
 import app.cci.com.bliblistream.Controleur.Control;
 import app.cci.com.bliblistream.Model.Class.DownloadImageTask;
-import app.cci.com.bliblistream.Model.Class.Film;
 import app.cci.com.bliblistream.Model.Class.ImagesCache;
 import app.cci.com.bliblistream.Outil.ToolKit;
 import app.cci.com.bliblistream.R;
@@ -38,14 +22,14 @@ import app.cci.com.bliblistream.R;
  * Listener Abstrait de la TableView
  * @author DaRk-_-D0G on 06/10/2014.
  */
-public class AbstractTableViewListFilm extends BaseAdapter {
+public class AbstractTableViewListFilmMonCompte extends BaseAdapter {
     private Control control;
 
     /* ce tableau trace le clic */
    // private HashMap<Integer, Integer> mIdMap = new HashMap<Integer, Integer>();
     ImagesCache cache;
     private LayoutInflater mLayoutInflater = null;
-
+    public int filtreCat;
     Integer mLastPosition;
     Integer limit;
     Context mContext;
@@ -56,7 +40,8 @@ public class AbstractTableViewListFilm extends BaseAdapter {
      * @param inTextViewResourceId int
      * @param inObjects String[]
      */
-    public AbstractTableViewListFilm(Control control, int inTextViewResourceId, Integer limit) {
+    public AbstractTableViewListFilmMonCompte(Control control, int inTextViewResourceId, Integer limit) {
+        ToolKit.log("--POSE-->");
         this.mContext = control.getActivity().getApplicationContext();
         mLayoutInflater = (LayoutInflater) mContext
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -89,8 +74,9 @@ public class AbstractTableViewListFilm extends BaseAdapter {
      */
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+    ToolKit.log("--POSE-->");
         if(position == 1) {
-            //ToolKit.log("--POSE-->"+position);
+            ToolKit.log("--POSE-->"+position);
             this.mLastPosition += 1;
         }
         View v = convertView;
@@ -100,46 +86,18 @@ public class AbstractTableViewListFilm extends BaseAdapter {
 
             LayoutInflater inflater = (LayoutInflater) mContext
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            v = inflater.inflate(R.layout.view_rowtableview, null);
+            v = inflater.inflate(inTextViewResourceId, null);
             viewHolder = new CompleteListViewHolder(v,this);
             v.setTag(viewHolder);
 
+        try {
+           Integer id = control.filtreFilm.get(position);
+            v.setVisibility(View.VISIBLE);
+        } catch ( IndexOutOfBoundsException e ) {
+            return inflater.inflate(R.layout.blank_layout, parent,
+                    false);
+        }
 
-            String img = control.getCollectionFilm().get(position).lienImage;
-
-            Bitmap bm = cache.getImageFromWarehouse(img);
-
-            if (bm != null) {
-
-                viewHolder.imageView.setImageBitmap(bm);
-
-               // if(this.mLastPosition >= 5) {
-                    //ToolKit.log("--POSE-->"+position);
-                    //  ToolKit.animationThis(R.anim.animation_translateenentredroit, progressBar, activity.getBaseContext());
-
-                        //ToolKit.animationThis(R.anim.animation_translateversbas, viewHolder.imageView, control.getActivity().getBaseContext());
-
-                   // ToolKit.animationThis(R.anim.animation_translateversbas, viewHolder.imageView, control.getActivity().getBaseContext());
-                        // no image assigned to image view
-                  //  }
-
-
-
-
-
-
-
-
-
-            } else {
-
-                viewHolder.imageView.setImageBitmap(null);
-
-                viewHolder.imgTask.execute(img);
-                               //viewHolder.imageView.setImageBitmap(null);
-
-
-            }
 
 
 

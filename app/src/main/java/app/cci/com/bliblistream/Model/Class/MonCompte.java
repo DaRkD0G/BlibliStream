@@ -1,11 +1,9 @@
 package app.cci.com.bliblistream.Model.Class;
 
-import app.cci.com.bliblistream.Outil.ToolKit;
-
 /**
  * Created by DaRk-_-D0G on 03/11/14.
  */
-public class Film {
+public class MonCompte {
 
     public int id;
     public String titre,description,lienfilm,lienba,lienImage,tarif,dateSortie;
@@ -13,7 +11,7 @@ public class Film {
     public Categorie categorie;
 
 
-    public Film() {
+    public MonCompte() {
         this.id = 1;
         this.titre = "test";
         this.description = "test";
@@ -26,16 +24,16 @@ public class Film {
         this.categorie = new Categorie();
     }
 
-    public Film(int id,
-                String titre,
-                String description,
-                String lienfilm,
-                String lienba,
-                String lienImage,
-                String tarif,
-                String dateSortie,
-                Boolean nouveaute,
-                Categorie unCat) {
+    public MonCompte(int id,
+                     String titre,
+                     String description,
+                     String lienfilm,
+                     String lienba,
+                     String lienImage,
+                     String tarif,
+                     String dateSortie,
+                     Boolean nouveaute,
+                     Categorie unCat) {
         this.id = id;
         this.titre = titre;
         this.description = description;

@@ -4,31 +4,44 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/layout_accueil"
-    android:weightSum="1"
-
+    android:weightSum="100"
     android:background="@android:color/white">
 
+    <!-- nouveauté -->
     <LinearLayout
         android:layout_margin="5dp"
         android:id="@+id/S1"
         android:layout_width="fill_parent"
         android:layout_height="0dp"
         android:orientation="vertical"
-        android:layout_weight = "0.45"
+        android:layout_weight = "30"
 
         android:background="@android:drawable/dialog_holo_dark_frame"
 
         >
         <RelativeLayout
-            android:background="@drawable/film1"
-            android:id="@+id/S2"
+
+            android:id="@+id/RelativeLayout_Film1"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
            >
+            <ImageView
+                android:id="@+id/ImageView_Film1"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentTop="true"
+                android:background="@drawable/bg_load"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
             <Button
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:id="@+id/button_nouveaute"
+                android:id="@+id/Button_Acceuil_Nouveaute"
                 android:background="@android:color/transparent"
                 />
            <RelativeLayout
@@ -57,12 +70,13 @@
 
     </RelativeLayout>
     </LinearLayout>
+    <!-- categore -->
     <LinearLayout
         android:id="@+id/S5"
         android:layout_width="fill_parent"
         android:layout_height="0dp"
         android:orientation="vertical"
-        android:layout_weight = "0.45"
+        android:layout_weight = "30"
 
         android:background="@android:drawable/dialog_holo_light_frame"
         android:layout_marginLeft="5dp"
@@ -70,16 +84,29 @@
         android:layout_marginBottom="5dp">
 
         <RelativeLayout
-            android:background="@drawable/film2"
 
-            android:id="@+id/s"
+
+            android:id="@+id/RelativeLayout_Film2"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             >
+            <ImageView
+                android:id="@+id/ImageView_Film2"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentTop="true"
+                android:background="@drawable/bg_load"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
             <Button
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:id="@+id/button_categorie"
+                android:id="@+id/Button_Tout_Les_Films"
                 android:background="@android:color/transparent"
                 />
             <RelativeLayout
@@ -97,7 +124,7 @@
                     android:id="@+id/S6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/categorie"
+                    android:text="@string/tout"
                     android:textColor="@android:color/black"
                     android:layout_alignParentBottom="true"
                     android:gravity="center"
@@ -110,51 +137,78 @@
 
         </RelativeLayout>
     </LinearLayout>
-    <Button
-        android:layout_width="fill_parent"
-        android:layout_height="0dp"
-        android:id="@+id/button_moncompte"
-        android:text="@string/mon_compte"
-        android:layout_weight = "0.1"
-        android:background="@drawable/style_bordure_ombre"
-        />
-    <!--<LinearLayout
-        android:id="@+id/colorContour"
+    <!-- tout film -->
+    <LinearLayout
+        android:id="@+id/S52"
         android:layout_width="fill_parent"
         android:layout_height="0dp"
         android:orientation="vertical"
-        android:layout_weight = "0.1"
-        android:background="@color/film_titre_color">
+        android:layout_weight = "30"
+        android:background="@android:drawable/dialog_holo_light_frame"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="5dp">
+
         <RelativeLayout
-            android:id="@+id/s10"
+
+
+            android:id="@+id/RelativeLayout_Film3"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             >
+            <ImageView
+                android:id="@+id/ImageView_Film3"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentTop="true"
+                android:background="@drawable/bg_load"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
 
-        <RelativeLayout
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:background="@android:color/white"
-            android:alpha="0.4"
-            >
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:id="@+id/Button_Acceuil_Categorie"
+                android:background="@android:color/transparent"
+                />
+            <RelativeLayout
+                android:background="@drawable/style_bordure_ombre"
+                android:layout_width="fill_parent"
+                android:layout_height="50dp"
+                android:gravity="bottom"
+                android:layout_gravity="bottom"
+                android:layout_alignParentBottom="true"
+                android:alpha="0.4">
+                <TextView
+                    android:padding="10dp"
+                    android:id="@+id/S62"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/categorie"
+                    android:textColor="@android:color/black"
+                    android:layout_alignParentBottom="true"
+                    android:gravity="center"
+                    android:textStyle="bold"
+                    android:textSize="20sp" >
+                </TextView>
 
-            <TextView
-                android:padding="10dp"
-                android:id="@+id/numero"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="MON COMPTE"
-                android:textColor="@android:color/black"
-
-
-                android:textStyle="bold"
-
-                android:textSize="20sp" >
-            </TextView>
-
-
+            </RelativeLayout>
 
         </RelativeLayout>
-        </RelativeLayout>
-    </LinearLayout>-->
+    </LinearLayout>
+
+    <!-- mon compte -->
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:id="@+id/Button_Acceuil_MonCompte"
+        android:text="@string/mon_compte"
+        android:layout_weight = "10"
+        android:background="@drawable/style_bordure_ombre"
+        />
 </LinearLayout>

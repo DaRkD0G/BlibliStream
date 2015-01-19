@@ -3,6 +3,8 @@ package app.cci.com.bliblistream.Model.AbstractClass;
 import android.content.Context;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ListView;
+
 import java.util.ArrayList;
 import app.cci.com.bliblistream.Outil.ToolKit;
 
@@ -30,7 +32,11 @@ public abstract class AbstractButton extends View implements View.OnClickListene
         }
 
         this.setOnClickListener(this);
+
+
     }
+
+
 
     /**
      * Ecouteur du clic sur un bouton, ici elle est sucharger par les listenerView

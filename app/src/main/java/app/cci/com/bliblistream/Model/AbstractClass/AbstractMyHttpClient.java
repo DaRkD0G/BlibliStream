@@ -64,7 +64,6 @@ public abstract class AbstractMyHttpClient {
      *
      */
     public boolean execute() {
-
         if(ToolKitNetWork.isConnectionOK(this.activity.getBaseContext())){
             this.httpAsyncTask.execute(this.url);
             return true;
@@ -91,7 +90,7 @@ public abstract class AbstractMyHttpClient {
      *
      */
     private String getInfoForUrl(){
-        InputStream inputStream = null;
+       /* InputStream inputStream = null;
         String result = "";
         try {
             // Fabrique le retour d'un requete
@@ -105,8 +104,8 @@ public abstract class AbstractMyHttpClient {
             }
         } catch (Exception e) {
             ToolKit.logWTF("InputStream ------>" + e.getLocalizedMessage());
-        }
-        return result;
+        }*/
+        return null;
     }
 
     /**
@@ -114,7 +113,7 @@ public abstract class AbstractMyHttpClient {
      *
      */
     public String getInfoUrlByJsonAndReturn(){
-
+/*
         InputStream inputStream = null;
         String result = "";
 
@@ -135,7 +134,7 @@ public abstract class AbstractMyHttpClient {
                 jsonObjectContenu.put("password", user.getPassword());
                 jsonObjectContenu.put("name", user.getName());*/
                /* JSONArray ja = new JSONArray();
-                ja.put(jsonObjectContenu);*/
+                ja.put(jsonObjectContenu);
 
 
                // jsonObject.put("user", jsonObjectContenu);
@@ -179,8 +178,8 @@ public abstract class AbstractMyHttpClient {
             ToolKit.logWTF("InputStream" +e.getLocalizedMessage());
         }
 
-        // 11. return result
-        return result;
+        // 11. return result*/
+        return null;
     }
 
 
@@ -234,6 +233,7 @@ public abstract class AbstractMyHttpClient {
             } else if(typeDemande == TYPEDEMANDE.GET_SET_JSON_PARAM) {
                // return getInfoUrlByJsonAndReturn();
             } else if(typeDemande == TYPEDEMANDE.GET_SET_URL_PARAM) {
+
                 return getInfoForUrlByParam();
             }
 
@@ -243,12 +243,16 @@ public abstract class AbstractMyHttpClient {
         @Override
         protected void onPostExecute(JSONObject result) {
            // Toast.makeText(activity.getBaseContext(), , Toast.LENGTH_LONG).show();
-            this.result = result;
-            loadJsonWeb();
-            this.isFinish = true;
-            ToolKit.log("Received!");
 
-            //etResponse.setText(result);
+            this.result = result;
+            ToolKit.log("---> Received!");
+            if(!loadJsonWeb()) {
+                ToolKit.log("Erreur onPostExecute pas loadJsonWeb <----");
+            }
+
+            this.isFinish = true;
+
+
         }
     }
 
@@ -273,6 +277,7 @@ public abstract class AbstractMyHttpClient {
             resultJsonString = convertInputStreamToString(inputStream);
 
         } catch (IOException e) {
+            //ToolKit.showMessage(-1, "Pas de connection (A1)", activity, -1, -1);
             ToolKit.log("ERREUR -> jsonStringToObject :"+e.toString());
         }
 
@@ -281,6 +286,7 @@ public abstract class AbstractMyHttpClient {
         try {
             jObj = new JSONObject(resultJsonString);
         } catch (JSONException e) {
+           // ToolKit.showMessage(-1, "Pas de connection (A2)", activity, -1, -1);
             ToolKit.log("ERREUR -> jsonStringToObject :"+e.toString());
         }
         return jObj;
@@ -303,4 +309,6 @@ public abstract class AbstractMyHttpClient {
     public boolean loadJsonWeb() {
         return false;
     }
+
+
 }

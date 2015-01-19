@@ -1,18 +1,28 @@
 package app.cci.com.bliblistream.Controleur;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 
-import org.apache.http.NameValuePair;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
-
+import java.nio.charset.IllegalCharsetNameException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
+import app.cci.com.bliblistream.Controleur.ListenerView.ListenerViewFilm;
+
+import app.cci.com.bliblistream.Controleur.ListenerView.ListenerViewListCategorie;
+import app.cci.com.bliblistream.Controleur.ListenerView.ListenerViewListFilmCat;
+import app.cci.com.bliblistream.Controleur.ListenerView.ListenerViewListFilmnouveaute;
+
+import app.cci.com.bliblistream.Controleur.ListenerView.ListenerViewListMonCompte;
+import app.cci.com.bliblistream.Model.Class.Categorie;
+import app.cci.com.bliblistream.Model.Class.Film;
+import app.cci.com.bliblistream.Model.Class.MyHttpClientListCategorie;
+import app.cci.com.bliblistream.Model.Class.MyHttpClientListFilm;
 import app.cci.com.bliblistream.Model.Class.User;
 import app.cci.com.bliblistream.Model.Service.MyHttpClientConnection;
 import app.cci.com.bliblistream.R;
@@ -33,11 +43,30 @@ public class Control {
     private View view;
     private Animation animation;
     private ArrayList<Integer> wayViewID;
+    private List<Film> collectionFilm;
+    private int filtreIdCat = -1;
+    public ArrayList<Integer> filtreFilm;
 
+    public int getFiltreIdCat() {
+        return filtreIdCat;
+    }
+
+    public void setFiltreIdCat(int filtreIdCat) {
+        this.filtreIdCat = filtreIdCat;
+    }
+
+    private Film filmChose;
     private MyHttpClientConnection myHttpClientConnection;
     public User user;
+   // private ArrayList<Categorie> collectionCategorie;
+    ProgressDialog pDialog;
     //TODO CLASS USER
     public boolean LOGINTEMP = false;
+
+    List<Categorie>  collectionMapCategorie;
+    List<Film> collectionFilmMonCompte;
+    MyHttpClientListCategorie myHttpClientListCategorie;
+    MyHttpClientListFilm myHttpClientListFilm;
     /**
      * Constructeur
      *
@@ -47,8 +76,21 @@ public class Control {
         this.myHttpClientConnection = new MyHttpClientConnection(uActivity);
         this.activity = uActivity;
         this.wayViewID = new ArrayList<Integer>();
+        this.collectionFilm = null;
+        this.collectionMapCategorie = null;
+
+        this.myHttpClientListCategorie =  new MyHttpClientListCategorie(this);
+        this.myHttpClientListFilm = new MyHttpClientListFilm(this);
     }
 
+
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+    public User getUser() {
+        return user;
+    }
     public MyHttpClientConnection getMyHttpClientConnection() {
         return  this.myHttpClientConnection;
     }
@@ -64,23 +106,23 @@ public class Control {
         LayoutInflater inflater = (LayoutInflater) this.activity.getSystemService(android.app.Activity.LAYOUT_INFLATER_SERVICE);
         try {
             //ajout id layout pour le chemin de lutilisateur
-            this.wayViewID.add(inRidLayout);
 
+            ToolKit.log("--ID VIEW -->"+inRidLayout);
             //on creer un variable temps pour la sauvegarde de la view maintenant pour lanimation
             View saveViewNow = this.view;
 
             this.view = null;
-            this.view = inflater.inflate(this.getLastWayViewID(), null);
+            this.view = inflater.inflate(inRidLayout, null);
 
             /* Celon la vue il ajoute lecouteur qui lui est specifique */
-            switch (this.getLastWayViewID()) {
+            switch (inRidLayout) {
 
                 case R.layout.view_login:
 
-                        ToolKit.log("Listener view_login  Activer");
+                        //ToolKit.log("Listener view_login  Activer");
                         //Animation
                         if(saveViewNow != null) {
-                            this.animationThis(R.anim.animation_fadin,saveViewNow);
+                            ToolKit.animationThis(R.anim.animation_fadin, saveViewNow, activity.getBaseContext());
                         }
 
                         //Set a lactivite la view et faire lanimation + listener
@@ -90,26 +132,126 @@ public class Control {
 
                 case R.layout.view_accueil:
 
-                        ToolKit.log(" view_accueil  Activer");
+                    notAllReadyAdd(inRidLayout);
+
+                      //
                         //Animation
                         if(this.instantListener instanceof  ListenerViewLogin) {
-                            this.animationThis(R.anim.animation_translateensortiegauche,saveViewNow);
+                            ToolKit.animationThis(R.anim.animation_translateensortiegauche,saveViewNow,activity.getBaseContext());
+
                         } else {
-                            this.animationThis(R.anim.animation_fadin,saveViewNow);
+                            ToolKit.animationThis(R.anim.animation_fadin,saveViewNow,activity.getBaseContext());
+
                         }
                         //Set a lactivite la view et faire lanimation + listener
+
                         this.getActivity().setContentView(this.view);
                         this.instantListener = new ListenerViewAccueil(this);
+                        if(collectionMapCategorie == null && collectionFilm == null) {
+                            loadBDD();
+                        }
+
                     break;
 
                 case R.layout.view_listfilm:
 
-                        ToolKit.log("Listener view_listfilm Activer");
-                        //Animation
-                        this.animationThis(R.anim.animation_fadin,saveViewNow);
-                        //Set a lactivite la view et faire lanimation + listener
+                   // if(this.collectionFilm != null && this.collectionFilm.size() > 0) {
+
+                            notAllReadyAdd(inRidLayout);
+                            ToolKit.animationThis(R.anim.animation_fadin,saveViewNow,activity.getBaseContext());
+
+                            this.getActivity().setContentView(this.view);
+                            this.instantListener = new ListenerViewListFilm(this);
+
+/*
+                    } else {
+                        ProgressDialog progressDialog= ProgressDialog.show(this.getActivity(), "",
+                                "Loading. Please wait...", true);
+                        progressDialog.show();
+                        loadBDD();
+                        Thread thread = new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                /* Attente de la reponse */
+                /* Depassement delais reponse*
+                                long start = System.currentTimeMillis();
+
+                                while ( System.currentTimeMillis() < (start + 2000)) {
+                                    try {
+                                        if(collectionFilm != null && collectionFilm.size() >= 1) {
+                                           // thread.interrupt();
+                                            Thread.currentThread().interrupt();
+                                            break;
+                                        }
+                                        Thread.sleep(500);
+                                    } catch (InterruptedException e) {
+                                    }
+                                }
+                            }
+                        });
+                        progressDialog.dismiss();
+
+                    }*/
+
+                    break;
+                case R.layout.view_moncompte:
+                    notAllReadyAdd(inRidLayout);
+                    //this.wayViewID.add(R.layout.view_moncompte);
+
+                    //Animation
+                    ToolKit.animationThis(R.anim.animation_fadin,saveViewNow,activity.getBaseContext());
+                    //this.animationThis(R.anim.animation_fadin,saveViewNow);
+                    //Set a lactivite la view et faire lanimation + listener
+                    this.getActivity().setContentView(this.view);
+                    this.instantListener = new ListenerViewListMonCompte(this);
+                    break;
+
+                case R.layout.view_film:
+                    notAllReadyAdd(inRidLayout);
+                   // this.wayViewID.add(R.layout.view_film);
+
+                    //Animation
+                    ToolKit.animationThis(R.anim.animation_fadin,saveViewNow,activity.getBaseContext());
+                    //this.animationThis(R.anim.animation_fadin,saveViewNow);
+                    //Set a lactivite la view et faire lanimation + listener
+                    //
+                    this.getActivity().setContentView(this.view);
+                    this.instantListener = new ListenerViewFilm(this);
+
+
+                    break;
+                case R.layout.view_listcategorie:
+
+
+                        notAllReadyAdd(inRidLayout);
+                        ToolKit.animationThis(R.anim.animation_fadin,saveViewNow,activity.getBaseContext());
+
                         this.getActivity().setContentView(this.view);
-                        this.instantListener = new ListenerViewListFilm(this);
+                        this.instantListener = new ListenerViewListCategorie(this);
+
+
+
+                    break;
+
+                case R.layout.view_listfilmcat:
+
+                    // if(this.collectionFilm != null && this.collectionFilm.size() > 0) {
+
+                    notAllReadyAdd(inRidLayout);
+                    ToolKit.animationThis(R.anim.animation_fadin,saveViewNow,activity.getBaseContext());
+
+                    this.getActivity().setContentView(this.view);
+                    this.instantListener = new ListenerViewListFilmCat(this);
+                    break;
+                case R.layout.view_listfilmnouveaute:
+
+                    // if(this.collectionFilm != null && this.collectionFilm.size() > 0) {
+
+                    notAllReadyAdd(inRidLayout);
+                    ToolKit.animationThis(R.anim.animation_fadin,saveViewNow,activity.getBaseContext());
+
+                    this.getActivity().setContentView(this.view);
+                    this.instantListener = new ListenerViewListFilmnouveaute(this);
                     break;
             }
         } catch (NullPointerException e) {
@@ -145,27 +287,7 @@ public class Control {
         return this.instantListener;
     }
 
-    public void animationThis(int inTypeAnimation, View inView) {
-         this.animation = AnimationUtils.loadAnimation(this.getActivity().getApplicationContext(),
-                 inTypeAnimation);
 
-        this.animation.setAnimationListener(new Animation.AnimationListener(){
-            @Override
-            public void onAnimationStart(Animation arg0) {
-
-            }
-            @Override
-            public void onAnimationRepeat(Animation arg0) {
-
-            }
-            @Override
-            public void onAnimationEnd(Animation arg0) {
-
-            }
-        });
-        inView.startAnimation(this.animation);
-
-    }
 
     private int getLastWayViewID(){
         return this.wayViewID.get(this.wayViewID.size() -1);
@@ -174,12 +296,26 @@ public class Control {
     private void removeLastWayViewID(){
         this.wayViewID.remove(this.wayViewID.size() -1);
     }
+    private void notAllReadyAdd(Integer uLayout) {
+        if(this.wayViewID.size() > 0) {
+            if(!(uLayout == getLastWayViewID())) {
+                this.wayViewID.add(uLayout);
+            }
 
-    public void LoadLastViewAndSetListener() {
-        if(this.wayViewID.size() > 2) {
-            this.removeLastWayViewID();
-            this.loadViewAndSetListener(this.getLastWayViewID());
+        } else {
+            //if(!(uLayout == getLastWayViewID())) {
+                this.wayViewID.add(uLayout);
+           // }
         }
+
+    }
+    public void LoadLastViewAndSetListener() {
+        ToolKit.log("getBACK!");
+
+        if(this.wayViewID.size() > 1) {
+        removeLastWayViewID();
+            this.loadViewAndSetListener(this.getLastWayViewID());
+       }
     }
 
     public void resumeView() {
@@ -188,7 +324,55 @@ public class Control {
 
     }
 
+    public List<Film> getCollectionFilm() {
+        return collectionFilm;
+    }
 
+    public void setCollectionFilm(List<Film> collectionFilm) {
+        this.collectionFilm = collectionFilm;
+    }
+    public void loadBDD() {
+        ToolKit.log("------------> LOAD BDD <-------------> OK");
+        if( !myHttpClientListCategorie.executeLoading()) {
+            ToolKit.showMessage(-1,"Pas de connection (A6)",this.getActivity(),-1,-1);
+        } else {
+            Thread thread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                /* Attente de la reponse */
+                /* Depassement delais reponse*/
+                    long start = System.currentTimeMillis();
+                    ToolKit.log("------------> Load Categorie <-------------");
+                    while (!myHttpClientListCategorie.getIsFinish() && System.currentTimeMillis() < (start + 2000)) {
+                        try {
 
+                            Thread.sleep(500);
+                        } catch (InterruptedException e) {
+                        }
+                    }
+                }
+            });
+            ToolKit.log("------------> Load Categorie <-------------> FINI");
+        }
+        if(!myHttpClientListFilm.executeLoading()) {
+            ToolKit.showMessage(-1,"Pas de connection (A6)",this.getActivity(),-1,-1);
+        } else {
+            ToolKit.log("------------> LOAD list film <-------------> OK");
+        }
+    }
 
+    public void setFilmChose(Integer position) {
+        this.filmChose = this.collectionFilm.get(position);
+    }
+
+    public Film getFilmChose() {
+        return this.filmChose;
+    }
+    public void setCategorie(List<Categorie> collectionMapCategorie) {
+         this.collectionMapCategorie = collectionMapCategorie;
+    }
+
+    public List<Categorie>  getCategorie() {
+        return this.collectionMapCategorie;
+    }
 }

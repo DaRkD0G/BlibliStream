@@ -2,6 +2,8 @@ package app.cci.com.bliblistream.Controleur.ListenerView;
 
 import android.app.Activity;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -17,6 +19,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import app.cci.com.bliblistream.Model.Class.MCrypt;
 import app.cci.com.bliblistream.Model.Class.User;
 import app.cci.com.bliblistream.Model.CustomClass.CustomEditText;
 import app.cci.com.bliblistream.Model.AbstractClass.AbstractMyHttpClient;
@@ -79,6 +82,7 @@ public class ListenerViewLogin {
 /*************************************************************************************************/
     // Controleur / loadButtonListener
 /*************************************************************************************************/
+
     /**
      * Charger les elements pour les attributs de la class
      */
@@ -115,8 +119,10 @@ public class ListenerViewLogin {
         (control.getActivity().findViewById(R.id.button_connection)).setVisibility(View.INVISIBLE);
 
         //animation
-        control.animationThis(R.anim.animation_translateenentredroit, view1);
-        control.animationThis(R.anim.animation_translateenentredroit, view2);
+        ToolKit.animationThis(R.anim.animation_translateenentredroit,view1,control.getActivity().getBaseContext());
+        //control.animationThis(R.anim.animation_translateenentredroit, view1);
+        ToolKit.animationThis(R.anim.animation_translateenentredroit,view2,control.getActivity().getBaseContext());
+        //control.animationThis(R.anim.animation_translateenentredroit, view2);
     }
 /*************************************************************************************************/
     // Check Login / button_se_connect / checkLoginLoad
@@ -130,11 +136,11 @@ public class ListenerViewLogin {
         String name = arrayEditText.get(0).getText().toString();
         String pass = arrayEditText.get(1).getText().toString();
 
-        if (name.equals("") || pass.equals("")) {
+        if (name.equals("")  || pass.equals("") || name.equals("speudo") || pass.equals("MDP")) {
             animateErrorLogin("Merci de completer les champs login et mot de passe.");
         } else {
-
-            activeConnectionAndPassParam(new User(name,pass));
+            control.setUser(new User(name,pass));
+            activeConnectionAndPassParam(control.user);
             checkValidationAndActiveTranstion();
         }
     }
@@ -149,7 +155,7 @@ public class ListenerViewLogin {
 
         );
         this.myHttpClientLogin.setParams(
-                "http://yannickstephan.com/json/user.json",
+                "http://172.16.1.111:8888/bibli/loginpass.php",
                 AbstractMyHttpClient.TYPEDEMANDE.GET_SET_URL_PARAM,
                 uUser
         );
@@ -163,7 +169,9 @@ public class ListenerViewLogin {
             setEnableElement(false);
             view3 = control.getActivity().findViewById(R.id.linearLayout_fond_trans_login_chargement);
             view3.setVisibility(View.VISIBLE);
-            control.animationThis(R.anim.animation_fadout, view3);
+
+            ToolKit.animationThis(R.anim.animation_fadout,view3,control.getActivity().getBaseContext());
+           // control.animationThis(R.anim.animation_fadout, view3);
             checkLoginInThread();
         } else {
             animateErrorLogin("Pas de connection à Internet.");
@@ -210,7 +218,10 @@ public class ListenerViewLogin {
             setEnableElement(true);
             animateErrorLogin("Identifiant ou mot de passe erroner.");
             view3.setVisibility(View.INVISIBLE);
-            control.animationThis(R.anim.animation_fadin, view3);
+
+            ToolKit.animationThis(R.anim.animation_fadout,view3,control.getActivity().getBaseContext());
+
+           // control.animationThis(R.anim.animation_fadin, view3);
         }
     }
 /*************************************************************************************************/
@@ -223,7 +234,8 @@ public class ListenerViewLogin {
         if (!activeAnime) {
             activeAnime = true;
             final TextView text = (TextView) control.getActivity().findViewById(R.id.layout_login_mauvais_identifiant);
-            control.animationThis(R.anim.animation_fadout, text);
+            ToolKit.animationThis(R.anim.animation_fadout,text,control.getActivity().getBaseContext());
+           // control.animationThis(R.anim.animation_fadout, text);
             //On creer un timer qui execute un fonction aprés les seconde
             new java.util.Timer().schedule(
                     new java.util.TimerTask() {
@@ -235,7 +247,8 @@ public class ListenerViewLogin {
                                 @Override
                                 public void run() {
                                     /* code pour rendre invisible le btn aprés execution */
-                                    control.animationThis(R.anim.animation_fadin, text);
+                                    ToolKit.animationThis(R.anim.animation_fadin,text,control.getActivity().getBaseContext());
+                                   // control.animationThis(R.anim.animation_fadin, text);
                                     text.setVisibility(View.INVISIBLE);
                                     activeAnime = false;
                                 }
@@ -296,11 +309,11 @@ public class ListenerViewLogin {
 
             try {
                 // Creation du nombre de parametre
-                List<NameValuePair> nameValuePairs;
+                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
 
                 if(this.objectClass instanceof User) {
                     //Nombre de parametre
-                    nameValuePairs = new ArrayList<NameValuePair>(2);
+
                     // Ajoute des params User
                     User user = (User) this.objectClass;
                     nameValuePairs.add(new BasicNameValuePair("name", user.getName()));
@@ -323,5 +336,6 @@ public class ListenerViewLogin {
             return result;
         }
     }
+
 }
 
