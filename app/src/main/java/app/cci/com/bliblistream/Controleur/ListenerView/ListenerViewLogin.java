@@ -155,7 +155,7 @@ public class ListenerViewLogin {
 
         );
         this.myHttpClientLogin.setParams(
-                "http://172.16.1.111:8888/bibli/loginpass.php",
+                "http://172.16.1.198:8888/bibli/loginpass.php",
                 AbstractMyHttpClient.TYPEDEMANDE.GET_SET_URL_PARAM,
                 uUser
         );

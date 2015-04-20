@@ -68,15 +68,21 @@ public class ListenerViewAccueil {
 
                         ImagesCache cache = ImagesCache.getInstance();//Singleton instance handled in ImagesCache class.
                         cache.initializeCache();
+                        Bitmap bm = null;
+                        String img = "";
+                        String img1 = "";
+                        String img2 = "";
+                        if (control.getCollectionFilm() != null) {
+                            Integer random = ToolKit.randInt(0,control.getCollectionFilm().size() -1);
+                             img = control.getCollectionFilm().get(random).lienImage;
+                            random = ToolKit.randInt(0,control.getCollectionFilm().size() -1);
+                             img1 = control.getCollectionFilm().get(random).lienImage;
+                            random = ToolKit.randInt(0,control.getCollectionFilm().size() -1);
+                             img2 = control.getCollectionFilm().get(random).lienImage;
 
-                        Integer random = ToolKit.randInt(0,control.getCollectionFilm().size() -1);
-                        String img = control.getCollectionFilm().get(random).lienImage;
-                        random = ToolKit.randInt(0,control.getCollectionFilm().size() -1);
-                        String img1 = control.getCollectionFilm().get(random).lienImage;
-                        random = ToolKit.randInt(0,control.getCollectionFilm().size() -1);
-                        String img2 = control.getCollectionFilm().get(random).lienImage;
+                            bm = cache.getImageFromWarehouse(img);
+                        }
 
-                        Bitmap bm = cache.getImageFromWarehouse(img);
 
                         if(bm != null)
                         {

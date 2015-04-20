@@ -80,8 +80,8 @@ public class MyHttpClientListMonCompte extends AbstractMyHttpClient {
 
                                 JSONObject jsonUser = jsonObject.getJSONObject("user");
 
-                                String name = jsonUser.getString("name");
-                                String monnaie = jsonUser.getString("monnaie");
+                                String name = jsonUser.getString("userPrenom");
+                                String monnaie = jsonUser.getString("jeton");
                                 String mail = jsonUser.getString("mail");
 
 
@@ -161,7 +161,7 @@ public class MyHttpClientListMonCompte extends AbstractMyHttpClient {
 
             nameValuePairs = new ArrayList<NameValuePair>(2);
                 User user = (User) this.control.getUser();
-                nameValuePairs.add(new BasicNameValuePair("name", user.getName()));
+                nameValuePairs.add(new BasicNameValuePair("userPrenom", user.getName()));
                 nameValuePairs.add(new BasicNameValuePair("password", user.getPassword()));
                 nameValuePairs.add(new BasicNameValuePair("param", "getmoncompte"));
 

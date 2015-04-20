@@ -37,7 +37,7 @@ public abstract  class MyHttpClientMonCompte222 extends AbstractMyHttpClient {
 
     public Boolean executeLoading() {
         this.setParams(
-                "http://192.168.1.11:8888/bibli/user.php",
+                "http://172.16.1.111:8888/bibli/user.php",
                 TYPEDEMANDE.GET_SET_URL_PARAM,
                 null
         );

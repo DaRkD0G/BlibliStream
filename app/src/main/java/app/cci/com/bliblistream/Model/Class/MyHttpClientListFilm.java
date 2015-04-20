@@ -88,8 +88,8 @@ public class MyHttpClientListFilm extends AbstractMyHttpClient {
                                         String titre = c.getString("titre");
                                         String description = c.getString("description");
                                         String lienfilm = c.getString("lienfilm");
-                                        String lienba = c.getString("lienba");
-                                        String lienImage = c.getString("lienimage");
+                                        String lienba = c.getString("lienBa");
+                                        String lienImage = c.getString("lienImage");
                                         String tarif = c.getString("tarif");
                                         String dateSortie = c.getString("datesortie");
                                         Integer boolNewString = c.getInt("nouveaute");
