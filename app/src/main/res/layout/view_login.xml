@@ -67,7 +67,7 @@
             android:layout_height="wrap_content"
             android:text="@string/email" />
         <!-- editText customiser -->
-        <app.cci.com.bliblistream.Model.CustomClass.CustomEditText
+        <app.cci.com.bliblistream.View.EditText.CustomEditText
             android:id="@+id/editTextLogin"
             android:name="app.cci.com.bliblistream.Model.Class.CustomEditText"
             style="@style/FontEditTextLogin"
@@ -92,7 +92,7 @@
             android:layout_marginTop="20dp"
             android:text="@string/password" />
         <!-- editText customiser -->
-        <app.cci.com.bliblistream.Model.CustomClass.CustomEditText
+        <app.cci.com.bliblistream.View.EditText.CustomEditText
             android:id="@+id/ediTextPassword"
             android:name="app.cci.com.bliblistream.Model.Class.CustomEditText"
             style="@style/FontEditTextLogin"

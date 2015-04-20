@@ -2,8 +2,7 @@ package app.cci.com.bliblistream.Model.Service;
 
 import android.app.Activity;
 
-import app.cci.com.bliblistream.Model.AbstractClass.AbstractMyHttpClient;
-import app.cci.com.bliblistream.Outil.ToolKit;
+import app.cci.com.bliblistream.Model.JsonData.AbstractMyHttpClient;
 
 /**
  * Created by DaRk-_-D0G on 13/11/14.

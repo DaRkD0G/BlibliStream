@@ -8,7 +8,7 @@
 
     android:background="@android:color/white">
 
-    <app.cci.com.bliblistream.Model.CustomClass.CustomEditText
+    <app.cci.com.bliblistream.View.EditText.CustomEditText
         android:id="@+id/editTextLogin"
         android:name="app.cci.com.bliblistream.Model.Class.CustomEditText"
 
