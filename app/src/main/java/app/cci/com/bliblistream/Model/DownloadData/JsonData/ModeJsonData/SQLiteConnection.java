@@ -1,4 +1,4 @@
-package app.cci.com.bliblistream.Model.Service;
+package app.cci.com.bliblistream.Model.DownloadData.JsonData.ModeJsonData;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -7,32 +7,23 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import java.sql.SQLException;
-import java.util.LinkedList;
-import java.util.List;
 
 
 /**
  * Created by DaRk-_-D0G on 27/10/14.
  * Class BDD
  */
-public class SQLiteConnection  {
+public class SQLiteConnection {
 
-    private static final String DATABASE_NAME = " nba";
-    private static final String DATABASE_TABLE = "bookList";
-    private static final int DATABASE_VERSION = 1;
-    private static String TAG = "Upgrading Database!";
     public static final String KEY_BOOK = "book";
     public static final String KEY_AUTHOR = "author";
     public static final String KEY_ISBN = "isbn";
     public static final String KEY_ROWID = "_id";
     public static final String KEY_RATING = "rating";
     public static final String KEY_STATUS = "status";
-
-
-    private DatabaseHelper mDbHelper;
-    private SQLiteDatabase mDb;
-
-
+    private static final String DATABASE_NAME = " nba";
+    private static final String DATABASE_TABLE = "bookList";
+    private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_CREATE =
             " create table  " + DATABASE_TABLE + " ("
                     + KEY_ROWID + " integer primary key autoincrement,  "
@@ -41,33 +32,14 @@ public class SQLiteConnection  {
                     + KEY_RATING + " text not null, "
                     + KEY_STATUS + " text not null, "
                     + KEY_ISBN + " text not null); ";
-
+    private static String TAG = "Upgrading Database!";
+    private DatabaseHelper mDbHelper;
+    private SQLiteDatabase mDb;
     private Context mCtx;
 
     public void SQLiteConnection(Context uContext) {
         this.mCtx = uContext;
 
-    }
-
-    private static class DatabaseHelper extends SQLiteOpenHelper {
-        DatabaseHelper(Context context) {
-            super(context, DATABASE_NAME, null, DATABASE_VERSION);
-
-
-        }
-
-        @Override
-        public void onCreate(SQLiteDatabase db) {
-            db.execSQL(DATABASE_CREATE);
-
-
-        }
-
-        @Override
-        public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-            db.execSQL("ALTER TABLE bookList ADD COLUMN String status");
-
-        }
     }
 
     public SQLiteConnection open() throws SQLException {
@@ -103,10 +75,10 @@ public class SQLiteConnection  {
         return mDb.query(DATABASE_TABLE, new String[]{KEY_BOOK, KEY_ISBN, KEY_AUTHOR, KEY_ROWID, KEY_RATING, KEY_STATUS}, null, null, null, null, null);
     }
 
-    public Cursor fetchCustom(String uRequete) throws  SQLException {
+    public Cursor fetchCustom(String uRequete) throws SQLException {
         Cursor mCursor =
                 mDb.query(DATABASE_TABLE, new String[]{KEY_BOOK, KEY_AUTHOR, KEY_ROWID, KEY_ISBN, KEY_RATING, KEY_STATUS}, uRequete, null, null, null, null);
-        if(mCursor != null) {
+        if (mCursor != null) {
             mCursor.moveToFirst();
         }
         return mCursor;
@@ -155,5 +127,26 @@ public class SQLiteConnection  {
         return mDb.update(DATABASE_TABLE, args, KEY_ROWID + "=" + rowId, null) > 0;
 
 
+    }
+
+    private static class DatabaseHelper extends SQLiteOpenHelper {
+        DatabaseHelper(Context context) {
+            super(context, DATABASE_NAME, null, DATABASE_VERSION);
+
+
+        }
+
+        @Override
+        public void onCreate(SQLiteDatabase db) {
+            db.execSQL(DATABASE_CREATE);
+
+
+        }
+
+        @Override
+        public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+            db.execSQL("ALTER TABLE bookList ADD COLUMN String status");
+
+        }
     }
 }

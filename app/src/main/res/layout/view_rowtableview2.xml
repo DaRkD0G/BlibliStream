@@ -1,13 +1,10 @@
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/listListener"
     android:layout_width="fill_parent"
+
     android:layout_height="200dp"
-
-    android:padding="@dimen/ecart_list_film"
     android:background="@android:drawable/dialog_holo_light_frame"
-    android:id="@+id/listListener">
-
-
+    android:padding="@dimen/ecart_list_film">
 
 
     <ImageView
@@ -15,14 +12,15 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:adjustViewBounds="true"
         android:scaleType="centerCrop"
-        android:src="@drawable/bg_load"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:src="@drawable/bg_load" />
+
     <ProgressBar
         android:id="@+id/progressBar"
         style="?android:attr/progressBarStyleLarge"
@@ -38,38 +36,36 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentTop="true"
-
-        android:adjustViewBounds="true"
-        android:scaleType="centerCrop"
-        android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
 
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop" />
 
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:gravity="bottom"
-        android:layout_gravity="bottom"
         android:layout_alignParentBottom="true"
-        android:background="@drawable/style_bordure_ombre"
+        android:layout_gravity="bottom"
         android:alpha="0.8"
-     >
+        android:background="@drawable/style_bordure_ombre"
+        android:gravity="bottom">
 
         <LinearLayout
 
-            android:orientation="vertical"
             android:layout_width="fill_parent"
             android:layout_height="@dimen/listPreferredItemDescriptionHeightdp"
+            android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_gravity="center"
-            android:layout_alignParentBottom="true"
-            android:weightSum="1"
-            android:padding="@dimen/ecart_list_film">
+            android:orientation="vertical"
+            android:padding="@dimen/ecart_list_film"
+            android:weightSum="1">
 
             <TextView
                 android:id="@+id/titreFilm"
@@ -79,16 +75,16 @@
                 android:gravity="center_vertical"
                 android:text="NOM FILM"
 
-                android:textSize="16sp"
-                android:textColor="@color/film_titre_color"/>
+                android:textColor="@color/film_titre_color"
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/descriptionFilm"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:ellipsize="marquee"
-                android:textColor="@color/film_titre_color"
                 android:text="DESCRIPTION FILM"
+                android:textColor="@color/film_titre_color"
                 android:textSize="10sp" />
 
         </LinearLayout>

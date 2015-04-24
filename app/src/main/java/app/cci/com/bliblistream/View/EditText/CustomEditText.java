@@ -11,19 +11,18 @@ import android.widget.EditText;
 
 /**
  * Class qui customise le EditText
- * @author DaRk-_-D0G on 17/06/2014.
  *
+ * @author DaRk-_-D0G on 17/06/2014.
  */
 public class CustomEditText extends EditText {
 
 
-
-
-    final Drawable imgX = getResources().getDrawable(android.R.drawable.presence_offline ); // X image
+    final Drawable imgX = getResources().getDrawable(android.R.drawable.presence_offline); // X image
     public boolean dejaClic = false;
 
     /**
      * Contructeur 1
+     *
      * @param context Context
      */
     public CustomEditText(Context context) {
@@ -34,8 +33,9 @@ public class CustomEditText extends EditText {
 
     /**
      * Contructeur 2
-     * @param context Context
-     * @param attrs AttributeSet
+     *
+     * @param context  Context
+     * @param attrs    AttributeSet
      * @param defStyle int
      */
     public CustomEditText(Context context, AttributeSet attrs, int defStyle) {
@@ -46,8 +46,9 @@ public class CustomEditText extends EditText {
 
     /**
      * Contructeur
+     *
      * @param context Context
-     * @param attrs AttributeSet
+     * @param attrs   AttributeSet
      */
     public CustomEditText(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -58,7 +59,7 @@ public class CustomEditText extends EditText {
     /**
      * Initilisation et ajout literner
      */
-    void init()  {
+    void init() {
 
         /* Ajout bouton x */
         imgX.setBounds(0, 0, imgX.getIntrinsicWidth(), imgX.getIntrinsicHeight());
@@ -75,7 +76,7 @@ public class CustomEditText extends EditText {
 
                 /* lors du clic decu active deja clic pour modifier le text */
                 if (event.getAction() != MotionEvent.ACTION_UP) {
-                    if(!dejaClic) {
+                    if (!dejaClic) {
                         et.setText("");
                     }
                     dejaClic = true;
@@ -99,10 +100,12 @@ public class CustomEditText extends EditText {
             }
 
             @Override
-            public void afterTextChanged(Editable arg0) {}
+            public void afterTextChanged(Editable arg0) {
+            }
 
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
         });
     }
 
@@ -110,7 +113,7 @@ public class CustomEditText extends EditText {
      * manager du bouton x
      */
     void manageClearButton() {
-        if (this.getText().toString().equals("") )
+        if (this.getText().toString().equals(""))
             removeClearButton();
         else
             addClearButton();

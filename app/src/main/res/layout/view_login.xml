@@ -1,5 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
-
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/layout_login"
     android:layout_width="match_parent"
@@ -44,10 +42,10 @@
         android:layout_height="fill_parent"
         android:alpha="0.6"
         android:background="@color/transp_fond_color"
+        android:baselineAligned="true"
         android:orientation="vertical"
         android:padding="@dimen/activity_vertical_margin"
-        android:visibility="invisible"
-        android:baselineAligned="true">
+        android:visibility="invisible">
 
     </LinearLayout>
 
@@ -80,10 +78,10 @@
         <!-- tiré -->
         <ImageView
             android:layout_width="fill_parent"
-            android:contentDescription="@string/ligne"
             android:layout_height="1dp"
             android:layout_marginTop="-12dp"
-            android:background="#80808080" />
+            android:background="#80808080"
+            android:contentDescription="@string/ligne" />
         <!-- titre -->
         <TextView
             style="@style/FontTextLogin"
@@ -107,10 +105,10 @@
         <!-- tiré -->
         <ImageView
             android:layout_width="fill_parent"
-            android:contentDescription="@string/ligne"
             android:layout_height="1dp"
             android:layout_marginTop="-12dp"
-            android:background="#80808080" />
+            android:background="#80808080"
+            android:contentDescription="@string/ligne" />
 
         <Button
             android:id="@+id/button_se_connect"
@@ -121,36 +119,38 @@
             android:layout_marginTop="50dp"
             android:background="@drawable/style_button_login"
             android:text="@string/se_connecter" />
+
         <TextView
 
-            android:layout_marginTop="5dp"
-            android:padding="15dp"
-            android:visibility="invisible"
             android:id="@+id/layout_login_mauvais_identifiant"
+            style="@style/FontToast"
             android:layout_width="fill_parent"
             android:layout_height="50dp"
+            android:layout_marginTop="5dp"
             android:background="@drawable/style_toast"
-            style="@style/FontToast"/>
+            android:padding="15dp"
+            android:visibility="invisible" />
 
     </LinearLayout>
+
     <LinearLayout
         android:id="@+id/linearLayout_fond_trans_login_chargement"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:alpha="0.6"
         android:background="@color/transp_fond_color"
+        android:gravity="center"
         android:orientation="vertical"
         android:padding="@dimen/activity_vertical_margin"
-        android:visibility="invisible"
-        android:gravity="center">
-    <!-- titre -->
-    <ProgressBar
-        android:id="@+id/progressBar1"
-        style="?android:attr/progressBarStyleLarge"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_below="@+id/button1"
-        android:layout_centerHorizontal="true" />
+        android:visibility="invisible">
+        <!-- titre -->
+        <ProgressBar
+            android:id="@+id/progressBar1"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_below="@+id/button1"
+            android:layout_centerHorizontal="true" />
     </LinearLayout>
 
 </RelativeLayout>

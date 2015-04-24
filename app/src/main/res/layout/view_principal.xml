@@ -2,8 +2,13 @@
 <ViewFlipper xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/flipper"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    >
-    <include android:id="@+id/first"  layout="@layout/view_login" />
-    <include android:id="@+id/second"  layout="@layout/view_accueil" />
+    android:layout_height="fill_parent">
+
+    <include
+        android:id="@+id/first"
+        layout="@layout/view_login" />
+
+    <include
+        android:id="@+id/second"
+        layout="@layout/view_accueil" />
 </ViewFlipper>

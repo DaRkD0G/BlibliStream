@@ -2,11 +2,9 @@ package app.cci.com.bliblistream.Controler.ListenerView;
 
 import android.widget.ListView;
 
-import app.cci.com.bliblistream.Controler.Control;
-import app.cci.com.bliblistream.View.TableView.AbstractTableViewListCategorie;
-import app.cci.com.bliblistream.Model.JsonData.MyHttpClientListFilm;
-import app.cci.com.bliblistream.Outil.ToolKit;
+import app.cci.com.bliblistream.Controler.ControlerActivity.ControlerMainActivity;
 import app.cci.com.bliblistream.R;
+import app.cci.com.bliblistream.View.TableView.AbstractTableViewListCategorie;
 
 /**
  * Ecouteur de la View Acceuil
@@ -14,44 +12,26 @@ import app.cci.com.bliblistream.R;
  * @author DaRk-_-D0G on 30/09/2014.
  */
 public class ListenerViewListCategorie {
-    private Control control;
-    int valeurClic = -2;
-
+    private ControlerMainActivity controlerMainActivity;
     private ListView listView;
-
-    private MyHttpClientListFilm myHttpClientListFilm;
 
     /**
      * Constructeur
      *
-     * @param inControl Control
+     * @param inControlerMainActivity Control
      */
-    public ListenerViewListCategorie(Control inControl) {
-        ToolKit.log("Class init  --> ListenerViewListFilm");
-
-
-
-
-        this.control = inControl;
-        ToolKit.log("Class init  --> BACkkkkkkk-------------------------------------------");
-
-
-
-
+    public ListenerViewListCategorie(ControlerMainActivity inControlerMainActivity) {
+        this.controlerMainActivity = inControlerMainActivity;
         /* creation dun ecouteur de la listView avec les methodes qui peuvent etre sucharger */
-        listView = ((ListView) this.control.getActivity().findViewById(R.id.list_film));
-        loadFilmListView();
-
-
+        listView = ((ListView) this.controlerMainActivity.getActivity().findViewById(R.id.list_film));
+        this.loadFilmListView();
     }
 
 
     public void loadFilmListView() {
-
-        control.getActivity().runOnUiThread(new Runnable() {
+        controlerMainActivity.getActivity().runOnUiThread(new Runnable() {
             public void run() {
-
-                AbstractTableViewListCategorie abstractTableViewListCategorie = new AbstractTableViewListCategorie(control,
+                AbstractTableViewListCategorie abstractTableViewListCategorie = new AbstractTableViewListCategorie(controlerMainActivity,
                         R.layout.view_rowtableview, 5) {
 
                 };

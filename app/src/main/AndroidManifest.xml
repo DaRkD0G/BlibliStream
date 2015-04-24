@@ -1,30 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="app.cci.com.bliblistream" >
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    package="app.cci.com.bliblistream">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/MyTheme.Background" >
+        android:theme="@style/MyTheme.Background">
         <activity
             android:name=".Activity.MainActivity"
-            android:largeHeap="true"
             android:hardwareAccelerated="true"
-            android:theme="@style/MyTheme.Background"
             android:label="@string/app_name"
+            android:largeHeap="true"
             android:screenOrientation="portrait"
-            >
+            android:theme="@style/MyTheme.Background">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Controler.VideoViewActivity"
-            android:screenOrientation="landscape"/>
+        <activity
+            android:name=".Activity.VideoViewActivity"
+            android:screenOrientation="landscape">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            </activity>
+
     </application>
 
 </manifest>

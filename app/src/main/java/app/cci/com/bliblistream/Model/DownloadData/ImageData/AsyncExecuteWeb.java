@@ -1,6 +1,5 @@
-package app.cci.com.bliblistream.Model.DownloadData;
+package app.cci.com.bliblistream.Model.DownloadData.ImageData;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -10,7 +9,6 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import java.io.InputStream;
-import java.util.Objects;
 
 import app.cci.com.bliblistream.Outil.ToolKit;
 import app.cci.com.bliblistream.R;
@@ -23,7 +21,8 @@ public class AsyncExecuteWeb extends AsyncTask<String, Void, Bitmap> {
     ImageView bmImage;
     ProgressBar progressBar;
     Context context;
-    public AsyncExecuteWeb(ImageView bmImage,ProgressBar progressBar, Context context) {
+
+    public AsyncExecuteWeb(ImageView bmImage, ProgressBar progressBar, Context context) {
         this.bmImage = bmImage;
         this.progressBar = progressBar;
         this.context = context;
@@ -45,8 +44,8 @@ public class AsyncExecuteWeb extends AsyncTask<String, Void, Bitmap> {
 
     protected void onPostExecute(Bitmap result) {
 
-        ToolKit.animationThis(R.anim.animation_fadin,progressBar,context);
-        ToolKit.animationThis(R.anim.animation_fadout,bmImage,context);
+        ToolKit.animationThis(R.anim.animation_fadin, progressBar, context);
+        ToolKit.animationThis(R.anim.animation_fadout, bmImage, context);
         progressBar.setVisibility(View.INVISIBLE);
         bmImage.setImageBitmap(result);
     }

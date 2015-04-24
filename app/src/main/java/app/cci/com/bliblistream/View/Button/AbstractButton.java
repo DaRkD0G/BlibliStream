@@ -3,19 +3,21 @@ package app.cci.com.bliblistream.View.Button;
 import android.content.Context;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ListView;
 
 import java.util.ArrayList;
+
 import app.cci.com.bliblistream.Outil.ToolKit;
 
 /**
  * Class abtrait de l'ecouteur des buttons, Extends de View et implemante OnClickListener
- *  @author DaRk-_-D0G on 06/10/2014.
+ *
+ * @author DaRk-_-D0G on 06/10/2014.
  */
 public abstract class AbstractButton extends View implements View.OnClickListener {
     /**
      * Constructeur abstract ListenerButton
-     * @param context Context
+     *
+     * @param context       Context
      * @param inArrayButton ArrayList<Button>
      */
     public AbstractButton(Context context, ArrayList<Button> inArrayButton) {
@@ -24,7 +26,7 @@ public abstract class AbstractButton extends View implements View.OnClickListene
         ToolKit.log("Class Init --> ListenerButton");
         /* le tableau de button passer en paramettre ajouter a l ecouteur */
         try {
-            for(Button unButton : inArrayButton) {
+            for (Button unButton : inArrayButton) {
                 unButton.setOnClickListener(this);
             }
         } catch (NullPointerException e) {
@@ -37,9 +39,9 @@ public abstract class AbstractButton extends View implements View.OnClickListene
     }
 
 
-
     /**
      * Ecouteur du clic sur un bouton, ici elle est sucharger par les listenerView
+     *
      * @param v View
      */
     @Override

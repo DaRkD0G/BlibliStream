@@ -5,11 +5,11 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import app.cci.com.bliblistream.Controler.Control;
-import app.cci.com.bliblistream.View.TableView.AbstractTableViewListFilmNouveaute;
-import app.cci.com.bliblistream.Model.JsonData.MyHttpClientListFilm;
-import app.cci.com.bliblistream.Outil.ToolKit;
+import app.cci.com.bliblistream.Controler.ControlerActivity.ControlerMainActivity;
+import app.cci.com.bliblistream.Model.StrucData.CollectionFilm;
+import app.cci.com.bliblistream.Model.StrucData.User;
 import app.cci.com.bliblistream.R;
+import app.cci.com.bliblistream.View.TableView.AbstractTableViewListFilmNouveaute;
 
 /**
  * Ecouteur de la View Acceuil
@@ -17,61 +17,25 @@ import app.cci.com.bliblistream.R;
  * @author DaRk-_-D0G on 30/09/2014.
  */
 public class ListenerViewListFilmnouveaute {
-    private Control control;
-    int valeurClic = -2;
-
+    private ControlerMainActivity controlerMainActivity;
     private ListView listView;
-
-    private MyHttpClientListFilm myHttpClientListFilm;
 
     /**
      * Constructeur
      *
-     * @param inControl Control
+     * @param inControlerMainActivity Control
      */
-    public ListenerViewListFilmnouveaute(Control inControl) {
-        ToolKit.log("Class init  --> ListenerViewListFilm");
-
-
-        this.control = inControl;
-
-
+    public ListenerViewListFilmnouveaute(ControlerMainActivity inControlerMainActivity) {
+        this.controlerMainActivity = inControlerMainActivity;
 
         /* creation dun ecouteur de la listView avec les methodes qui peuvent etre sucharger */
-        listView = ((ListView) this.control.getActivity().findViewById(R.id.list_film));
-        loadFilmListView();
+        this.listView = ((ListView) this.controlerMainActivity.getActivity().findViewById(R.id.list_film));
 
-        listView.setOnItemClickListener(
-                new AdapterView.OnItemClickListener() {
-
-                    @Override
-                    public void onItemClick(AdapterView<?> arg0, View view,
-                                            int position, long id) {
-                        // TODO Auto-generated method stub
-                       //s Object o = listView.getItemAtPosition(position);
-                        control.setFilmChose(position);
-
-                      //  String pen = o.toString();
-                        Toast.makeText(control.getActivity().getBaseContext(), "You have chosen the pen: " + position+" " + control.getCollectionFilm().get(position).titre, Toast.LENGTH_LONG).show();
-
-
-                        control.loadViewAndSetListener(R.layout.view_film);
-                    }
-                }
-        );
-    }
-
-
-    public void loadFilmListView() {
-
-        control.getActivity().runOnUiThread(new Runnable() {
+        this.controlerMainActivity.getActivity().runOnUiThread(new Runnable() {
             public void run() {
-
-                AbstractTableViewListFilmNouveaute abstractTableViewListFilm = new AbstractTableViewListFilmNouveaute(control,
+                AbstractTableViewListFilmNouveaute abstractTableViewListFilm = new AbstractTableViewListFilmNouveaute(controlerMainActivity,
                         R.layout.view_rowtableview, 5) {
-
                 };
-
                 listView.setAdapter(abstractTableViewListFilm);
             }
 
@@ -82,6 +46,18 @@ public class ListenerViewListFilmnouveaute {
             //checkUiLoad(validationLogin);
 
         });
+
+        this.listView.setOnItemClickListener(
+                new AdapterView.OnItemClickListener() {
+
+                    @Override
+                    public void onItemClick(AdapterView<?> arg0, View view,
+                                            int position, long id) {
+                        User.setFilmChoisi(CollectionFilm.getCollectionFilm().get(position));
+                        controlerMainActivity.loadViewAndSetListener(R.layout.view_film);
+                    }
+                }
+        );
     }
 }
 

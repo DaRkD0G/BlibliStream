@@ -5,120 +5,120 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 
 import java.util.ArrayList;
 
-import app.cci.com.bliblistream.Model.DownloadData.DownloadImageTask;
-import app.cci.com.bliblistream.Model.DownloadData.ImagesCache;
-import app.cci.com.bliblistream.R;
-import app.cci.com.bliblistream.Controler.Control;
-import app.cci.com.bliblistream.View.Button.AbstractButton;
+import app.cci.com.bliblistream.Controler.ControlerActivity.ControlerMainActivity;
+import app.cci.com.bliblistream.Model.DownloadData.ImageData.DownloadImageTask;
+import app.cci.com.bliblistream.Model.DownloadData.ImageData.ImagesCache;
+import app.cci.com.bliblistream.Model.StrucData.CollectionFilm;
 import app.cci.com.bliblistream.Outil.ToolKit;
+import app.cci.com.bliblistream.R;
+import app.cci.com.bliblistream.View.Button.AbstractButton;
 
 /**
- *
  * Ecouteur de la View Acceuil
+ *
  * @author DaRk-_-D0G on 30/09/2014.
  */
 public class ListenerViewAccueil {
-    private Control control;
-    //ArrayList de button de la vue Acceuil
+    private ControlerMainActivity controlerMainActivity;
     private ArrayList<Button> arrayButton;
     private ArrayList<LinearLayout> arrayLinearLayout;
 
     /**
      * Constructeur
-     * @param inControl Control
+     *
+     * @param inControlerMainActivity Control
      */
-    public ListenerViewAccueil(Control inControl) {
+    public ListenerViewAccueil(ControlerMainActivity inControlerMainActivity) {
+        this.controlerMainActivity = inControlerMainActivity;
+        this.loadAffichage();
+    }
 
-        ToolKit.log("Class init  --> ListenerViewAccueil");
-        this.control = inControl;
+    public void loadAffichage() {
+        this.loadDataImage();
         /* ici on ajout tout les buttons de la vue */
         this.arrayButton = new ArrayList<Button>();
         /* Ajoute des boutons de la vue à l attribut */
-        this.arrayButton.add((Button) this.control.getActivity().findViewById(R.id.Button_Acceuil_Nouveaute));
-        this.arrayButton.add((Button) this.control.getActivity().findViewById(R.id.Button_Tout_Les_Films));
-        this.arrayButton.add((Button) this.control.getActivity().findViewById(R.id.Button_Acceuil_Categorie));
-        this.arrayButton.add((Button) this.control.getActivity().findViewById(R.id.Button_Acceuil_MonCompte));
+        this.arrayButton.add((Button) this.controlerMainActivity.getActivity().findViewById(R.id.Button_Acceuil_Nouveaute));
+        this.arrayButton.add((Button) this.controlerMainActivity.getActivity().findViewById(R.id.Button_Tout_Les_Films));
+        this.arrayButton.add((Button) this.controlerMainActivity.getActivity().findViewById(R.id.Button_Acceuil_Categorie));
+        this.arrayButton.add((Button) this.controlerMainActivity.getActivity().findViewById(R.id.Button_Acceuil_MonCompte));
+        this.addActionOnButtons();
+    }
 
-
-
+    /**
+     * Load les images d'acceuil
+     */
+    public void loadDataImage() {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
                 /* Attente de la reponse */
                 /* Depassement delais reponse */
                 long start = System.currentTimeMillis();
-                while (control.getCollectionFilm() == null &&
+                while (CollectionFilm.getCollectionFilm().size() == 0 &&
                         System.currentTimeMillis() < (start + 10000)) {
                     try {
                         Thread.sleep(800);
-                    } catch (InterruptedException e) { }
+                    } catch (InterruptedException e) {
+                    }
                 }
                 /* Animation du login */
-
-                control.getActivity().runOnUiThread(new Runnable() {
+                controlerMainActivity.getActivity().runOnUiThread(new Runnable() {
                     public void run() {
                         /* Animation fonction login bon ou pas */
-                        ImageView imv = (ImageView) control.getActivity().findViewById(R.id.ImageView_Film1);
-                        ImageView imv1 = (ImageView) control.getActivity().findViewById(R.id.ImageView_Film2);
-                        ImageView imv2 = (ImageView) control.getActivity().findViewById(R.id.ImageView_Film3);
+                        ImageView imv1 = (ImageView) controlerMainActivity.getActivity().findViewById(R.id.ImageView_Film1);
+                        ImageView imv2 = (ImageView) controlerMainActivity.getActivity().findViewById(R.id.ImageView_Film2);
+                        ImageView imv3 = (ImageView) controlerMainActivity.getActivity().findViewById(R.id.ImageView_Film3);
 
                         ImagesCache cache = ImagesCache.getInstance();//Singleton instance handled in ImagesCache class.
-                        cache.initializeCache();
-                        Bitmap bm = null;
-                        String img = "";
+
+                        Bitmap bm1 = null;
+                        Bitmap bm2 = null;
+                        Bitmap bm3 = null;
                         String img1 = "";
                         String img2 = "";
-                        if (control.getCollectionFilm() != null) {
-                            Integer random = ToolKit.randInt(0,control.getCollectionFilm().size() -1);
-                             img = control.getCollectionFilm().get(random).lienImage;
-                            random = ToolKit.randInt(0,control.getCollectionFilm().size() -1);
-                             img1 = control.getCollectionFilm().get(random).lienImage;
-                            random = ToolKit.randInt(0,control.getCollectionFilm().size() -1);
-                             img2 = control.getCollectionFilm().get(random).lienImage;
+                        String img3 = "";
+                        if (CollectionFilm.getCollectionFilm().size() > 0) {
+                            img1 = CollectionFilm.getCollectionFilm().get(0).getLienImage();
+                            img2 = CollectionFilm.getCollectionFilm().get(1).getLienImage();
+                            img3 = CollectionFilm.getCollectionFilm().get(2).getLienImage();
 
-                            bm = cache.getImageFromWarehouse(img);
+                            bm1 = cache.getImageFromWarehouse(img1);
+                            bm2 = cache.getImageFromWarehouse(img2);
+                            bm3 = cache.getImageFromWarehouse(img3);
                         }
-
-
-                        if(bm != null)
-                        {
-                            imv2.setImageBitmap(bm);
-                            imv1.setImageBitmap(bm);
-                            imv.setImageBitmap(bm);
-                        }
-                        else
-                        {
-                            imv.setImageBitmap(null);
+                        if (bm1 != null && bm2 != null && bm3 != null) {
+                            imv3.setImageBitmap(bm3);
+                            imv2.setImageBitmap(bm2);
+                            imv1.setImageBitmap(bm1);
+                        } else {
                             imv1.setImageBitmap(null);
                             imv2.setImageBitmap(null);
+                            imv3.setImageBitmap(null);
 
-                            DownloadImageTask imgTask = new DownloadImageTask(cache, imv, 500, 200);//Since you are using it from `Activity` call second Constructor.
                             DownloadImageTask imgTask1 = new DownloadImageTask(cache, imv1, 500, 200);//Since you are using it from `Activity` call second Constructor.
                             DownloadImageTask imgTask2 = new DownloadImageTask(cache, imv2, 500, 200);//Since you are using it from `Activity` call second Constructor.
+                            DownloadImageTask imgTask3 = new DownloadImageTask(cache, imv3, 500, 200);//Since you are using it from `Activity` call second Constructor.
 
-                            imgTask.execute(img);
+
                             imgTask1.execute(img1);
                             imgTask2.execute(img2);
+                            imgTask3.execute(img3);
                         }
-
-
-
-
-
                     }
                 });
             }
         });
         thread.start();
-
-
-
-
+    }
+    
+    public void addActionOnButtons() {
         /* On redefinit l ecouteur du clic sur les boutons */
-        new AbstractButton(this.control.getActivity().getBaseContext(), this.arrayButton) {
+        new AbstractButton(this.controlerMainActivity.getActivity().getBaseContext(), this.arrayButton) {
             /**
              * Methode Sucharge de la class AbstractButton pour redefinir les boutons de la vue
              * @param v View
@@ -126,34 +126,26 @@ public class ListenerViewAccueil {
             @Override
             public void onClick(View v) {
                 super.onClick(v);
-                if(     control.getCollectionFilm() != null &&
-                        control.getCategorie() != null &&
-                        control.getCategorie().size() > 0 &&
-                        control.getCollectionFilm().size() > 0) {
-                    switch (v.getId()) {
-                        case R.id.Button_Acceuil_Nouveaute:
-                            control.loadViewAndSetListener(R.layout.view_listfilmnouveaute);
-                            ToolKit.log("clique Button_Acceuil_Nouveaute");
-                            break;
+                switch (v.getId()) {
+                    case R.id.Button_Acceuil_Nouveaute:
+                        controlerMainActivity.loadViewAndSetListener(R.layout.view_listfilmnouveaute);
+                        ToolKit.log("clique Button_Acceuil_Nouveaute");
+                        break;
 
-                        case R.id.Button_Tout_Les_Films:
+                    case R.id.Button_Tout_Les_Films:
 
-                            ToolKit.log("Clique  Button_Tout_Les_Films");
-                            control.loadViewAndSetListener(R.layout.view_listfilm);
-                            break;
-                        case R.id.Button_Acceuil_MonCompte:
-                            ToolKit.log("Clique  Button_Acceuil_MonCompte");
-                            control.loadViewAndSetListener(R.layout.view_moncompte);
-                            break;
-                        case R.id.Button_Acceuil_Categorie:
-                            ToolKit.log("Clique  Button_Acceuil_Categorie");
-                            control.loadViewAndSetListener(R.layout.view_listcategorie);
-                            break;
-                    }
-                } else {
-                    ToolKit.showMessage(-1,"Merci de patienter quelque instant pour le chargement de votre compte...",control.getActivity(),-1,-1);
+                        ToolKit.log("Clique  Button_Tout_Les_Films");
+                        controlerMainActivity.loadViewAndSetListener(R.layout.view_listfilm);
+                        break;
+                    case R.id.Button_Acceuil_MonCompte:
+                        ToolKit.log("Clique  Button_Acceuil_MonCompte");
+                        controlerMainActivity.loadViewAndSetListener(R.layout.view_moncompte);
+                        break;
+                    case R.id.Button_Acceuil_Categorie:
+                        ToolKit.log("Clique  Button_Acceuil_Categorie");
+                        controlerMainActivity.loadViewAndSetListener(R.layout.view_listcategorie);
+                        break;
                 }
-
             }
         };
     }

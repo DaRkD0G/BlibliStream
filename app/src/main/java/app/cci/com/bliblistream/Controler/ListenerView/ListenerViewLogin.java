@@ -1,19 +1,25 @@
 package app.cci.com.bliblistream.Controler.ListenerView;
 
+import android.graphics.Bitmap;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import app.cci.com.bliblistream.Controler.ControlerActivity.ControlerMainActivity;
+import app.cci.com.bliblistream.Model.DownloadData.ImageData.DownloadImageTask;
+import app.cci.com.bliblistream.Model.DownloadData.ImageData.ImagesCache;
+import app.cci.com.bliblistream.Model.DownloadData.JsonData.JsonFeetcher.MyHttpClientLogin;
+import app.cci.com.bliblistream.Model.StrucData.Categorie;
+import app.cci.com.bliblistream.Model.StrucData.CollectionCategorie;
+import app.cci.com.bliblistream.Model.StrucData.CollectionFilm;
+import app.cci.com.bliblistream.Model.StrucData.Film;
 import app.cci.com.bliblistream.Model.StrucData.User;
-import app.cci.com.bliblistream.View.EditText.CustomEditText;
-import app.cci.com.bliblistream.Model.JsonData.AbstractMyHttpClient;
-
-import app.cci.com.bliblistream.R;
-import app.cci.com.bliblistream.Controler.Control;
-import app.cci.com.bliblistream.View.Button.AbstractButton;
 import app.cci.com.bliblistream.Outil.ToolKit;
+import app.cci.com.bliblistream.R;
+import app.cci.com.bliblistream.View.Button.AbstractButton;
+import app.cci.com.bliblistream.View.EditText.CustomEditText;
 
 /**
  * Ecouteur de la View Acceuil
@@ -21,26 +27,26 @@ import app.cci.com.bliblistream.Outil.ToolKit;
  * @author DaRk-_-D0G  on 30/09/2014.
  */
 public class ListenerViewLogin {
-    private Control control;
+    private ControlerMainActivity controlerMainActivity;
     private ArrayList<Button> arrayButton;
     private ArrayList<CustomEditText> arrayEditText;
     private View view3;
     private boolean activeAnime = false;
-    private MyHttpClientLogin myHttpClientLogin;
+
 
     /**
      * Constructeur
      *
-     * @param inControl Control
+     * @param inControlerMainActivity Control
      */
-    public ListenerViewLogin(Control inControl) {
-        this.control = inControl;
+    public ListenerViewLogin(ControlerMainActivity inControlerMainActivity) {
+        this.controlerMainActivity = inControlerMainActivity;
 
         /* Charge Element pour attribut */
         loadButtonListener();
 
         /* On redefinit l ecouteur du clic de la sur les boutons passer en parrametre --> this.arrayButton  */
-        new AbstractButton(this.control.getActivity().getBaseContext(), this.arrayButton) {
+        new AbstractButton(this.controlerMainActivity.getActivity().getBaseContext(), this.arrayButton) {
             /**
              * Methode Sucharge de la class AbstractButton pour redefinir les boutons de la vue
              * @param v View
@@ -70,7 +76,7 @@ public class ListenerViewLogin {
     /**
      * Charger les elements pour les attributs de la class
      */
-    public void loadButtonListener(){
+    public void loadButtonListener() {
         ToolKit.log("Class init  --> ListenerViewLogin");
 
         //TODO ici on ajout tout les buttons de la VIEW
@@ -81,32 +87,33 @@ public class ListenerViewLogin {
          * 0 = Bouton Connection
          * 1 = Bouton Se connect
          */
-        this.arrayButton.add((Button) this.control.getActivity().findViewById(R.id.button_connection));
-        this.arrayButton.add((Button) this.control.getActivity().findViewById(R.id.button_se_connect));
+        this.arrayButton.add((Button) this.controlerMainActivity.getActivity().findViewById(R.id.button_connection));
+        this.arrayButton.add((Button) this.controlerMainActivity.getActivity().findViewById(R.id.button_se_connect));
 
         /**
          * 0 = EditTextLogin
          * 1 = EditTextPassWord
          */
-        this.arrayEditText.add((CustomEditText) control.getActivity().findViewById(R.id.editTextLogin));
-        this.arrayEditText.add((CustomEditText) control.getActivity().findViewById(R.id.ediTextPassword));
+        this.arrayEditText.add((CustomEditText) controlerMainActivity.getActivity().findViewById(R.id.editTextLogin));
+        this.arrayEditText.add((CustomEditText) controlerMainActivity.getActivity().findViewById(R.id.ediTextPassword));
     }
 /*************************************************************************************************/
     // button_connection / checkBTNConnection
-/*************************************************************************************************/
+
+    /**
+     * *********************************************************************************************
+     */
     public void checkBTNConnection() {
         ToolKit.log("Clique sur BTN --> Login");
         //selectionne les vues pour les anime au changement
 
-        View view1 = control.getActivity().findViewById(R.id.linearLayout_fond_trans_login);
-        View view2 = control.getActivity().findViewById(R.id.linearLayout_fond_trans_login_contenu);
-        (control.getActivity().findViewById(R.id.button_connection)).setVisibility(View.INVISIBLE);
+        View view1 = controlerMainActivity.getActivity().findViewById(R.id.linearLayout_fond_trans_login);
+        View view2 = controlerMainActivity.getActivity().findViewById(R.id.linearLayout_fond_trans_login_contenu);
+        (controlerMainActivity.getActivity().findViewById(R.id.button_connection)).setVisibility(View.INVISIBLE);
 
-        //animation
-        ToolKit.animationThis(R.anim.animation_translateenentredroit,view1,control.getActivity().getBaseContext());
-        //control.animationThis(R.anim.animation_translateenentredroit, view1);
-        ToolKit.animationThis(R.anim.animation_translateenentredroit,view2,control.getActivity().getBaseContext());
-        //control.animationThis(R.anim.animation_translateenentredroit, view2);
+        ToolKit.animationThis(R.anim.animation_translateenentredroit, view1, controlerMainActivity.getActivity().getBaseContext());
+        ToolKit.animationThis(R.anim.animation_translateenentredroit, view2, controlerMainActivity.getActivity().getBaseContext());
+
     }
 /*************************************************************************************************/
     // Check Login / button_se_connect / checkLoginLoad
@@ -116,57 +123,55 @@ public class ListenerViewLogin {
      * Check le login avec la connection au serveur
      */
     public void checkLoginLoad() {
-        ToolKit.log("Clique sur BTN --> Check Login");
-        String name = arrayEditText.get(0).getText().toString();
-        String pass = arrayEditText.get(1).getText().toString();
+        if (ToolKit.isConnectionOK(this.controlerMainActivity.getActivity())) {
+            String name = arrayEditText.get(0).getText().toString();
+            String pass = arrayEditText.get(1).getText().toString();
 
-        if (name.equals("")  || pass.equals("") || name.equals("speudo") || pass.equals("MDP")) {
-            animateErrorLogin("Merci de completer les champs login et mot de passe.");
+            if (name.equals("") || pass.equals("") || name.equals("speudo") || pass.equals("MDP")) {
+                animateErrorLogin("Merci de completer les champs login et mot de passe.");
+            } else {
+                User.setNom(name);
+                User.setPassword(pass);
+
+                if(CollectionFilm.getCollectionFilm().size() > 0 &&
+                   CollectionCategorie.getCollectionCategorie().size() > 0) {
+
+                    MyHttpClientLogin.getInstance().execute();
+                    this.checkValidationAndActiveTranstion();
+                } else {
+                    this.animateErrorLogin("Merci de relancer votre authentification.");
+                }
+            }
         } else {
-            control.setUser(new User(name,pass));
-            activeConnectionAndPassParam(control.user);
-            checkValidationAndActiveTranstion();
+            this.animateErrorLogin("Pas de connection à Internet.");
         }
     }
 
-    /**
-     * Instancie un connection HttpClient et pass les parametres de connection
-     * @param uUser Un User
-     */
-    private void activeConnectionAndPassParam(User uUser) {
-        this.myHttpClientLogin = new MyHttpClientLogin(
-                control.getActivity()
-
-        );
-        this.myHttpClientLogin.setParams(
-                "http://yannickstephan.com/cci/user.json",
-                AbstractMyHttpClient.TYPEDEMANDE.GET_SET_URL_PARAM,
-                uUser
-        );
-    }
 
     /**
-     *  Check si la connection et valide et attend le retour du webservice
+     * Check si la connection et valide et attend le retour du webservice
      */
     private void checkValidationAndActiveTranstion() {
-        if(this.myHttpClientLogin.execute()){
+        if (ToolKit.isConnectionOK(this.controlerMainActivity.getActivity())) {
             setEnableElement(false);
-            view3 = control.getActivity().findViewById(R.id.linearLayout_fond_trans_login_chargement);
+            view3 = controlerMainActivity.getActivity().findViewById(R.id.linearLayout_fond_trans_login_chargement);
             view3.setVisibility(View.VISIBLE);
 
-            ToolKit.animationThis(R.anim.animation_fadout,view3,control.getActivity().getBaseContext());
-           // control.animationThis(R.anim.animation_fadout, view3);
-            checkLoginInThread();
+            ToolKit.animationThis(R.anim.animation_fadout, view3, controlerMainActivity.getActivity().getBaseContext());
+
+            this.checkLoginInThread();
         } else {
-            animateErrorLogin("Pas de connection à Internet.");
+            this.animateErrorLogin("Pas de connection à Internet.");
         }
     }
+
     /**
      * Check le retour du myHttpClient de la validation du login
      * Dans un Thread et appel de l'animation qui suit
+     *
      * @param MyHttpClientLogin myHttpClient
      */
-    private void checkLoginInThread(){
+    private void checkLoginInThread() {
 
         Thread thread = new Thread(new Runnable() {
             @Override
@@ -174,14 +179,15 @@ public class ListenerViewLogin {
                 /* Attente de la reponse */
                 /* Depassement delais reponse */
                 long start = System.currentTimeMillis();
-                while (!myHttpClientLogin.getIsFinish() && System.currentTimeMillis() < (start + 10000)) {
+                while (!MyHttpClientLogin.ifLoadFinished() && System.currentTimeMillis() < (start + 10000)) {
                     try {
                         Thread.sleep(800);
-                    } catch (InterruptedException e) { }
+                    } catch (InterruptedException e) {
+                    }
                 }
                 /* Animation du login */
-                final Boolean validationLogin = myHttpClientLogin.loadJsonWeb();
-                control.getActivity().runOnUiThread(new Runnable() {
+                final Boolean validationLogin = MyHttpClientLogin.loadJsonData();
+                controlerMainActivity.getActivity().runOnUiThread(new Runnable() {
                     public void run() {
                         /* Animation fonction login bon ou pas */
                         checkUiLoad(validationLogin);
@@ -197,15 +203,12 @@ public class ListenerViewLogin {
      */
     private void checkUiLoad(Boolean validationLogin) {
         if (validationLogin) {
-            control.loadViewAndSetListener(R.layout.view_accueil);
+            controlerMainActivity.loadViewAndSetListener(R.layout.view_accueil);
         } else {
             setEnableElement(true);
             animateErrorLogin("Identifiant ou mot de passe erroner.");
             view3.setVisibility(View.INVISIBLE);
-
-            ToolKit.animationThis(R.anim.animation_fadout,view3,control.getActivity().getBaseContext());
-
-           // control.animationThis(R.anim.animation_fadin, view3);
+            ToolKit.animationThis(R.anim.animation_fadout, view3, controlerMainActivity.getActivity().getBaseContext());
         }
     }
 /*************************************************************************************************/
@@ -217,9 +220,9 @@ public class ListenerViewLogin {
     public void animateErrorLogin(String textError) {
         if (!activeAnime) {
             activeAnime = true;
-            final TextView text = (TextView) control.getActivity().findViewById(R.id.layout_login_mauvais_identifiant);
-            ToolKit.animationThis(R.anim.animation_fadout,text,control.getActivity().getBaseContext());
-           // control.animationThis(R.anim.animation_fadout, text);
+            final TextView text = (TextView) controlerMainActivity.getActivity().findViewById(R.id.layout_login_mauvais_identifiant);
+            ToolKit.animationThis(R.anim.animation_fadout, text, controlerMainActivity.getActivity().getBaseContext());
+            // control.animationThis(R.anim.animation_fadout, text);
             //On creer un timer qui execute un fonction aprés les seconde
             new java.util.Timer().schedule(
                     new java.util.TimerTask() {
@@ -227,12 +230,12 @@ public class ListenerViewLogin {
                         public void run() {
                             //execute le code apres le temps
                             //creation dun thrad sur la vue de lutilisation
-                            control.getActivity().runOnUiThread(new Runnable() {
+                            controlerMainActivity.getActivity().runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
                                     /* code pour rendre invisible le btn aprés execution */
-                                    ToolKit.animationThis(R.anim.animation_fadin,text,control.getActivity().getBaseContext());
-                                   // control.animationThis(R.anim.animation_fadin, text);
+                                    ToolKit.animationThis(R.anim.animation_fadin, text, controlerMainActivity.getActivity().getBaseContext());
+                                    // control.animationThis(R.anim.animation_fadin, text);
                                     text.setVisibility(View.INVISIBLE);
                                     activeAnime = false;
                                 }
@@ -249,6 +252,7 @@ public class ListenerViewLogin {
 
     /**
      * Enable Element View
+     *
      * @param uBoolean Activation ou Desactivation element
      */
     public void setEnableElement(boolean uBoolean) {
@@ -257,11 +261,5 @@ public class ListenerViewLogin {
         this.arrayEditText.get(0).setEnabled(uBoolean);
         this.arrayEditText.get(1).setEnabled(uBoolean);
     }
-
-/*************************************************************************************************/
-    // Override Class MyHttpClient / Connection
-/*************************************************************************************************/
-
-
 }
 

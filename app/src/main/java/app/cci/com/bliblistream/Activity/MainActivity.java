@@ -3,8 +3,12 @@ package app.cci.com.bliblistream.Activity;
 import android.app.Activity;
 import android.os.Bundle;
 
-
-import app.cci.com.bliblistream.Controler.Control;
+import app.cci.com.bliblistream.Controler.ControlerActivity.ControlerMainActivity;
+import app.cci.com.bliblistream.Model.DownloadData.ImageData.ImagesCache;
+import app.cci.com.bliblistream.Model.DownloadData.JsonData.JsonFeetcher.MyHttpClientListCategorie;
+import app.cci.com.bliblistream.Model.DownloadData.JsonData.JsonFeetcher.MyHttpClientListFilm;
+import app.cci.com.bliblistream.Model.StrucData.CollectionCategorie;
+import app.cci.com.bliblistream.Model.StrucData.CollectionFilm;
 import app.cci.com.bliblistream.R;
 
 
@@ -13,10 +17,7 @@ import app.cci.com.bliblistream.R;
  */
 public class MainActivity extends Activity {
 
-    //Le controleur de l application
-    private Control control;
-
-
+    private ControlerMainActivity controlerMainActivity;
     /**
      * Lancement de l'application
      *
@@ -25,13 +26,18 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        //initialisation de lattribut controleur
-        this.control = new Control(this);
-
-
+        /* Initialisation cache image */
+        ImagesCache cache = ImagesCache.getInstance();
+        cache.initializeCache();
+        /* initialisation de lattribut controleur */
+        this.controlerMainActivity = new ControlerMainActivity(this);
+        /* Init Collection */
+        CollectionFilm.getInstance();
+        CollectionCategorie.getInstance();
+        /* Get Data Json Categorie et films */
+        new MyHttpClientListFilm().execute();
+        new MyHttpClientListCategorie().execute();
     }
-
     /**
      * Restauration de l'application
      */
@@ -39,21 +45,9 @@ public class MainActivity extends Activity {
     protected void onResume() {
         super.onResume();
 
-        if(this.control.getListener() == null) {
-            this.control.loadViewAndSetListener(R.layout.view_login);
+        if (this.controlerMainActivity.getListener() == null) {
+            this.controlerMainActivity.loadViewAndSetListener(R.layout.view_login);
         }
-        /* TODO TEMP */
-
-
-
-        //TODO Ici faire un check up avec le control pour savoir on ce situe l application
-       /* this.animFadein = AnimationUtils.loadAnimation(getApplicationContext(),
-                );
-
-        // set animation listener
-        View btn = (View) findViewById(R.id.layout_login);
-        btn.startAnimation(animFadein);*/
-
     }
 
     /**
@@ -73,18 +67,7 @@ public class MainActivity extends Activity {
     }
 
     @Override
-    public void onBackPressed() {
-    //    ToolKit.log("OK");
-
-        this.control.LoadLastViewAndSetListener();
-
-
-    }
-    /**
-     * getSize and
-     */
-    /******/
-
+    public void onBackPressed() { this.controlerMainActivity.LoadLastViewAndSetListener(); }
 }
 
 

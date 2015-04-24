@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
-    android:weightSum="100"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:weightSum="100">
 
     <!-- Image entête -->
     <LinearLayout
@@ -20,21 +20,22 @@
         <RelativeLayout
             android:id="@+id/S2"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-           >
+            android:layout_height="fill_parent">
+
             <ImageView
                 android:id="@+id/icon2"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 android:adjustViewBounds="true"
                 android:scaleType="centerCrop"
-                android:src="@drawable/bg_load"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
+                android:src="@drawable/bg_load" />
+
             <ProgressBar
                 android:id="@+id/progressBar"
                 style="?android:attr/progressBarStyleLarge"
@@ -50,14 +51,15 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                android:layout_alignParentTop="true"
-
-                android:adjustViewBounds="true"
-                android:scaleType="centerCrop"
-                android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
+
                 android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
+                android:layout_alignParentRight="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop" />
+
             <RelativeLayout
                 android:layout_width="fill_parent"
                 android:layout_height="50dp"
@@ -77,7 +79,7 @@
                     android:text="TITRE DU FILM"
                     android:textColor="@android:color/black"
                     android:textSize="20sp"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
             </RelativeLayout>
 
@@ -85,72 +87,73 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/ok"
         android:layout_width="fill_parent"
         android:layout_height="0dp"
         android:layout_weight="20"
-        android:padding="10dp"
-        android:orientation="vertical"
         android:background="@drawable/style_bordure_ombre"
-        android:id="@+id/ok">
+        android:orientation="vertical"
+        android:padding="10dp">
 
         <TextView
-            android:gravity="center_horizontal"
+            android:id="@+id/TextView_Entete_Description_Film"
             android:layout_width="fill_parent"
             android:layout_height="50dp"
-            android:id="@+id/TextView_Entete_Description_Film"
+            android:gravity="center_horizontal"
             android:text="DESCRIPTION" />
 
 
     </LinearLayout>
+
     <LinearLayout
+        android:id="@+id/ok2"
         android:layout_width="fill_parent"
         android:layout_height="0dp"
+
         android:layout_weight="20"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
 
-        android:orientation="vertical"
-        android:id="@+id/ok2"
-        android:gravity="center_horizontal">
         <Button
-            android:layout_margin="5dp"
-            android:text="Bande Annonce"
-            android:textStyle="bold"
             android:id="@+id/Button_Entete_BandeAnnonce_Film"
-            android:textColor="@android:color/white"
             android:layout_width="fill_parent"
             android:layout_height="45dp"
-            android:background="@drawable/style_button_blue"
-            />
-        <Button
             android:layout_margin="5dp"
-            android:text="Visionner"
-            android:textStyle="bold"
-            android:id="@+id/Button_Entete_Visionner_Film"
+            android:background="@drawable/style_button_blue"
+            android:text="Bande Annonce"
             android:textColor="@android:color/white"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/Button_Entete_Visionner_Film"
             android:layout_width="fill_parent"
             android:layout_height="45dp"
+            android:layout_margin="5dp"
             android:background="@drawable/style_button_red"
-            />
-
+            android:text="Visionner"
+            android:textColor="@android:color/white"
+            android:textStyle="bold" />
 
 
     </LinearLayout>
+
     <LinearLayout
+        android:id="@+id/ok3"
         android:layout_width="fill_parent"
         android:layout_height="0dp"
         android:layout_weight="10"
-        android:padding="10dp"
-        android:orientation="vertical"
         android:background="@drawable/style_bordure_ombre"
-        android:id="@+id/ok3">
+        android:orientation="vertical"
+        android:padding="10dp">
 
         <TextView
 
-            android:gravity="center_horizontal"
+            android:id="@+id/TextView_Entete_Date_Film"
             android:layout_width="fill_parent"
             android:layout_height="50dp"
-            android:id="@+id/TextView_Entete_Date_Film"
+            android:gravity="center_horizontal"
             android:text="Categorie Description" />
 
 
-</LinearLayout>
+    </LinearLayout>
 </LinearLayout>

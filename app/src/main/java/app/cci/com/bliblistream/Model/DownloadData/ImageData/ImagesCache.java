@@ -1,4 +1,4 @@
-package app.cci.com.bliblistream.Model.DownloadData;
+package app.cci.com.bliblistream.Model.DownloadData.ImageData;
 
 import android.graphics.Bitmap;
 import android.util.LruCache;
@@ -6,7 +6,7 @@ import android.util.LruCache;
 
 public class ImagesCache
 {
-    private LruCache<String, Bitmap> imagesWarehouse;
+    private  LruCache<String, Bitmap> imagesWarehouse;
 
     private static ImagesCache cache;
 

@@ -1,29 +1,103 @@
 package app.cci.com.bliblistream.Model.StrucData;
 
+import java.util.ArrayList;
+
 /**
- * Created by DaRk-_-D0G on 06/11/14.
+ * Class User Singleton
  */
 public class User {
-    private String name,password;
 
-    public User(String name, String password) {
-        this.name = name;
-        this.password = password;
+    /**
+     * Singleton Instance
+     */
+    private static User userInstance = null;
+    /**
+     * Attributs
+     */
+    private static String nom, prenom, password;
+    private static Integer id, jeton;
+    private static Film filmChoisi;
+    private static ArrayList<Integer> location;
+    /**
+     * Init
+     */
+    public User() {
     }
 
-    public String getName() {
-        return name;
+    public static User getInstance() {
+        if (userInstance == null) {
+            userInstance = new User();
+        }
+        return userInstance;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    /* ################################################################## */
+    /*                          GETTER SETTER                             */
+    /* ################################################################## */
+
+    public static Film getFilmChoisi() { return User.filmChoisi; }
+
+    public static void setFilmChoisi(Film filmChoisi) {
+        User.filmChoisi = filmChoisi;
     }
 
-    public String getPassword() {
-        return password;
+    public static Integer getId() {
+        return User.id;
+    }
+    
+    public static void setId(Integer id) {
+        User.id = id;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public static String getNom() {
+        return User.nom;
     }
+
+    public static void setNom(String name) {
+        User.nom = name;
+    }
+
+    public static String getPrenom() {
+        return User.prenom;
+    }
+
+    public static void setPrenom(String prenom) {
+        User.prenom = prenom;
+    }
+
+    public static ArrayList<Integer> getLocation() {
+        return User.location;
+    }
+
+    public static void setLocation(ArrayList<Integer> location) {
+        User.location = location;
+    }
+
+    public static String getPassword() {
+        return User.password;
+    }
+
+    public static void setPassword(String password) {
+        User.password = password;
+    }
+
+    public static Integer getJeton() {
+        return User.jeton;
+    }
+
+    public static void setJeton(Integer jeton) {
+        User.jeton = jeton;
+    }
+
+    /* ################################################################## */
+    /*                          AUTRE METHOD                              */
+    /* ################################################################## */
+    @Override
+    public String toString() {
+        return super.toString();
+    }
+    public static String toStringDetail() {
+        return getInstance().toString();
+    }
+
 }

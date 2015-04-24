@@ -1,4 +1,4 @@
-package app.cci.com.bliblistream.Model.DownloadData;
+package app.cci.com.bliblistream.Model.DownloadData.ImageData;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -10,7 +10,6 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import app.cci.com.bliblistream.Model.DownloadData.ImagesCache;
 import app.cci.com.bliblistream.Outil.ToolKit;
 
 
@@ -32,7 +31,6 @@ public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
 
     private ImageView ivImageView;
 
-
     public DownloadImageTask(BaseAdapter adapter, int desiredWidth, int desiredHeight) {
         this.adapter = adapter;
 
@@ -42,8 +40,6 @@ public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
 
         this.desiredHeight = desiredHeight;
     }
-
-
 
     public DownloadImageTask(ImagesCache cache, ImageView ivImageView, int desireWidth, int desireHeight) {
         this.cache = cache;
@@ -69,15 +65,14 @@ public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
         if (result != null) {
             cache.addImageToWarehouse(imageUrl, result);
 
-
-            if (adapter != null) {
-                adapter.notifyDataSetChanged();
-            }
-
             if (ivImageView != null) {
                 ivImageView.setImageBitmap(result);
             } else {
 
+            }
+
+            if (adapter != null) {
+                adapter.notifyDataSetChanged();
             }
         }
     }
@@ -121,7 +116,7 @@ public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
                     return image;
                 }
             } catch (Exception e) {
-                ToolKit.log("getImage" + e.toString());
+                //Log.e("getImage", e.toString());
             }
         }
 
