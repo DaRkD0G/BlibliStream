@@ -123,29 +123,6 @@ public class ToolKit {
 
         return relations;
     }
-  /*  static public void uiTrhead(Activity uActivity,final Object objectReception, final Method uMethod,final Object uParameters) throws Exception {
-        uActivity.runOnUiThread(new Runnable() {
-            public void run() {
-                try {
-                    uMethod.invoke(objectReception, uParameters);
-                } catch (IllegalAccessException e) {
-
-                } catch (InvocationTargetException e) {
-
-                }
-
-               /* if(validationLogin) {
-                    control.loadViewAndSetListener(R.layout.view_accueil);
-                } else {
-                    setEnableElement(true);
-                    animateErrorLogin();
-                    view3.setVisibility(View.INVISIBLE);
-                    control.animationThis(R.anim.animation_fadin,view3);
-                }
-            }
-        });
-
-    }*/
 
     /**
      * Enables/Disables all child views in a view group.

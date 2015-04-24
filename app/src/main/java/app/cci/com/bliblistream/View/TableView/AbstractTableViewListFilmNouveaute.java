@@ -24,16 +24,7 @@ import app.cci.com.bliblistream.R;
  * @author DaRk-_-D0G on 06/10/2014.
  */
 public class AbstractTableViewListFilmNouveaute extends BaseAdapter {
-    public int filtreCat;
-    /* ce tableau trace le clic */
-    // private HashMap<Integer, Integer> mIdMap = new HashMap<Integer, Integer>();
-
-    Integer mLastPosition;
-    Integer limit;
-    Context mContext;
-    int inTextViewResourceId;
-    private ControlerMainActivity controlerMainActivity;
-    private LayoutInflater mLayoutInflater = null;
+    private Context mContext;
 
     /**
      * Constructeur du Listener des lignes de la TableView
@@ -44,21 +35,23 @@ public class AbstractTableViewListFilmNouveaute extends BaseAdapter {
      */
     public AbstractTableViewListFilmNouveaute(ControlerMainActivity controlerMainActivity, int inTextViewResourceId, Integer limit) {
         this.mContext = controlerMainActivity.getActivity().getApplicationContext();
-        mLayoutInflater = (LayoutInflater) mContext
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    }
 
+    @Override
+    public Object getItem(int position) { return CollectionFilm.getCollectionFilm().get(position); }
 
-        mLastPosition = 0;
-        this.limit = limit;
-        this.controlerMainActivity = controlerMainActivity;
-        this.inTextViewResourceId = inTextViewResourceId;
+    @Override
+    public int getCount() { return CollectionFilm.getCollectionFilm().size(); }
 
-        //Since you are using it from `Adapter` call first Constructor.
+    @Override
+    public void notifyDataSetChanged() { super.notifyDataSetChanged(); }
 
-        /* Pour chaque ligne on ajoute un tableau de pointeur */
-       /* for (int i = 0; i < inObjects.size() -1; ++i) {
-            mIdMap.put(i, i);
-        }*/
+    @Override
+    public long getItemId(int position) { return position; }
+
+    @Override
+    public boolean hasStableIds() {
+        return true;
     }
 
 
@@ -72,15 +65,8 @@ public class AbstractTableViewListFilmNouveaute extends BaseAdapter {
      */
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        if (position == 1) {
-            //ToolKit.log("--POSE-->"+position);
-            this.mLastPosition += 1;
-        }
         View v = convertView;
         CompleteListViewHolder viewHolder;
-        //   if (convertView == null) {
-
-
         LayoutInflater inflater = (LayoutInflater) mContext
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         v = inflater.inflate(R.layout.view_rowtableview, null);
@@ -119,55 +105,11 @@ public class AbstractTableViewListFilmNouveaute extends BaseAdapter {
         return v;
     }
 
-    /**
-     * Obtenir un Item
-     *
-     * @param position int
-     * @return long
-     */
-    @Override
-    public Object getItem(int position) {
-        // ToolKit.log("--->position--->"+position);
-        return CollectionFilm.getCollectionFilm().get(position);
-    }
-
-    @Override
-    public int getCount() {
-
-        return CollectionFilm.getCollectionFilm().size();
-    }
-
-    @Override
-    public void notifyDataSetChanged() {
-
-
-        //ivImageView.setImageBitmap(bitmap);
-
-        super.notifyDataSetChanged();
-    }
-
-    @Override
-    public long getItemId(int position) {
-
-        return position;
-    }
-
-    /**
-     * ?
-     *
-     * @return boolean
-     */
-    @Override
-    public boolean hasStableIds() {
-        return true;
-    }
-
     class CompleteListViewHolder {
         public TextView titreFilmView;
         public TextView descriptionView;
         public ImageView imageView;
         public DownloadImageTask imgTask;
-        //imageView.setScaleType(imageView.ScaleType.CENTER_INSIDE);
         public ProgressBar progressBar;
 
         public CompleteListViewHolder(View base, BaseAdapter baseAdapter) {

@@ -16,7 +16,6 @@ import android.widget.EditText;
  */
 public class CustomEditText extends EditText {
 
-
     final Drawable imgX = getResources().getDrawable(android.R.drawable.presence_offline); // X image
     public boolean dejaClic = false;
 

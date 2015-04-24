@@ -36,8 +36,7 @@ public class ListenerViewFilm {
     private ControlerMainActivity controlerMainActivity;
     private ArrayList<Button> arrayButton;
     private Intent myIntent;
-    private Bundle b;
-
+    /// Dialog Fragment sur la location
     private final DialogFragment dialog = new MyDialogFragment() {
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -50,14 +49,10 @@ public class ListenerViewFilm {
 
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-
-                    myIntent = new Intent(controlerMainActivity.getActivity(), VideoViewActivity.class);
-                    myIntent.putExtra("video", User.getFilmChoisi().getLienFilm());
-
                     MyHttpClientListAchatFilm listAchat = new MyHttpClientListAchatFilm();
                     listAchat.setFilmId(User.getFilmChoisi().getId());
                     listAchat.execute();
-
+                    ToolKit.showMessage(-1, "Merci de patienter nous effectuons la demande.", controlerMainActivity.getActivity(), -1, -1);
                     sendDemandeData();
                 }
             });
@@ -74,8 +69,9 @@ public class ListenerViewFilm {
         this.loadAffichage();
 
     }
-    //############################# AFFICHAGE #############################
-
+    /* ############################################################# */
+    /*                          AFFICHAGE                            */
+    /* ############################################################# */
     /**
      * Call defirente fonction affichage
      */
@@ -146,17 +142,23 @@ public class ListenerViewFilm {
                         break;
 
                     case R.id.Button_Entete_Ba_Film:
-                        myIntent = new Intent(controlerMainActivity.getActivity(), VideoViewActivity.class);
-                        myIntent.putExtra("video", User.getFilmChoisi().getLienBa());
-                        controlerMainActivity.getActivity().startActivity(myIntent);
 
+                        String lienBa = User.getFilmChoisi().getLienBa();
+                        if (lienBa.endsWith("mp4")) {
+                            myIntent = new Intent(controlerMainActivity.getActivity(), VideoViewActivity.class);
+                            myIntent.putExtra("video", lienBa);
+                            controlerMainActivity.getActivity().startActivity(myIntent);
+                        } else {
+                            ToolKit.showMessage(-1, "Une erreur c'est produite (Contacter le service bibliotheque Format non MP4)", controlerMainActivity.getActivity(), -1, -1);
+                        }
                         break;
                 }
             }
         };
     }
-    //############################# DATA #############################
-
+    /* ############################################################# */
+    /*                          CHECKUP DATA                         */
+    /* ############################################################# */
     /**
      * Envoi la demande de location
      */
@@ -167,11 +169,12 @@ public class ListenerViewFilm {
 
                 long start = System.currentTimeMillis();
                 while (!MyHttpClientListAchatFilm.ifLoadFinished() &&
-                        System.currentTimeMillis() < (start + 1000)
+                        System.currentTimeMillis() < (start + 100)
                         ) {
                     try {
-                        Thread.sleep(200);
-                    } catch (InterruptedException e) { }
+                        Thread.sleep(50);
+                    } catch (InterruptedException e) {
+                    }
                 }
 
                 final Boolean validationLogin = MyHttpClientListAchatFilm.loadJsonData();
@@ -181,13 +184,31 @@ public class ListenerViewFilm {
                         /* Animation fonction login bon ou pas */
                         if (validationLogin) {
                             if (MyHttpClientListAchatFilm.ifCanSeeVideo()) {
+                                myIntent = new Intent(controlerMainActivity.getActivity(), VideoViewActivity.class);
+
+                               /* TODO MODIFIER POUR OBTENIR LE LIEN ENVOYER ET LANCE LA FENENTRE */
+                                myIntent.putExtra("video", User.getFilmChoisi().getLienFilm());
                                 User.getLocation().add(User.getFilmChoisi().getId());
                                 controlerMainActivity.getActivity().startActivity(myIntent);
-                                ToolKit.showMessage(-1, "Bon visionnage", controlerMainActivity.getActivity(), -1, -1);
                             } else {
                                 ToolKit.showMessage(-1, "Vous ne diposez plus de jeton pour la location", controlerMainActivity.getActivity(), -1, -1);
                             }
                         }
+                        /*
+                                            String lienFilm = User.getFilmChoisi().getLienFilm();
+                    if (lienFilm.endsWith("mp4")) {
+                        myIntent = new Intent(controlerMainActivity.getActivity(), VideoViewActivity.class);
+                        myIntent.putExtra("video", User.getFilmChoisi().getLienFilm());
+
+                        MyHttpClientListAchatFilm listAchat = new MyHttpClientListAchatFilm();
+                        listAchat.setFilmId(User.getFilmChoisi().getId());
+                        listAchat.execute();
+
+
+                    } else {
+                        ToolKit.showMessage(-1, "Une erreur c'est produite (Contacter le service bibliotheque Format non MP4)", controlerMainActivity.getActivity(), -1, -1);
+                    }
+                         */
                     }
                 });
             }

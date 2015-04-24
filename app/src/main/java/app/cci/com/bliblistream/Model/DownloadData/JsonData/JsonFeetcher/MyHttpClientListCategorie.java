@@ -83,7 +83,7 @@ public class MyHttpClientListCategorie extends AbstractMyHttpClient {
 
     @Override
     public JSONObject executeRequeteWithUrlByParam() {
-        HttpPost httppost = new HttpPost(this.url);
+        HttpPost httppost = new HttpPost(this.getUrl());
         JSONObject result = null;
 
         try {
@@ -98,7 +98,7 @@ public class MyHttpClientListCategorie extends AbstractMyHttpClient {
 
 
             httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-            HttpResponse response = this.httpclient.execute(httppost);
+            HttpResponse response = this.getHttpclient().execute(httppost);
             result = jsonResultToJsonObject(response);
 
 

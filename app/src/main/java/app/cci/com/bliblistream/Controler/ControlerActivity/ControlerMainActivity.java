@@ -48,14 +48,6 @@ public class ControlerMainActivity {
 
     }
 
-    public int getFiltreIdCat() {
-        return filtreIdCat;
-    }
-
-    public void setFiltreIdCat(int filtreIdCat) {
-        this.filtreIdCat = filtreIdCat;
-    }
-
     /**
      * Mettre un listener specifique a la view et charger la vue
      *
@@ -68,7 +60,7 @@ public class ControlerMainActivity {
         LayoutInflater inflater = (LayoutInflater) this.activity.getSystemService(android.app.Activity.LAYOUT_INFLATER_SERVICE);
         try {
             //ajout id layout pour le chemin de lutilisateur
-            ToolKit.log("--ID VIEW -->" + inRidLayout);
+            ToolKit.log("[ControlerMainActivity] SELECTION ID VIEW :" + inRidLayout);
             //on creer un variable temps pour la sauvegarde de la view maintenant pour lanimation
             View saveViewNow = this.view;
 
@@ -109,6 +101,7 @@ public class ControlerMainActivity {
                     notAllReadyAdd(inRidLayout);
                     ToolKit.animationThis(R.anim.animation_fadin, saveViewNow, activity.getBaseContext());
                     this.getActivity().setContentView(this.view);
+
                     TextView textView = (TextView) getActivity().findViewById(R.id.TextView_MonCompte_Nom);
                     textView.setText(User.getNom());
                     ToolKit.animationThis(R.anim.animation_translateenentredroit, textView, activity.getBaseContext());
@@ -220,6 +213,21 @@ public class ControlerMainActivity {
      *
      * @param uLayout Integer
      */
+
+    /**
+     * Obtenir l'id filtre
+     * @return int
+     */
+    public int getFiltreIdCat() { return filtreIdCat; }
+
+    /**
+     * Set un Filtre
+     * @param filtreIdCat Int
+     */
+    public void setFiltreIdCat(int filtreIdCat) {
+        this.filtreIdCat = filtreIdCat;
+    }
+
     private void notAllReadyAdd(Integer uLayout) {
         if (this.wayViewID.size() > 0) {
             if (!(uLayout == getLastWayViewID())) {
@@ -232,11 +240,6 @@ public class ControlerMainActivity {
     /**
      * Remettre la dernier view vue
      */
-    public void LoadLastViewAndSetListener() {
-        if (this.wayViewID.size() > 1) {
-            removeLastWayViewID();
-            this.loadViewAndSetListener(this.getLastWayViewID());
-        }
-    }
+    public void LoadLastViewAndSetListener() { if (this.wayViewID.size() > 1) { removeLastWayViewID(); this.loadViewAndSetListener(this.getLastWayViewID()); } }
 }
 

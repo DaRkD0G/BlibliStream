@@ -32,13 +32,8 @@ public abstract class AbstractButton extends View implements View.OnClickListene
         } catch (NullPointerException e) {
             ToolKit.log("ERREUR DANS INITIALISATION DAJOUT DE BOUTON, Le bouton demandander nexiste pas sur cette View");
         }
-
         this.setOnClickListener(this);
-
-
     }
-
-
     /**
      * Ecouteur du clic sur un bouton, ici elle est sucharger par les listenerView
      *

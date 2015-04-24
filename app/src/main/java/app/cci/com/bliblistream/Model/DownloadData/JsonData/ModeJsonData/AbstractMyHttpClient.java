@@ -20,10 +20,22 @@ import app.cci.com.bliblistream.Outil.ToolKit;
  */
 public abstract class AbstractMyHttpClient {
 
-    public HttpClient httpclient;
-    public String url;
-    public Object objectClass;
+    private HttpClient httpclient;
+    private String url;
+    private Object objectClass;
     private HttpAsyncTask httpAsyncTask;
+
+    public HttpClient getHttpclient() {
+        return httpclient;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public Object getObjectClass() {
+        return objectClass;
+    }
 
     /**
      * Constructeur
@@ -70,46 +82,11 @@ public abstract class AbstractMyHttpClient {
     /**
      * Execute la demande de connection pour chercher les informations d'un lien avec des param URL / Json
      */
-    public void execute() {
-        this.httpAsyncTask.execute(this.url);
-    }
-
-    /**
-     * Execute la demande de connection pour chercher les informations d'un lien avec des param URL / Json
-     *
-     *
-     public boolean check() {
-     //Execute
-     if(this.url.equals("")) {
-     ToolKit.log("Erreur -> Manque URL MyHttpClient");
-     return false;
-     } else if(this.objectClass == null)  {
-     ToolKit.log("Erreur -> Manque URL MyHttpClient");
-     return false;
-     }
-     return true;
-     }*/
+    public void execute() { this.httpAsyncTask.execute(this.url); }
     /**
      * Donne ce que retourne une URL en format STRING
      */
-    private String getInfoForUrl() {
-       /* InputStream inputStream = null;
-        String result = "";
-        try {
-            // Fabrique le retour d'un requete
-            HttpResponse httpResponse = this.httpclient.execute(new HttpGet(this.url));
-            // Resois la reponse de L'url
-            try {
-                inputStream = httpResponse.getEntity().getContent();
-                result = convertInputStreamToString(inputStream);
-            } catch (NullPointerException e) {
-                result = null;
-            }
-        } catch (Exception e) {
-            ToolKit.logWTF("InputStream ------>" + e.getLocalizedMessage());
-        }*/
-        return null;
-    }
+    private String getInfoForUrl() { return null; }
 
     /**
      * Envoi d'un objet au formation JSON
@@ -118,7 +95,6 @@ public abstract class AbstractMyHttpClient {
 /*
         InputStream inputStream = null;
         String result = "";
-
         try {
 
             // 2. make POST request to the given URL
@@ -188,9 +164,7 @@ public abstract class AbstractMyHttpClient {
         return this.httpAsyncTask.isFinish;
     }
 
-    public JSONObject getResult() throws NullPointerException {
-        return this.httpAsyncTask.result;
-    }
+    public JSONObject getResult() throws NullPointerException { return this.httpAsyncTask.result; }
 
     /**
      * StringJson to JsonObject
@@ -206,19 +180,14 @@ public abstract class AbstractMyHttpClient {
             InputStream inputStream = uResult.getEntity().getContent();
             resultJsonString = convertInputStreamToString(inputStream);
 
-        } catch (IOException e) {
-            //ToolKit.showMessage(-1, "Pas de connection (A1)", activity, -1, -1);
-            ToolKit.log("ERREUR -> jsonStringToObject :" + e.toString());
-        }
+        } catch (IOException e) { ToolKit.log("[AbstractMyHttpClient] ERREUR -> jsonStringToObject :" + e.toString()); }
 
         //String To json
         JSONObject jObj = null;
         try {
             jObj = new JSONObject(resultJsonString);
-        } catch (JSONException e) {
-            // ToolKit.showMessage(-1, "Pas de connection (A2)", activity, -1, -1);
-            ToolKit.log("ERREUR -> jsonStringToObject :" + e.toString());
-        }
+        } catch (JSONException e) { ToolKit.log("[AbstractMyHttpClient] ERREUR -> jsonStringToObject :" + e.toString()); }
+
         return jObj;
     }
 
@@ -271,36 +240,28 @@ public abstract class AbstractMyHttpClient {
          */
         @Override
         protected JSONObject doInBackground(String... urls) {
-            //postData();
 
             if (typeDemande == TYPEDEMANDE.GET_URL_INFO) {
                 // return getInfoForUrl();
             } else if (typeDemande == TYPEDEMANDE.GET_SET_JSON_PARAM) {
                 // return getInfoUrlByJsonAndReturn();
             } else if (typeDemande == TYPEDEMANDE.GET_SET_URL_PARAM) {
-
                 return executeRequeteWithUrlByParam();
             }
-
             return null;
         }
-
-        // onPostExecute displays the results of the AsyncTask.
+        /**
+         * Runs on the UI thread excution requete
+         * @param result
+         */
         @Override
         protected void onPostExecute(JSONObject result) {
-            // Toast.makeText(activity.getBaseContext(), , Toast.LENGTH_LONG).show();
-
             this.result = result;
-            ToolKit.log("---> Received!");
+            ToolKit.log("[AbstractMyHttpClient] ---------------------> Data Recetp");
             if (!loadJsonWeb()) {
-                ToolKit.log("Erreur onPostExecute pas loadJsonWeb <----");
+                ToolKit.log("[AbstractMyHttpClient] Erreur onPostExecute pas loadJsonWeb");
             }
-
             this.isFinish = true;
-
-
         }
     }
-
-
 }

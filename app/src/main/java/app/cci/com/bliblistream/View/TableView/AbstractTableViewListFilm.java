@@ -23,12 +23,8 @@ import app.cci.com.bliblistream.R;
  * @author DaRk-_-D0G on 06/10/2014.
  */
 public class AbstractTableViewListFilm extends BaseAdapter {
-    Integer mLastPosition;
-
-    //private LayoutInflater mLayoutInflater = null;
-    Integer limit;
-    Context mContext;
-    int inTextViewResourceId;
+    private Context mContext;
+    private int inTextViewResourceId;
     private ControlerMainActivity controlerMainActivity;
 
     /**
@@ -40,11 +36,34 @@ public class AbstractTableViewListFilm extends BaseAdapter {
      */
     public AbstractTableViewListFilm(ControlerMainActivity controlerMainActivity, int inTextViewResourceId, Integer limit) {
         this.mContext = controlerMainActivity.getActivity().getApplicationContext();
-        mLastPosition = 0;
-        this.limit = limit;
         this.controlerMainActivity = controlerMainActivity;
         this.inTextViewResourceId = inTextViewResourceId;
 
+    }
+
+    @Override
+    public Object getItem(int position) {
+        return CollectionFilm.getCollectionFilm().get(position);
+    }
+
+    @Override
+    public int getCount() {
+        return CollectionFilm.getCollectionFilm().size();
+    }
+
+    @Override
+    public void notifyDataSetChanged() {
+        super.notifyDataSetChanged();
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public boolean hasStableIds() {
+        return true;
     }
 
     /**
@@ -57,9 +76,6 @@ public class AbstractTableViewListFilm extends BaseAdapter {
      */
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        if (position == 1) {
-            this.mLastPosition += 1;
-        }
         View v = convertView;
         CompleteListViewHolder viewHolder;
 
@@ -68,8 +84,6 @@ public class AbstractTableViewListFilm extends BaseAdapter {
         v = inflater.inflate(R.layout.view_rowtableview, null);
         viewHolder = new CompleteListViewHolder(v, this);
         v.setTag(viewHolder);
-
-
 
         /* Load img */
         String img = CollectionFilm.getCollectionFilm().get(position).getLienImage();
@@ -93,48 +107,11 @@ public class AbstractTableViewListFilm extends BaseAdapter {
         return v;
     }
 
-    /**
-     * Obtenir un Item
-     *
-     * @param position int
-     * @return long
-     */
-    @Override
-    public Object getItem(int position) {
-        return CollectionFilm.getCollectionFilm().get(position);
-    }
-
-    @Override
-    public int getCount() {
-        return CollectionFilm.getCollectionFilm().size();
-    }
-
-    @Override
-    public void notifyDataSetChanged() {
-        super.notifyDataSetChanged();
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return position;
-    }
-
-    /**
-     * ?
-     *
-     * @return boolean
-     */
-    @Override
-    public boolean hasStableIds() {
-        return true;
-    }
-
     class CompleteListViewHolder {
         public TextView titreFilmView;
         public TextView descriptionView;
         public ImageView imageView;
         public DownloadImageTask imgTask;
-        //imageView.setScaleType(imageView.ScaleType.CENTER_INSIDE);
         public ProgressBar progressBar;
 
         public CompleteListViewHolder(View base, BaseAdapter baseAdapter) {

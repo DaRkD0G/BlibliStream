@@ -42,6 +42,30 @@ public class AbstractTableViewListFilmMonCompte extends BaseAdapter {
 
     }
 
+    @Override
+    public Object getItem(int position) {
+        return CollectionFilm.getCollectionFilm().get(position);
+    }
+
+    @Override
+    public int getCount() {
+        return CollectionFilm.getCollectionFilm().size();
+    }
+
+    @Override
+    public void notifyDataSetChanged() {
+        super.notifyDataSetChanged();
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public boolean hasStableIds() {
+        return true;
+    }
 
     /**
      * Methode qui serre a charger chaque ligne d'une viewRow et la personnaliser
@@ -78,42 +102,6 @@ public class AbstractTableViewListFilmMonCompte extends BaseAdapter {
         viewHolder.descriptionView.setText(description);
 
         return v;
-    }
-
-    /**
-     * Obtenir un Item
-     *
-     * @param position int
-     * @return long
-     */
-    @Override
-    public Object getItem(int position) {
-        return CollectionFilm.getCollectionFilm().get(position);
-    }
-
-    @Override
-    public int getCount() {
-        return CollectionFilm.getCollectionFilm().size();
-    }
-
-    @Override
-    public void notifyDataSetChanged() {
-        super.notifyDataSetChanged();
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return position;
-    }
-
-    /**
-     * ?
-     *
-     * @return boolean
-     */
-    @Override
-    public boolean hasStableIds() {
-        return true;
     }
 
     class CompleteListViewHolder {

@@ -63,10 +63,10 @@ public class MyHttpClientListFilm extends AbstractMyHttpClient {
                             ArrayList<Integer> collectionCategorie = new ArrayList<Integer>();
 
                             JSONArray colCat =  c.getJSONArray("categorie");
-                            for (int index = 0; i < colCat.length(); ++index) {
+                            for (int index = 0; index < colCat.length(); ++index) {
                                 collectionCategorie.add(colCat.getInt(index));
                             }
-                            if (collectionCategorie.size() > 0) {
+                            if (collectionCategorie.size() == 0) {
                                 CollectionFilm.resetCollectionFilms();
                                 return;
                             }
@@ -107,7 +107,7 @@ public class MyHttpClientListFilm extends AbstractMyHttpClient {
      */
     @Override
     public JSONObject executeRequeteWithUrlByParam() {
-        HttpPost httppost = new HttpPost(this.url);
+        HttpPost httppost = new HttpPost(this.getUrl());
         JSONObject result = null;
         try {
             List<NameValuePair> nameValuePairs;
@@ -117,7 +117,7 @@ public class MyHttpClientListFilm extends AbstractMyHttpClient {
             nameValuePairs.add(new BasicNameValuePair("param", "getfilm"));
 
             httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-            HttpResponse response = this.httpclient.execute(httppost);
+            HttpResponse response = this.getHttpclient().execute(httppost);
             result = jsonResultToJsonObject(response);
 
 

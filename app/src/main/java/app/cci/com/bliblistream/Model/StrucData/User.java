@@ -44,7 +44,7 @@ public class User {
     public static Integer getId() {
         return User.id;
     }
-    
+
     public static void setId(Integer id) {
         User.id = id;
     }

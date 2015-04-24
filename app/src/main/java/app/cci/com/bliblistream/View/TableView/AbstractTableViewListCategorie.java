@@ -27,7 +27,7 @@ import app.cci.com.bliblistream.R;
  */
 public class AbstractTableViewListCategorie extends BaseAdapter implements AdapterView.OnItemClickListener {
     private Context mContext;
-    int inTextViewResourceId;
+    private int inTextViewResourceId;
     private ControlerMainActivity controlerMainActivity;
 
     /**
@@ -43,6 +43,40 @@ public class AbstractTableViewListCategorie extends BaseAdapter implements Adapt
         this.inTextViewResourceId = inTextViewResourceId;
     }
 
+    @Override
+    public Categorie getItem(int position) { return CollectionCategorie.getCollectionCategorie().get(position); }
+
+    @Override
+    public int getCount() {
+        return CollectionCategorie.getCollectionCategorie().size();
+    }
+
+    @Override
+    public void notifyDataSetChanged() {
+        super.notifyDataSetChanged();
+    }
+
+    @Override
+    public long getItemId(int position) { return position; }
+
+    @Override
+    public boolean hasStableIds() {
+        return true;
+    }
+
+    /**
+     * Quand il y'a un clic
+     * @param arg0 AdapterView
+     * @param view View
+     * @param position Position
+     * @param id id
+     */
+    @Override
+    public void onItemClick(AdapterView<?> arg0, View view,
+                            int position, long id) {
+        controlerMainActivity.setFiltreIdCat(CollectionCategorie.getCollectionCategorie().get(position).getId());
+        controlerMainActivity.loadViewAndSetListener(R.layout.view_listfilmcat);
+    }
 
     /**
      * Methode qui serre a charger chaque ligne d'une viewRow et la personnaliser
@@ -77,40 +111,6 @@ public class AbstractTableViewListCategorie extends BaseAdapter implements Adapt
         viewHolder.titreFilmView.setText(nom);
         viewHolder.descriptionView.setText(description);
         return v;
-    }
-
-    /**
-     * Obtenir un Item
-     *
-     * @param position int
-     * @return long
-     */
-    @Override
-    public Categorie getItem(int position) { return CollectionCategorie.getCollectionCategorie().get(position); }
-
-    @Override
-    public int getCount() {
-        return CollectionCategorie.getCollectionCategorie().size();
-    }
-
-    @Override
-    public void notifyDataSetChanged() {
-        super.notifyDataSetChanged();
-    }
-
-    @Override
-    public long getItemId(int position) { return position; }
-
-    @Override
-    public boolean hasStableIds() {
-        return true;
-    }
-
-    @Override
-    public void onItemClick(AdapterView<?> arg0, View view,
-                            int position, long id) {
-        controlerMainActivity.setFiltreIdCat(CollectionCategorie.getCollectionCategorie().get(position).getId());
-        controlerMainActivity.loadViewAndSetListener(R.layout.view_listfilmcat);
     }
 
     class CompleteListViewHolder {

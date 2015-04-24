@@ -1,4 +1,4 @@
-package app.cci.com.bliblistream.Model.StrucData;
+/*package app.cci.com.bliblistream.Model.StrucData;
 
 
 import java.security.NoSuchAlgorithmException;
@@ -115,4 +115,4 @@ public class MCrypt {
         }
         return decrypted;
     }
-}
+}*/

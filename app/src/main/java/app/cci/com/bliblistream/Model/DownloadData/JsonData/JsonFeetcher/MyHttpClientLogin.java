@@ -27,8 +27,7 @@ import app.cci.com.bliblistream.Outil.ToolKit;
  */
 public class MyHttpClientLogin extends AbstractMyHttpClient {
 
-    private static MyHttpClientLogin loginInstance = null;
-
+    private static MyHttpClientLogin loginInstance;
     /**
      * Init Instance
      *
@@ -42,26 +41,34 @@ public class MyHttpClientLogin extends AbstractMyHttpClient {
                 null
         );
     }
-
+    /**
+     * Init Instance  MyHttpClientLogin
+     * @return MyHttpClientLogin
+     */
     public static MyHttpClientLogin getInstance() {
         if (loginInstance == null) {
             loginInstance = new MyHttpClientLogin();
         }
         return loginInstance;
     }
-
+    /**
+     * Le chargement de la data fini
+     * @return boolean
+     */
     public static boolean ifLoadFinished() {
         return MyHttpClientLogin.getInstance().getIsFinish();
     }
-
+    /**
+     * Charger la data Json en object
+     * @return boolean
+     */
     public static boolean loadJsonData() {
         return MyHttpClientLogin.getInstance().loadJsonWeb();
     }
-
     /**
      * Charge les donnes de retour de la requete JSON
      *
-     * @return
+     * @return boolean
      */
     @Override
     public boolean loadJsonWeb() {
@@ -106,7 +113,6 @@ public class MyHttpClientLogin extends AbstractMyHttpClient {
             return false;
         }
     }
-
     /**
      * Exectute la requete avec des params a URL
      *
@@ -114,16 +120,14 @@ public class MyHttpClientLogin extends AbstractMyHttpClient {
      */
     @Override
     public JSONObject executeRequeteWithUrlByParam() {
-        HttpPost httppost = new HttpPost(this.url);
+        HttpPost httppost = new HttpPost(this.getUrl());
         JSONObject result = null;
 
         try {
             // Creation du nombre de parametre
             List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
 
-            if (this.objectClass instanceof User) {
-
-                User user = (User) this.objectClass;
+            if (this.getObjectClass() instanceof User) {
                 nameValuePairs.add(new BasicNameValuePair("name", User.getNom()));
                 nameValuePairs.add(new BasicNameValuePair("password", User.getPassword()));
 
@@ -132,7 +136,7 @@ public class MyHttpClientLogin extends AbstractMyHttpClient {
             }
 
             httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-            HttpResponse response = this.httpclient.execute(httppost);
+            HttpResponse response = this.getHttpclient().execute(httppost);
             result = jsonResultToJsonObject(response);
 
         } catch (ClientProtocolException e) {
@@ -142,7 +146,6 @@ public class MyHttpClientLogin extends AbstractMyHttpClient {
         }
         return result;
     }
-
     /**
      * Get le string de la class
      *
