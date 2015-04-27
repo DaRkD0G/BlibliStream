@@ -1,10 +1,9 @@
 package app.cci.com.bliblistream.Controler.ControlerActivity;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.animation.Animation;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -17,10 +16,8 @@ import app.cci.com.bliblistream.Controler.ListenerView.ListenerViewListFilm;
 import app.cci.com.bliblistream.Controler.ListenerView.ListenerViewListFilmCat;
 import app.cci.com.bliblistream.Controler.ListenerView.ListenerViewListFilmnouveaute;
 import app.cci.com.bliblistream.Controler.ListenerView.ListenerViewLogin;
-import app.cci.com.bliblistream.Model.DownloadData.ImageData.ImagesCache;
-import app.cci.com.bliblistream.Model.DownloadData.JsonData.JsonFeetcher.MyHttpClientListCategorie;
-import app.cci.com.bliblistream.Model.DownloadData.JsonData.JsonFeetcher.MyHttpClientListFilm;
 import app.cci.com.bliblistream.Model.StrucData.CollectionFilm;
+import app.cci.com.bliblistream.Model.StrucData.Film;
 import app.cci.com.bliblistream.Model.StrucData.User;
 import app.cci.com.bliblistream.Outil.ToolKit;
 import app.cci.com.bliblistream.R;
@@ -36,7 +33,7 @@ public class ControlerMainActivity {
     private Object instantListener;
     private View view;
     private ArrayList<Integer> wayViewID;
-    private int filtreIdCat = -1;
+
     /**
      * Constructeur
      *
@@ -120,13 +117,36 @@ public class ControlerMainActivity {
                     textView = (TextView) getActivity().findViewById(R.id.vos_films);
                     ToolKit.animationThis(R.anim.animation_translateenentredroit, textView, activity.getBaseContext());
 
-                    ArrayList<Integer> location = User.getLocation();
 
-                    ToolKit.logObject(location);
                     ListView listView = (ListView) getActivity().findViewById(R.id.ListeView_MonCompte_liste);
 
-                    MonCompteArrayAdapter adapter = new MonCompteArrayAdapter(getActivity(), R.layout.view_rowtableview_moncompte, location);
+
+                    ArrayList<Integer> location = User.getLocation();
+                    MonCompteArrayAdapter adapter = new MonCompteArrayAdapter(getActivity(), R.layout.view_rowtableview, location);
                     listView.setAdapter(adapter);
+
+                    listView.setOnItemClickListener(
+                            new AdapterView.OnItemClickListener() {
+
+                                @Override
+                                public void onItemClick(AdapterView<?> arg0, View view,
+                                                        int position, long id) {
+
+                                    TextView textView = (TextView) view.findViewById(R.id.idFilm);
+                                    String no = textView.getText().toString();       //this will get a string
+                                    int no2 = Integer.parseInt(no);              //this will get a no from the string
+
+                                    // Integer idFilm = User.getLocation().get(position);
+                                    for (Film oneFilm : CollectionFilm.getCollectionFilm()) {
+                                        if (oneFilm.getId() == no2) {
+                                            User.setFilmChoisi(oneFilm);
+                                        }
+                                    }
+
+                                    loadViewAndSetListener(R.layout.view_film);
+                                }
+                            }
+                    );
 
                     break;
 
@@ -214,19 +234,6 @@ public class ControlerMainActivity {
      * @param uLayout Integer
      */
 
-    /**
-     * Obtenir l'id filtre
-     * @return int
-     */
-    public int getFiltreIdCat() { return filtreIdCat; }
-
-    /**
-     * Set un Filtre
-     * @param filtreIdCat Int
-     */
-    public void setFiltreIdCat(int filtreIdCat) {
-        this.filtreIdCat = filtreIdCat;
-    }
 
     private void notAllReadyAdd(Integer uLayout) {
         if (this.wayViewID.size() > 0) {
@@ -237,9 +244,15 @@ public class ControlerMainActivity {
             this.wayViewID.add(uLayout);
         }
     }
+
     /**
      * Remettre la dernier view vue
      */
-    public void LoadLastViewAndSetListener() { if (this.wayViewID.size() > 1) { removeLastWayViewID(); this.loadViewAndSetListener(this.getLastWayViewID()); } }
+    public void LoadLastViewAndSetListener() {
+        if (this.wayViewID.size() > 1) {
+            removeLastWayViewID();
+            this.loadViewAndSetListener(this.getLastWayViewID());
+        }
+    }
 }
 

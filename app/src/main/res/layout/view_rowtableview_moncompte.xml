@@ -1,10 +1,10 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/listListener"
-    android:layout_width="fill_parent"
+<RelativeLayout android:id="@+id/listListener"
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="fill_parent"
 
-    android:layout_height="60dp"
-    android:background="@android:drawable/dialog_holo_light_frame"
-    android:padding="@dimen/ecart_list_film">
+                android:layout_height="60dp"
+                android:background="@android:drawable/dialog_holo_light_frame"
+                android:padding="@dimen/ecart_list_film">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -33,7 +33,7 @@
                 android:text="NOM FILM"
 
                 android:textColor="@color/film_titre_color"
-                android:textSize="16sp" />
+                android:textSize="16sp"/>
 
             <TextView
                 android:id="@+id/descriptionFilm"
@@ -42,7 +42,7 @@
                 android:ellipsize="marquee"
                 android:text="DESCRIPTION FILM"
                 android:textColor="@color/film_titre_color"
-                android:textSize="10sp" />
+                android:textSize="10sp"/>
 
         </LinearLayout>
 

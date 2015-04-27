@@ -31,12 +31,26 @@ public class CollectionFilm {
     }
 
     /**
+     * Obtenir collection de film
+     * @return setUserFilmChoisi
+     */
+    public static void setUserFilmChoisi(Integer idFilm) {
+        for (Film oneFilm : CollectionFilm.getCollectionFilm()) {
+            if (oneFilm.getId().equals(idFilm)) {
+                User.setFilmChoisi(oneFilm);
+                return;
+            }
+        }
+    }
+
+    /**
      * Reset la collection de films
      */
     public static void resetCollectionFilms() {
         CollectionFilm instance = CollectionFilm.getInstance();
         instance.collectionFilm.clear();
     }
+
     /* ################################################################## */
     /*                          AUTRE METHOD                              */
     /* ################################################################## */

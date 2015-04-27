@@ -3,11 +3,10 @@ package app.cci.com.bliblistream.Controler.ListenerView;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import app.cci.com.bliblistream.Controler.ControlerActivity.ControlerMainActivity;
 import app.cci.com.bliblistream.Model.StrucData.CollectionFilm;
-import app.cci.com.bliblistream.Model.StrucData.User;
-import app.cci.com.bliblistream.Outil.ToolKit;
 import app.cci.com.bliblistream.R;
 import app.cci.com.bliblistream.View.TableView.AbstractTableViewListFilm;
 
@@ -52,7 +51,12 @@ public class ListenerViewListFilm {
                     @Override
                     public void onItemClick(AdapterView<?> arg0, View view,
                                             int position, long id) {
-                        User.setFilmChoisi(CollectionFilm.getCollectionFilm().get(position));
+                        TextView textView = (TextView) view.findViewById(R.id.idFilm);
+                        String no = textView.getText().toString();       //this will get a string
+                        int no2 = Integer.parseInt(no);              //this will get a no from the string
+
+                        CollectionFilm.setUserFilmChoisi(no2);
+
                         controlerMainActivity.loadViewAndSetListener(R.layout.view_film);
                     }
                 }

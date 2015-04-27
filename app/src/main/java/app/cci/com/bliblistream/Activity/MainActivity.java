@@ -9,6 +9,7 @@ import app.cci.com.bliblistream.Model.DownloadData.JsonData.JsonFeetcher.MyHttpC
 import app.cci.com.bliblistream.Model.DownloadData.JsonData.JsonFeetcher.MyHttpClientListFilm;
 import app.cci.com.bliblistream.Model.StrucData.CollectionCategorie;
 import app.cci.com.bliblistream.Model.StrucData.CollectionFilm;
+import app.cci.com.bliblistream.Outil.ToolKit;
 import app.cci.com.bliblistream.R;
 
 
@@ -16,8 +17,24 @@ import app.cci.com.bliblistream.R;
  * Class de l\u0027activite principale de l\u0027application, Herite de Activity
  */
 public class MainActivity extends Activity {
-
+    // Instance
     private ControlerMainActivity controlerMainActivity;
+    // Thread chargement Date
+    private Thread threadLoadData = new Thread(new Runnable() {
+        @Override
+        public void run() {
+            while (!ToolKit.isConnectionOK(getApplicationContext())) {
+                try {
+                    Thread.sleep(800);
+                } catch (InterruptedException e) {
+                }
+            }
+            MyHttpClientListFilm.executeReq();
+            MyHttpClientListCategorie.executeReq();
+
+        }
+    });
+
     /**
      * Lancement de l'application
      *
@@ -26,18 +43,20 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        /* Initialisation cache image */
-        ImagesCache cache = ImagesCache.getInstance();
-        cache.initializeCache();
+        /* Init Instance singleton */
+        ImagesCache.getInstance().initializeCache();    //Cache Image
+        CollectionFilm.getInstance();                   //Collection Films
+        CollectionCategorie.getInstance();              //Collection Categories
+        MyHttpClientListFilm.getInstance();             //Json Data Films
+        MyHttpClientListCategorie.getInstance();        //Json Data Collection Films
+        /* Load data Async */
+        this.threadLoadData.start();
         /* initialisation de lattribut controleur */
         this.controlerMainActivity = new ControlerMainActivity(this);
-        /* Init Collection */
-        CollectionFilm.getInstance();
-        CollectionCategorie.getInstance();
-        /* Get Data Json Categorie et films */
-        new MyHttpClientListFilm().execute();
-        new MyHttpClientListCategorie().execute();
+
+
     }
+
     /**
      * Restauration de l'application
      */
@@ -66,8 +85,13 @@ public class MainActivity extends Activity {
         super.onDestroy();
     }
 
+    /**
+     * Click button back
+     */
     @Override
-    public void onBackPressed() { this.controlerMainActivity.LoadLastViewAndSetListener(); }
+    public void onBackPressed() {
+        this.controlerMainActivity.LoadLastViewAndSetListener();
+    }
 }
 
 

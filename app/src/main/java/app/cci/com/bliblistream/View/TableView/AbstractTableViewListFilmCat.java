@@ -16,7 +16,6 @@ import app.cci.com.bliblistream.Controler.ControlerActivity.ControlerMainActivit
 import app.cci.com.bliblistream.Model.DownloadData.ImageData.DownloadImageTask;
 import app.cci.com.bliblistream.Model.DownloadData.ImageData.ImagesCache;
 import app.cci.com.bliblistream.Model.StrucData.CollectionFilm;
-import app.cci.com.bliblistream.Outil.ToolKit;
 import app.cci.com.bliblistream.R;
 
 
@@ -32,9 +31,6 @@ public class AbstractTableViewListFilmCat extends BaseAdapter {
     private ControlerMainActivity controlerMainActivity;
     private LayoutInflater mLayoutInflater = null;
 
-    public void setFiltreCat(Integer filtre) {
-        this.filtreCat = filtre;
-    }
     /**
      * Constructeur du Listener des lignes de la TableView
      *
@@ -51,6 +47,9 @@ public class AbstractTableViewListFilmCat extends BaseAdapter {
 
     }
 
+    public void setFiltreCat(Integer filtre) {
+        this.filtreCat = filtre;
+    }
 
     /**
      * Methode qui serre a charger chaque ligne d'une viewRow et la personnaliser
@@ -72,20 +71,22 @@ public class AbstractTableViewListFilmCat extends BaseAdapter {
 
         ArrayList<Integer> colCat = CollectionFilm.getCollectionFilm().get(position).getCategorie();
 
-        for(Integer onCat:colCat) {
+        boolean validation = false;
+        for (Integer onCat : colCat) {
             if (onCat == filtreCat) {
+                validation = true;
                 v.setVisibility(View.VISIBLE);
                 break;
-            } else {
-                return inflater.inflate(R.layout.blank_layout, parent,
-                        false);
             }
+        }
+        if (!validation) {
+            return inflater.inflate(R.layout.blank_layout, parent,
+                    false);
         }
 
 
-
         String img = CollectionFilm.getCollectionFilm().get(position).getLienImage();
-        Bitmap bm =  ImagesCache.getInstance().getImageFromWarehouse(img);
+        Bitmap bm = ImagesCache.getInstance().getImageFromWarehouse(img);
 
         if (bm != null) {
             viewHolder.imageView.setImageBitmap(bm);
@@ -112,24 +113,34 @@ public class AbstractTableViewListFilmCat extends BaseAdapter {
      * @return long
      */
     @Override
-    public Object getItem(int position) { return CollectionFilm.getCollectionFilm().get(position); }
+    public Object getItem(int position) {
+        return CollectionFilm.getCollectionFilm().get(position);
+    }
 
     @Override
-    public int getCount() { return CollectionFilm.getCollectionFilm().size(); }
+    public int getCount() {
+        return CollectionFilm.getCollectionFilm().size();
+    }
 
     @Override
-    public void notifyDataSetChanged() { super.notifyDataSetChanged(); }
+    public void notifyDataSetChanged() {
+        super.notifyDataSetChanged();
+    }
 
     @Override
-    public long getItemId(int position) { return position; }
+    public long getItemId(int position) {
+        return position;
+    }
 
     @Override
     public boolean hasStableIds() {
         return true;
     }
 
+
     class CompleteListViewHolder {
         public TextView titreFilmView;
+        public TextView idRecuperationFilm;
         public TextView descriptionView;
         public ImageView imageView;
         public DownloadImageTask imgTask;
@@ -141,6 +152,7 @@ public class AbstractTableViewListFilmCat extends BaseAdapter {
             progressBar = (ProgressBar) base.findViewById(R.id.progressBar);
             titreFilmView = (TextView) base.findViewById(R.id.titreFilm);
             descriptionView = (TextView) base.findViewById(R.id.descriptionFilm);
+            idRecuperationFilm = (TextView) base.findViewById(R.id.idFilm);
         }
     }
 }

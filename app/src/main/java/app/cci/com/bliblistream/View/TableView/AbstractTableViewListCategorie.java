@@ -16,7 +16,7 @@ import app.cci.com.bliblistream.Model.DownloadData.ImageData.DownloadImageTask;
 import app.cci.com.bliblistream.Model.DownloadData.ImageData.ImagesCache;
 import app.cci.com.bliblistream.Model.StrucData.Categorie;
 import app.cci.com.bliblistream.Model.StrucData.CollectionCategorie;
-import app.cci.com.bliblistream.Outil.ToolKit;
+import app.cci.com.bliblistream.Model.StrucData.User;
 import app.cci.com.bliblistream.R;
 
 
@@ -44,7 +44,9 @@ public class AbstractTableViewListCategorie extends BaseAdapter implements Adapt
     }
 
     @Override
-    public Categorie getItem(int position) { return CollectionCategorie.getCollectionCategorie().get(position); }
+    public Categorie getItem(int position) {
+        return CollectionCategorie.getCollectionCategorie().get(position);
+    }
 
     @Override
     public int getCount() {
@@ -57,7 +59,9 @@ public class AbstractTableViewListCategorie extends BaseAdapter implements Adapt
     }
 
     @Override
-    public long getItemId(int position) { return position; }
+    public long getItemId(int position) {
+        return position;
+    }
 
     @Override
     public boolean hasStableIds() {
@@ -74,7 +78,7 @@ public class AbstractTableViewListCategorie extends BaseAdapter implements Adapt
     @Override
     public void onItemClick(AdapterView<?> arg0, View view,
                             int position, long id) {
-        controlerMainActivity.setFiltreIdCat(CollectionCategorie.getCollectionCategorie().get(position).getId());
+        User.setFiltreIdCat(CollectionCategorie.getCollectionCategorie().get(position).getId());
         controlerMainActivity.loadViewAndSetListener(R.layout.view_listfilmcat);
     }
 
@@ -96,7 +100,7 @@ public class AbstractTableViewListCategorie extends BaseAdapter implements Adapt
         viewHolder = new CompleteListViewHolder(v, this);
         v.setTag(viewHolder);
         String img = CollectionCategorie.getCollectionCategorie().get(position).getLienImage();
-        Bitmap bm =  ImagesCache.getInstance().getImageFromWarehouse(img);
+        Bitmap bm = ImagesCache.getInstance().getImageFromWarehouse(img);
 
         if (bm != null) {
             viewHolder.imageView.setImageBitmap(bm);
@@ -113,8 +117,10 @@ public class AbstractTableViewListCategorie extends BaseAdapter implements Adapt
         return v;
     }
 
+
     class CompleteListViewHolder {
         public TextView titreFilmView;
+        public TextView idRecuperationFilm;
         public TextView descriptionView;
         public ImageView imageView;
         public DownloadImageTask imgTask;
@@ -126,6 +132,7 @@ public class AbstractTableViewListCategorie extends BaseAdapter implements Adapt
             progressBar = (ProgressBar) base.findViewById(R.id.progressBar);
             titreFilmView = (TextView) base.findViewById(R.id.titreFilm);
             descriptionView = (TextView) base.findViewById(R.id.descriptionFilm);
+            idRecuperationFilm = (TextView) base.findViewById(R.id.idFilm);
         }
     }
 }

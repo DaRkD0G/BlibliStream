@@ -28,6 +28,7 @@ import app.cci.com.bliblistream.Outil.ToolKit;
 public class MyHttpClientLogin extends AbstractMyHttpClient {
 
     private static MyHttpClientLogin loginInstance;
+
     /**
      * Init Instance
      *
@@ -41,6 +42,7 @@ public class MyHttpClientLogin extends AbstractMyHttpClient {
                 null
         );
     }
+
     /**
      * Init Instance  MyHttpClientLogin
      * @return MyHttpClientLogin
@@ -51,6 +53,7 @@ public class MyHttpClientLogin extends AbstractMyHttpClient {
         }
         return loginInstance;
     }
+
     /**
      * Le chargement de la data fini
      * @return boolean
@@ -58,6 +61,7 @@ public class MyHttpClientLogin extends AbstractMyHttpClient {
     public static boolean ifLoadFinished() {
         return MyHttpClientLogin.getInstance().getIsFinish();
     }
+
     /**
      * Charger la data Json en object
      * @return boolean
@@ -65,6 +69,7 @@ public class MyHttpClientLogin extends AbstractMyHttpClient {
     public static boolean loadJsonData() {
         return MyHttpClientLogin.getInstance().loadJsonWeb();
     }
+
     /**
      * Charge les donnes de retour de la requete JSON
      *
@@ -113,6 +118,7 @@ public class MyHttpClientLogin extends AbstractMyHttpClient {
             return false;
         }
     }
+
     /**
      * Exectute la requete avec des params a URL
      *
@@ -146,6 +152,7 @@ public class MyHttpClientLogin extends AbstractMyHttpClient {
         }
         return result;
     }
+
     /**
      * Get le string de la class
      *

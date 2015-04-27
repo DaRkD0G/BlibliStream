@@ -1,8 +1,5 @@
 package app.cci.com.bliblistream.Model.DownloadData.JsonData.JsonFeetcher;
 
-import android.graphics.Bitmap;
-import android.widget.ImageView;
-
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
@@ -17,13 +14,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import app.cci.com.bliblistream.Model.DownloadData.ImageData.DownloadImageTask;
-import app.cci.com.bliblistream.Model.DownloadData.ImageData.ImagesCache;
 import app.cci.com.bliblistream.Model.DownloadData.JsonData.ModeJsonData.AbstractMyHttpClient;
-import app.cci.com.bliblistream.Model.StrucData.Categorie;
 import app.cci.com.bliblistream.Model.StrucData.CollectionFilm;
 import app.cci.com.bliblistream.Model.StrucData.Film;
-import app.cci.com.bliblistream.Model.StrucData.User;
 import app.cci.com.bliblistream.Outil.ToolKit;
 
 /**
@@ -31,6 +24,7 @@ import app.cci.com.bliblistream.Outil.ToolKit;
  */
 
 public class MyHttpClientListFilm extends AbstractMyHttpClient {
+    private static MyHttpClientListFilm listFilmInstance;
 
     public MyHttpClientListFilm() {
         super();
@@ -39,6 +33,33 @@ public class MyHttpClientListFilm extends AbstractMyHttpClient {
                 AbstractMyHttpClient.TYPEDEMANDE.GET_SET_URL_PARAM,
                 null
         );
+    }
+
+    /**
+     * Init Instance  MyHttpClientListFilm
+     * @return MyHttpClientLogin
+     */
+    public static MyHttpClientListFilm getInstance() {
+        if (listFilmInstance == null) {
+            listFilmInstance = new MyHttpClientListFilm();
+        }
+        return listFilmInstance;
+    }
+
+    /**
+     * Le chargement de la data fini
+     * @return boolean
+     */
+    public static boolean ifLoadFinished() {
+        return MyHttpClientListFilm.getInstance().getIsFinish();
+    }
+
+    /**
+     * Le chargement de la data fini
+     * @return boolean
+     */
+    public static void executeReq() {
+        MyHttpClientListFilm.getInstance().execute();
     }
 
     /**
@@ -62,7 +83,7 @@ public class MyHttpClientListFilm extends AbstractMyHttpClient {
 
                             ArrayList<Integer> collectionCategorie = new ArrayList<Integer>();
 
-                            JSONArray colCat =  c.getJSONArray("categorie");
+                            JSONArray colCat = c.getJSONArray("categorie");
                             for (int index = 0; index < colCat.length(); ++index) {
                                 collectionCategorie.add(colCat.getInt(index));
                             }
@@ -81,9 +102,11 @@ public class MyHttpClientListFilm extends AbstractMyHttpClient {
                                     collectionCategorie
                             );
 
-                           CollectionFilm.getCollectionFilm().add(film);
+                            CollectionFilm.getCollectionFilm().add(film);
 
                         }
+
+                        // MainActivity.barriere.countDown();
                     } catch (JSONException e) {
                         CollectionFilm.resetCollectionFilms();
                         ToolKit.log("[MyHttpClientListFilm] Exception ajout film" + e.toString());
@@ -112,9 +135,7 @@ public class MyHttpClientListFilm extends AbstractMyHttpClient {
         try {
             List<NameValuePair> nameValuePairs;
             nameValuePairs = new ArrayList<NameValuePair>(2);
-            nameValuePairs.add(new BasicNameValuePair("name", User.getNom()));
-            nameValuePairs.add(new BasicNameValuePair("password", User.getPassword()));
-            nameValuePairs.add(new BasicNameValuePair("param", "getfilm"));
+            nameValuePairs.add(new BasicNameValuePair("params", "films"));
 
             httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
             HttpResponse response = this.getHttpclient().execute(httppost);

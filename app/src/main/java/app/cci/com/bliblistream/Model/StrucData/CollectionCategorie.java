@@ -27,6 +27,7 @@ public class CollectionCategorie {
         CollectionCategorie instance = CollectionCategorie.getInstance();
         instance.arraycollectionCategorie.clear();
     }
+
     /* ################################################################## */
     /*                          AUTRE METHOD                              */
     /* ################################################################## */

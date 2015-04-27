@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/custom_toast_layout_id"
-    android:layout_width="50dp"
-    android:layout_height="fill_parent"
-    android:background="@drawable/style_toast"
-    android:orientation="horizontal"
-    android:padding="15dp">
+<LinearLayout android:id="@+id/custom_toast_layout_id"
+              xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="50dp"
+              android:layout_height="fill_parent"
+              android:background="@drawable/style_toast"
+              android:orientation="horizontal"
+              android:padding="15dp">
 
 
     <TextView
@@ -15,7 +15,7 @@
         android:layout_width="wrap_content"
 
         android:layout_height="wrap_content"
-        android:textSize="20sp" />
+        android:textSize="20sp"/>
 
     <ImageView
         android:id="@+id/toast_image"

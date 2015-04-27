@@ -25,18 +25,6 @@ public abstract class AbstractMyHttpClient {
     private Object objectClass;
     private HttpAsyncTask httpAsyncTask;
 
-    public HttpClient getHttpclient() {
-        return httpclient;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public Object getObjectClass() {
-        return objectClass;
-    }
-
     /**
      * Constructeur
      *
@@ -66,6 +54,18 @@ public abstract class AbstractMyHttpClient {
 
     }
 
+    public HttpClient getHttpclient() {
+        return httpclient;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public Object getObjectClass() {
+        return objectClass;
+    }
+
     /**
      * Setter les paramettres d'execution
      *
@@ -82,11 +82,16 @@ public abstract class AbstractMyHttpClient {
     /**
      * Execute la demande de connection pour chercher les informations d'un lien avec des param URL / Json
      */
-    public void execute() { this.httpAsyncTask.execute(this.url); }
+    public void execute() {
+        this.httpAsyncTask.execute(this.url);
+    }
+
     /**
      * Donne ce que retourne une URL en format STRING
      */
-    private String getInfoForUrl() { return null; }
+    private String getInfoForUrl() {
+        return null;
+    }
 
     /**
      * Envoi d'un objet au formation JSON
@@ -164,7 +169,9 @@ public abstract class AbstractMyHttpClient {
         return this.httpAsyncTask.isFinish;
     }
 
-    public JSONObject getResult() throws NullPointerException { return this.httpAsyncTask.result; }
+    public JSONObject getResult() throws NullPointerException {
+        return this.httpAsyncTask.result;
+    }
 
     /**
      * StringJson to JsonObject
@@ -180,13 +187,17 @@ public abstract class AbstractMyHttpClient {
             InputStream inputStream = uResult.getEntity().getContent();
             resultJsonString = convertInputStreamToString(inputStream);
 
-        } catch (IOException e) { ToolKit.log("[AbstractMyHttpClient] ERREUR -> jsonStringToObject :" + e.toString()); }
+        } catch (IOException e) {
+            ToolKit.log("[AbstractMyHttpClient] ERREUR -> jsonStringToObject :" + e.toString());
+        }
 
         //String To json
         JSONObject jObj = null;
         try {
             jObj = new JSONObject(resultJsonString);
-        } catch (JSONException e) { ToolKit.log("[AbstractMyHttpClient] ERREUR -> jsonStringToObject :" + e.toString()); }
+        } catch (JSONException e) {
+            ToolKit.log("[AbstractMyHttpClient] ERREUR -> jsonStringToObject :" + e.toString());
+        }
 
         return jObj;
     }
@@ -250,6 +261,7 @@ public abstract class AbstractMyHttpClient {
             }
             return null;
         }
+
         /**
          * Runs on the UI thread excution requete
          * @param result

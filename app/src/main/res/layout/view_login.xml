@@ -1,12 +1,12 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/layout_login"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/fond_login"
-    android:baselineAligned="false"
-    android:clickable="false"
-    android:orientation="vertical"
-    android:weightSum="1">
+<RelativeLayout android:id="@+id/layout_login"
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/fond_login"
+                android:baselineAligned="false"
+                android:clickable="false"
+                android:orientation="vertical"
+                android:weightSum="1">
 
     <!-- Layout acceuil -->
     <RelativeLayout
@@ -22,7 +22,7 @@
             android:layout_height="50dp"
             android:gravity="center"
             android:text="@string/app_name"
-            android:textSize="35sp" />
+            android:textSize="35sp"/>
 
         <Button
             android:id="@+id/button_connection"
@@ -32,7 +32,7 @@
             android:layout_alignParentBottom="true"
 
             android:background="@drawable/style_button_login"
-            android:text="@string/connection" />
+            android:text="@string/connection"/>
     </RelativeLayout>
 
     <!-- Layout transparant blanc -->
@@ -63,7 +63,7 @@
             style="@style/FontTextLogin"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@string/email" />
+            android:text="@string/email"/>
         <!-- editText customiser -->
         <app.cci.com.bliblistream.View.EditText.CustomEditText
             android:id="@+id/editTextLogin"
@@ -74,21 +74,21 @@
             android:background="@null"
             android:ems="10"
             android:inputType="textEmailAddress"
-            android:text="@string/address_email" />
+            android:text="@string/address_email"/>
         <!-- tiré -->
         <ImageView
             android:layout_width="fill_parent"
             android:layout_height="1dp"
             android:layout_marginTop="-12dp"
             android:background="#80808080"
-            android:contentDescription="@string/ligne" />
+            android:contentDescription="@string/ligne"/>
         <!-- titre -->
         <TextView
             style="@style/FontTextLogin"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="@string/password" />
+            android:text="@string/password"/>
         <!-- editText customiser -->
         <app.cci.com.bliblistream.View.EditText.CustomEditText
             android:id="@+id/ediTextPassword"
@@ -108,7 +108,7 @@
             android:layout_height="1dp"
             android:layout_marginTop="-12dp"
             android:background="#80808080"
-            android:contentDescription="@string/ligne" />
+            android:contentDescription="@string/ligne"/>
 
         <Button
             android:id="@+id/button_se_connect"
@@ -118,7 +118,7 @@
             android:layout_gravity="bottom"
             android:layout_marginTop="50dp"
             android:background="@drawable/style_button_login"
-            android:text="@string/se_connecter" />
+            android:text="@string/se_connecter"/>
 
         <TextView
 
@@ -129,7 +129,7 @@
             android:layout_marginTop="5dp"
             android:background="@drawable/style_toast"
             android:padding="15dp"
-            android:visibility="invisible" />
+            android:visibility="invisible"/>
 
     </LinearLayout>
 
@@ -150,7 +150,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_below="@+id/button1"
-            android:layout_centerHorizontal="true" />
+            android:layout_centerHorizontal="true"/>
     </LinearLayout>
 
 </RelativeLayout>

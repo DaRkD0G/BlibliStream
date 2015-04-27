@@ -3,7 +3,6 @@ package app.cci.com.bliblistream.Controler.ListenerView;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import app.cci.com.bliblistream.Controler.ControlerActivity.ControlerMainActivity;
 import app.cci.com.bliblistream.Model.StrucData.CollectionFilm;
@@ -34,8 +33,9 @@ public class ListenerViewListFilmCat {
             public void run() {
 
                 AbstractTableViewListFilmCat abstractTableViewListFilmCat = new AbstractTableViewListFilmCat(controlerMainActivity,
-                        R.layout.view_rowtableview, 5) { };
-                abstractTableViewListFilmCat.setFiltreCat(controlerMainActivity.getFiltreIdCat());
+                        R.layout.view_rowtableview, 5) {
+                };
+                abstractTableViewListFilmCat.setFiltreCat(User.getFiltreIdCat());
                 listView.setAdapter(abstractTableViewListFilmCat);
             }
 

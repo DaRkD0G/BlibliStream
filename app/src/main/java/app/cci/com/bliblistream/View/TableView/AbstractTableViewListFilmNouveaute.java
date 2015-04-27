@@ -10,11 +10,13 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 import app.cci.com.bliblistream.Controler.ControlerActivity.ControlerMainActivity;
 import app.cci.com.bliblistream.Model.DownloadData.ImageData.DownloadImageTask;
 import app.cci.com.bliblistream.Model.DownloadData.ImageData.ImagesCache;
 import app.cci.com.bliblistream.Model.StrucData.CollectionFilm;
-import app.cci.com.bliblistream.Outil.ToolKit;
+import app.cci.com.bliblistream.Model.StrucData.Film;
 import app.cci.com.bliblistream.R;
 
 
@@ -38,16 +40,24 @@ public class AbstractTableViewListFilmNouveaute extends BaseAdapter {
     }
 
     @Override
-    public Object getItem(int position) { return CollectionFilm.getCollectionFilm().get(position); }
+    public Object getItem(int position) {
+        return CollectionFilm.getCollectionFilm().get(position);
+    }
 
     @Override
-    public int getCount() { return CollectionFilm.getCollectionFilm().size(); }
+    public int getCount() {
+        return CollectionFilm.getCollectionFilm().size();
+    }
 
     @Override
-    public void notifyDataSetChanged() { super.notifyDataSetChanged(); }
+    public void notifyDataSetChanged() {
+        super.notifyDataSetChanged();
+    }
 
     @Override
-    public long getItemId(int position) { return position; }
+    public long getItemId(int position) {
+        return position;
+    }
 
     @Override
     public boolean hasStableIds() {
@@ -83,7 +93,7 @@ public class AbstractTableViewListFilmNouveaute extends BaseAdapter {
 
 
         String img = CollectionFilm.getCollectionFilm().get(position).getLienImage();
-        Bitmap bm =  ImagesCache.getInstance().getImageFromWarehouse(img);
+        Bitmap bm = ImagesCache.getInstance().getImageFromWarehouse(img);
 
         if (bm != null) {
             viewHolder.imageView.setImageBitmap(bm);
@@ -95,18 +105,22 @@ public class AbstractTableViewListFilmNouveaute extends BaseAdapter {
 
         }
 
-
-        String nom = CollectionFilm.getCollectionFilm().get(position).getTitre();
-        String description = CollectionFilm.getCollectionFilm().get(position).getDescription();
+        ArrayList<Film> col = CollectionFilm.getCollectionFilm();
+        String nom = col.get(position).getTitre();
+        String description = col.get(position).getDescription();
+        String id = col.get(position).getId().toString();
 
         viewHolder.titreFilmView.setText(nom);
         viewHolder.descriptionView.setText(description);
+        viewHolder.idRecuperationFilm.setText(id);
 
         return v;
     }
 
+
     class CompleteListViewHolder {
         public TextView titreFilmView;
+        public TextView idRecuperationFilm;
         public TextView descriptionView;
         public ImageView imageView;
         public DownloadImageTask imgTask;
@@ -118,6 +132,7 @@ public class AbstractTableViewListFilmNouveaute extends BaseAdapter {
             progressBar = (ProgressBar) base.findViewById(R.id.progressBar);
             titreFilmView = (TextView) base.findViewById(R.id.titreFilm);
             descriptionView = (TextView) base.findViewById(R.id.descriptionFilm);
+            idRecuperationFilm = (TextView) base.findViewById(R.id.idFilm);
         }
     }
 }

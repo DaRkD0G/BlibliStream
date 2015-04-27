@@ -10,8 +10,6 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import app.cci.com.bliblistream.Outil.ToolKit;
-
 
 /**
  * Created by DaRk-_-D0G on 13/12/14.
@@ -112,6 +110,7 @@ public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
                     stream = connection.getInputStream();
 
                     image = BitmapFactory.decodeStream(stream, null, options);
+
 
                     return image;
                 }

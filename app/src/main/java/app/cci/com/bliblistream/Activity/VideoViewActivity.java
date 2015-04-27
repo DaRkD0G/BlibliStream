@@ -12,14 +12,9 @@ import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnPreparedListener;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.SurfaceHolder;
-import android.webkit.WebView;
 import android.widget.MediaController;
 import android.widget.VideoView;
 
-import java.net.URI;
-
-import app.cci.com.bliblistream.Model.StrucData.User;
 import app.cci.com.bliblistream.R;
 
 /**
@@ -40,7 +35,7 @@ public class VideoViewActivity extends Activity {
         getWindow().setFormat(PixelFormat.TRANSLUCENT);
 
         final ProgressDialog pDialog = new ProgressDialog(this);
-        pDialog.setTitle("Charge Video Streaming");
+        pDialog.setTitle("Charge video streaming");
         pDialog.setMessage("Chargement ...");
         pDialog.setIndeterminate(false);
         pDialog.setCancelable(false);

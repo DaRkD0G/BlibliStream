@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/layout_film"
+<LinearLayout android:id="@+id/layout_film"
+              xmlns:android="http://schemas.android.com/apk/res/android"
 
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@android:color/white"
-    android:orientation="vertical"
-    android:weightSum="100">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@android:color/white"
+              android:orientation="vertical"
+              android:weightSum="100">
 
     <!-- Image entête -->
     <LinearLayout
@@ -34,7 +34,7 @@
                 android:layout_alignParentTop="true"
                 android:adjustViewBounds="true"
                 android:scaleType="centerCrop"
-                android:src="@drawable/bg_load" />
+                android:src="@drawable/bg_load"/>
 
             <ProgressBar
                 android:id="@+id/progressBar"
@@ -58,7 +58,7 @@
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 android:adjustViewBounds="true"
-                android:scaleType="centerCrop" />
+                android:scaleType="centerCrop"/>
 
             <RelativeLayout
                 android:layout_width="fill_parent"
@@ -79,7 +79,7 @@
                     android:text="TITRE DU FILM"
                     android:textColor="@android:color/black"
                     android:textSize="20sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"/>
 
             </RelativeLayout>
 
@@ -100,7 +100,7 @@
             android:layout_width="fill_parent"
             android:layout_height="50dp"
             android:gravity="center_horizontal"
-            android:text="DESCRIPTION" />
+            android:text="DESCRIPTION"/>
 
 
     </LinearLayout>
@@ -122,7 +122,7 @@
             android:background="@drawable/style_button_blue"
             android:text="Bande Annonce"
             android:textColor="@android:color/white"
-            android:textStyle="bold" />
+            android:textStyle="bold"/>
 
         <Button
             android:id="@+id/Button_Entete_Visionner_Film"
@@ -132,7 +132,7 @@
             android:background="@drawable/style_button_red"
             android:text="Visionner"
             android:textColor="@android:color/white"
-            android:textStyle="bold" />
+            android:textStyle="bold"/>
 
 
     </LinearLayout>
@@ -152,7 +152,7 @@
             android:layout_width="fill_parent"
             android:layout_height="50dp"
             android:gravity="center_horizontal"
-            android:text="Categorie Description" />
+            android:text="Categorie Description"/>
 
 
     </LinearLayout>

@@ -18,7 +18,6 @@ import app.cci.com.bliblistream.Model.DownloadData.JsonData.ModeJsonData.Abstrac
 import app.cci.com.bliblistream.Model.StrucData.Categorie;
 import app.cci.com.bliblistream.Model.StrucData.CollectionCategorie;
 import app.cci.com.bliblistream.Model.StrucData.CollectionFilm;
-import app.cci.com.bliblistream.Model.StrucData.User;
 import app.cci.com.bliblistream.Outil.ToolKit;
 
 /**
@@ -26,6 +25,7 @@ import app.cci.com.bliblistream.Outil.ToolKit;
  */
 
 public class MyHttpClientListCategorie extends AbstractMyHttpClient {
+    private static MyHttpClientListCategorie listCategorieInstance;
 
     public MyHttpClientListCategorie() {
         super();
@@ -36,6 +36,32 @@ public class MyHttpClientListCategorie extends AbstractMyHttpClient {
         );
     }
 
+    /**
+     * Init Instance  MyHttpClientListFilm
+     * @return MyHttpClientLogin
+     */
+    public static MyHttpClientListCategorie getInstance() {
+        if (listCategorieInstance == null) {
+            listCategorieInstance = new MyHttpClientListCategorie();
+        }
+        return listCategorieInstance;
+    }
+
+    /**
+     * Le chargement de la data fini
+     * @return boolean
+     */
+    public static void executeReq() {
+        MyHttpClientListCategorie.getInstance().execute();
+    }
+
+    /**
+     * Le chargement de la data fini
+     * @return boolean
+     */
+    public static boolean ifLoadFinished() {
+        return MyHttpClientListCategorie.getInstance().getIsFinish();
+    }
 
     @Override
     public boolean loadJsonWeb() {
@@ -57,11 +83,7 @@ public class MyHttpClientListCategorie extends AbstractMyHttpClient {
                             String description = c.getString("description");
                             String lienImage = c.getString("lienImage");
                             Categorie unCat = new Categorie(id, titre, description, lienImage);
-                            try {
-                                CollectionCategorie.getCollectionCategorie().add(unCat);
-                            } catch (IndexOutOfBoundsException e) {
-
-                            }
+                            CollectionCategorie.getCollectionCategorie().add(unCat);
                         }
                     } catch (JSONException e) {
                         CollectionFilm.resetCollectionFilms();
@@ -91,10 +113,7 @@ public class MyHttpClientListCategorie extends AbstractMyHttpClient {
             List<NameValuePair> nameValuePairs;
 
             nameValuePairs = new ArrayList<NameValuePair>(2);
-
-            nameValuePairs.add(new BasicNameValuePair("name", User.getNom()));
-            nameValuePairs.add(new BasicNameValuePair("password", User.getPassword()));
-            nameValuePairs.add(new BasicNameValuePair("param", "getCategorie"));
+            nameValuePairs.add(new BasicNameValuePair("params", "categories"));
 
 
             httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));

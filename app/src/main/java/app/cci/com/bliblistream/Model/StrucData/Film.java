@@ -1,19 +1,22 @@
 package app.cci.com.bliblistream.Model.StrucData;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 /**
  * Created by DaRk-_-D0G on 03/11/14.
  */
 public class Film {
-    private Integer id,tarif;
+    private Integer id, tarif;
     private ArrayList<Integer> categorie;
     private String titre, description, lienFilm, lienBa, lienImage, dateSortie;
     private boolean nouveaute;
+
     /**
      * Init
      */
-    public Film() { }
+    public Film() {
+    }
 
     /**
      * Init
@@ -33,7 +36,7 @@ public class Film {
                 String lienImage,
                 Integer tarif,
                 String dateSortie,
-                ArrayList<Integer>  categories) {
+                ArrayList<Integer> categories) {
         this.id = id;
         this.titre = titre;
         this.description = description;
@@ -42,6 +45,11 @@ public class Film {
         this.tarif = tarif;
         this.dateSortie = dateSortie;
         this.categorie = categories;
+
+        Integer year = Calendar.getInstance().get(Calendar.YEAR);
+        if (dateSortie.startsWith(year.toString())) {
+            this.nouveaute = true;
+        }
     }
 
     /* ################################################################## */
@@ -87,6 +95,7 @@ public class Film {
     public String getDateSortie() {
         return dateSortie;
     }
+
     /* ################################################################## */
     /*                          AUTRE METHOD                              */
     /* ################################################################## */

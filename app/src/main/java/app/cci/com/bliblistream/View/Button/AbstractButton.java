@@ -34,6 +34,7 @@ public abstract class AbstractButton extends View implements View.OnClickListene
         }
         this.setOnClickListener(this);
     }
+
     /**
      * Ecouteur du clic sur un bouton, ici elle est sucharger par les listenerView
      *

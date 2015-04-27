@@ -6,12 +6,10 @@ import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -36,6 +34,41 @@ public class ListenerViewFilm {
     private ControlerMainActivity controlerMainActivity;
     private ArrayList<Button> arrayButton;
     private Intent myIntent;
+    private final Thread threadSendData = new Thread(new Runnable() {
+        @Override
+        public void run() {
+
+            long start = System.currentTimeMillis();
+            while (!MyHttpClientListAchatFilm.ifLoadFinished() &&
+                    System.currentTimeMillis() < (start + 100)
+                    ) {
+                try {
+                    Thread.sleep(50);
+                } catch (InterruptedException e) {
+                }
+            }
+
+            final Boolean validationLogin = MyHttpClientListAchatFilm.loadJsonData();
+
+            controlerMainActivity.getActivity().runOnUiThread(new Runnable() {
+                public void run() {
+                        /* Animation fonction login bon ou pas */
+                    if (validationLogin) {
+                        if (MyHttpClientListAchatFilm.ifCanSeeVideo()) {
+                            myIntent = new Intent(controlerMainActivity.getActivity(), VideoViewActivity.class);
+
+                               /* TODO MODIFIER POUR OBTENIR LE LIEN ENVOYER ET LANCE LA FENENTRE */
+                            myIntent.putExtra("video", User.getFilmChoisi().getLienFilm());
+                            User.getLocation().add(User.getFilmChoisi().getId());
+                            controlerMainActivity.getActivity().startActivity(myIntent);
+                        } else {
+                            ToolKit.showMessage(-1, "Vous ne diposez plus de jeton pour la location", controlerMainActivity.getActivity(), -1, -1);
+                        }
+                    }
+                }
+            });
+        }
+    });
     /// Dialog Fragment sur la location
     private final DialogFragment dialog = new MyDialogFragment() {
         @Override
@@ -53,12 +86,13 @@ public class ListenerViewFilm {
                     listAchat.setFilmId(User.getFilmChoisi().getId());
                     listAchat.execute();
                     ToolKit.showMessage(-1, "Merci de patienter nous effectuons la demande.", controlerMainActivity.getActivity(), -1, -1);
-                    sendDemandeData();
+                    threadSendData.start();
                 }
             });
             return alertDialogBuilder.create();
         }
     };
+
     /**
      * Constructeur
      *
@@ -72,6 +106,7 @@ public class ListenerViewFilm {
     /* ############################################################# */
     /*                          AFFICHAGE                            */
     /* ############################################################# */
+
     /**
      * Call defirente fonction affichage
      */
@@ -155,65 +190,6 @@ public class ListenerViewFilm {
                 }
             }
         };
-    }
-    /* ############################################################# */
-    /*                          CHECKUP DATA                         */
-    /* ############################################################# */
-    /**
-     * Envoi la demande de location
-     */
-    public void sendDemandeData() {
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-
-                long start = System.currentTimeMillis();
-                while (!MyHttpClientListAchatFilm.ifLoadFinished() &&
-                        System.currentTimeMillis() < (start + 100)
-                        ) {
-                    try {
-                        Thread.sleep(50);
-                    } catch (InterruptedException e) {
-                    }
-                }
-
-                final Boolean validationLogin = MyHttpClientListAchatFilm.loadJsonData();
-
-                controlerMainActivity.getActivity().runOnUiThread(new Runnable() {
-                    public void run() {
-                        /* Animation fonction login bon ou pas */
-                        if (validationLogin) {
-                            if (MyHttpClientListAchatFilm.ifCanSeeVideo()) {
-                                myIntent = new Intent(controlerMainActivity.getActivity(), VideoViewActivity.class);
-
-                               /* TODO MODIFIER POUR OBTENIR LE LIEN ENVOYER ET LANCE LA FENENTRE */
-                                myIntent.putExtra("video", User.getFilmChoisi().getLienFilm());
-                                User.getLocation().add(User.getFilmChoisi().getId());
-                                controlerMainActivity.getActivity().startActivity(myIntent);
-                            } else {
-                                ToolKit.showMessage(-1, "Vous ne diposez plus de jeton pour la location", controlerMainActivity.getActivity(), -1, -1);
-                            }
-                        }
-                        /*
-                                            String lienFilm = User.getFilmChoisi().getLienFilm();
-                    if (lienFilm.endsWith("mp4")) {
-                        myIntent = new Intent(controlerMainActivity.getActivity(), VideoViewActivity.class);
-                        myIntent.putExtra("video", User.getFilmChoisi().getLienFilm());
-
-                        MyHttpClientListAchatFilm listAchat = new MyHttpClientListAchatFilm();
-                        listAchat.setFilmId(User.getFilmChoisi().getId());
-                        listAchat.execute();
-
-
-                    } else {
-                        ToolKit.showMessage(-1, "Une erreur c'est produite (Contacter le service bibliotheque Format non MP4)", controlerMainActivity.getActivity(), -1, -1);
-                    }
-                         */
-                    }
-                });
-            }
-        });
-        thread.start();
     }
 }
 

@@ -1,6 +1,5 @@
 package app.cci.com.bliblistream.Controler.ListenerView;
 
-import android.graphics.Bitmap;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -8,13 +7,9 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import app.cci.com.bliblistream.Controler.ControlerActivity.ControlerMainActivity;
-import app.cci.com.bliblistream.Model.DownloadData.ImageData.DownloadImageTask;
-import app.cci.com.bliblistream.Model.DownloadData.ImageData.ImagesCache;
 import app.cci.com.bliblistream.Model.DownloadData.JsonData.JsonFeetcher.MyHttpClientLogin;
-import app.cci.com.bliblistream.Model.StrucData.Categorie;
 import app.cci.com.bliblistream.Model.StrucData.CollectionCategorie;
 import app.cci.com.bliblistream.Model.StrucData.CollectionFilm;
-import app.cci.com.bliblistream.Model.StrucData.Film;
 import app.cci.com.bliblistream.Model.StrucData.User;
 import app.cci.com.bliblistream.Outil.ToolKit;
 import app.cci.com.bliblistream.R;
@@ -133,14 +128,8 @@ public class ListenerViewLogin {
                 User.setNom(name);
                 User.setPassword(pass);
 
-                if(CollectionFilm.getCollectionFilm().size() > 0 &&
-                   CollectionCategorie.getCollectionCategorie().size() > 0) {
-
-                    MyHttpClientLogin.getInstance().execute();
-                    this.checkValidationAndActiveTranstion();
-                } else {
-                    this.animateErrorLogin("Merci de relancer votre authentification.");
-                }
+                MyHttpClientLogin.getInstance().execute();
+                this.checkValidationAndActiveTranstion();
             }
         } else {
             this.animateErrorLogin("Pas de connection à Internet.");
@@ -180,17 +169,22 @@ public class ListenerViewLogin {
                 /* Depassement delais reponse */
                 long start = System.currentTimeMillis();
                 while (!MyHttpClientLogin.ifLoadFinished() && System.currentTimeMillis() < (start + 10000)) {
+
                     try {
                         Thread.sleep(800);
                     } catch (InterruptedException e) {
                     }
                 }
-                /* Animation du login */
                 final Boolean validationLogin = MyHttpClientLogin.loadJsonData();
+                /* Animation du login */
+
+
                 controlerMainActivity.getActivity().runOnUiThread(new Runnable() {
                     public void run() {
                         /* Animation fonction login bon ou pas */
-                        checkUiLoad(validationLogin);
+                        if (CollectionFilm.getCollectionFilm().size() > 0 && CollectionCategorie.getCollectionCategorie().size() > 0) {
+                            checkUiLoad(validationLogin);
+                        }
                     }
                 });
             }

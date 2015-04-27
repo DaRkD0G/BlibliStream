@@ -18,6 +18,8 @@ public class User {
     private static Integer id, jeton;
     private static Film filmChoisi;
     private static ArrayList<Integer> location;
+    private static int filtreIdCat = -1;
+
     /**
      * Init
      */
@@ -35,7 +37,26 @@ public class User {
     /*                          GETTER SETTER                             */
     /* ################################################################## */
 
-    public static Film getFilmChoisi() { return User.filmChoisi; }
+
+    /**
+     * Obtenir l'id filtre
+     * @return int
+     */
+    public static int getFiltreIdCat() {
+        return User.filtreIdCat;
+    }
+
+    /**
+     * Set un Filtre
+     * @param filtreIdCat Int
+     */
+    public static void setFiltreIdCat(int filtreIdCat) {
+        User.filtreIdCat = filtreIdCat;
+    }
+
+    public static Film getFilmChoisi() {
+        return User.filmChoisi;
+    }
 
     public static void setFilmChoisi(Film filmChoisi) {
         User.filmChoisi = filmChoisi;
@@ -89,15 +110,16 @@ public class User {
         User.jeton = jeton;
     }
 
+    public static String toStringDetail() {
+        return getInstance().toString();
+    }
+
     /* ################################################################## */
     /*                          AUTRE METHOD                              */
     /* ################################################################## */
     @Override
     public String toString() {
         return super.toString();
-    }
-    public static String toStringDetail() {
-        return getInstance().toString();
     }
 
 }

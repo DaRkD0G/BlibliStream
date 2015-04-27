@@ -5,7 +5,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 
 import java.util.ArrayList;
 
@@ -115,7 +114,7 @@ public class ListenerViewAccueil {
         });
         thread.start();
     }
-    
+
     public void addActionOnButtons() {
         /* On redefinit l ecouteur du clic sur les boutons */
         new AbstractButton(this.controlerMainActivity.getActivity().getBaseContext(), this.arrayButton) {

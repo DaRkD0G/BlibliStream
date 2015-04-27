@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/layout_mon_compte"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
     android:layout_gravity="center_horizontal"
     android:layout_weight="0.02"
-    android:background="#ff5bc0ff"
+    android:background="#fff"
     android:weightSum="1">
 
     <LinearLayout
@@ -16,22 +16,23 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:orientation="vertical"
-        android:padding="@dimen/activity_vertical_margin"
+
         android:weightSum="1">
 
 
         <TextView
             android:id="@+id/txt_account"
+            style="@android:style/Theme.Holo.Light"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:gravity="center_horizontal"
-            android:paddingBottom="16dp"
+            android:paddingBottom="15dp"
             android:text="Mon compte"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="@color/transp_fond_color"
+            android:textColor="@android:color/black"
             android:textSize="@dimen/listPreferredItemDescriptionHeightdp"
-            android:textStyle="bold" />
+            android:textStyle="bold"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -41,44 +42,58 @@
 
             <TextView
                 android:id="@+id/TextView_MonCompte_Monnaie"
-                android:layout_width="65dp"
+                style="@android:style/Theme.Holo.Light"
+                android:layout_width="60dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
+                android:layout_marginRight="20dp"
                 android:background="@drawable/style_button_red"
                 android:gravity="center"
-                android:paddingBottom="16dp"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textSize="25dp"
-                android:visibility="invisible" />
+
+                android:textColor="@android:color/white"
+                android:textSize="15dp"
+                android:visibility="invisible"/>
 
 
             <TextView
                 android:id="@+id/TextView_MonCompte_Nom"
+                style="@android:style/Theme.Holo.Light"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
                 android:gravity="left"
-                android:paddingBottom="16dp"
+                android:paddingBottom="5dp"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textSize="20dp" />
+                android:textColor="@android:color/black"
+                android:textSize="15sp"/>
 
             <TextView
                 android:id="@+id/TextView_MonCompte_Email"
+                style="@android:style/Theme.Holo.Light"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
                 android:gravity="left"
-                android:paddingBottom="16dp"
+
+                android:paddingBottom="5dp"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textSize="20dp" />
+                android:textColor="@android:color/black"
+                android:textSize="15sp"/>
 
             <TextView
                 android:id="@+id/vos_films"
+                style="@android:style/Theme.Holo.Light"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
                 android:gravity="left"
-                android:paddingBottom="16dp"
+                android:paddingBottom="5dp"
                 android:text="Vos films disponibles :"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textSize="20dp" />
+                android:textColor="@android:color/black"
+                android:textSize="18sp"
+                android:textStyle="bold"/>
         </LinearLayout>
 
         <ListView
@@ -90,9 +105,5 @@
             android:scrollbars="none">
 
         </ListView>
-
-
     </LinearLayout>
-
-
 </RelativeLayout>
