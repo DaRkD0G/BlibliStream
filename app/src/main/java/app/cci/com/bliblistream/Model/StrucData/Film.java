@@ -9,7 +9,7 @@ import java.util.Calendar;
 public class Film {
     private Integer id, tarif;
     private ArrayList<Integer> categorie;
-    private String titre, description, lienFilm, lienBa, lienImage, dateSortie;
+    private String titre, description, lienBa, lienImage, dateSortie;
     private boolean nouveaute;
 
     /**
@@ -74,10 +74,6 @@ public class Film {
 
     public String getDescription() {
         return description;
-    }
-
-    public String getLienFilm() {
-        return lienFilm;
     }
 
     public String getLienBa() {

@@ -30,8 +30,7 @@ public class MyHttpClientListFilm extends AbstractMyHttpClient {
         super();
         this.setParams(
                 "http://yannickstephan.com/cci/collectionfilm_true.json",
-                AbstractMyHttpClient.TYPEDEMANDE.GET_SET_URL_PARAM,
-                null
+                AbstractMyHttpClient.TYPEDEMANDE.GET_SET_URL_PARAM
         );
     }
 
@@ -134,7 +133,7 @@ public class MyHttpClientListFilm extends AbstractMyHttpClient {
         JSONObject result = null;
         try {
             List<NameValuePair> nameValuePairs;
-            nameValuePairs = new ArrayList<NameValuePair>(2);
+            nameValuePairs = new ArrayList<NameValuePair>();
             nameValuePairs.add(new BasicNameValuePair("params", "films"));
 
             httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));

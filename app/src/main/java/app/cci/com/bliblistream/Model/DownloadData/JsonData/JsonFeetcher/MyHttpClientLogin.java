@@ -32,14 +32,12 @@ public class MyHttpClientLogin extends AbstractMyHttpClient {
     /**
      * Init Instance
      *
-     * @param control
      */
     public MyHttpClientLogin() {
         super();
         this.setParams(
                 "http://yannickstephan.com/cci/connection_true.json",
-                AbstractMyHttpClient.TYPEDEMANDE.GET_SET_URL_PARAM,
-                null
+                AbstractMyHttpClient.TYPEDEMANDE.GET_SET_URL_PARAM
         );
     }
 
@@ -106,7 +104,6 @@ public class MyHttpClientLogin extends AbstractMyHttpClient {
                     }
                 }
                 User.setLocation(list);
-
                 /* TODO Detail JSON */
                 ToolKit.logObject(User.getInstance());
                 return true;
@@ -131,15 +128,9 @@ public class MyHttpClientLogin extends AbstractMyHttpClient {
 
         try {
             // Creation du nombre de parametre
-            List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
-
-            if (this.getObjectClass() instanceof User) {
-                nameValuePairs.add(new BasicNameValuePair("name", User.getNom()));
-                nameValuePairs.add(new BasicNameValuePair("password", User.getPassword()));
-
-            } else {
-                nameValuePairs = new ArrayList<NameValuePair>(2);
-            }
+            List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+            nameValuePairs.add(new BasicNameValuePair("name", User.getNom()));
+            nameValuePairs.add(new BasicNameValuePair("password", User.getPassword()));
 
             httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
             HttpResponse response = this.getHttpclient().execute(httppost);

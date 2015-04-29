@@ -31,8 +31,7 @@ public class ListenerViewListFilm {
 
         this.controlerMainActivity.getActivity().runOnUiThread(new Runnable() {
             public void run() {
-                AbstractTableViewListFilm abstractTableViewListFilm = new AbstractTableViewListFilm(controlerMainActivity,
-                        R.layout.view_rowtableview, 5) {
+                AbstractTableViewListFilm abstractTableViewListFilm = new AbstractTableViewListFilm(controlerMainActivity) {
                 };
                 listView.setAdapter(abstractTableViewListFilm);
             }

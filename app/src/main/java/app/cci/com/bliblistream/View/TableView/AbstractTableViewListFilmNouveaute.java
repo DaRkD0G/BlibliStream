@@ -35,7 +35,7 @@ public class AbstractTableViewListFilmNouveaute extends BaseAdapter {
      * @param inTextViewResourceId int
      * @param inObjects            String[]
      */
-    public AbstractTableViewListFilmNouveaute(ControlerMainActivity controlerMainActivity, int inTextViewResourceId, Integer limit) {
+    public AbstractTableViewListFilmNouveaute(ControlerMainActivity controlerMainActivity, int inTextViewResourceId) {
         this.mContext = controlerMainActivity.getActivity().getApplicationContext();
     }
 
@@ -90,7 +90,6 @@ public class AbstractTableViewListFilmNouveaute extends BaseAdapter {
             return inflater.inflate(R.layout.blank_layout, parent,
                     false);
         }
-
 
         String img = CollectionFilm.getCollectionFilm().get(position).getLienImage();
         Bitmap bm = ImagesCache.getInstance().getImageFromWarehouse(img);

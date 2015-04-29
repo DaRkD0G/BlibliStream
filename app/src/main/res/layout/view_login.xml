@@ -1,12 +1,13 @@
-<RelativeLayout android:id="@+id/layout_login"
-                xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/fond_login"
-                android:baselineAligned="false"
-                android:clickable="false"
-                android:orientation="vertical"
-                android:weightSum="1">
+<RelativeLayout
+    android:id="@+id/layout_login"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/fond_login"
+    android:baselineAligned="false"
+    android:clickable="false"
+    android:orientation="vertical"
+    android:weightSum="1">
 
     <!-- Layout acceuil -->
     <RelativeLayout

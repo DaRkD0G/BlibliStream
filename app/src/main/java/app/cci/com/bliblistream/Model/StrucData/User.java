@@ -14,7 +14,7 @@ public class User {
     /**
      * Attributs
      */
-    private static String nom, prenom, password;
+    private static String nom, prenom, password, lienFilmVisionne;
     private static Integer id, jeton;
     private static Film filmChoisi;
     private static ArrayList<Integer> location;
@@ -37,6 +37,13 @@ public class User {
     /*                          GETTER SETTER                             */
     /* ################################################################## */
 
+    public static String getLienFilmVisionne() {
+        return lienFilmVisionne;
+    }
+
+    public static void setLienFilmVisionne(String lienFilmVisionne) {
+        User.lienFilmVisionne = lienFilmVisionne;
+    }
 
     /**
      * Obtenir l'id filtre

@@ -34,41 +34,7 @@ public class ListenerViewFilm {
     private ControlerMainActivity controlerMainActivity;
     private ArrayList<Button> arrayButton;
     private Intent myIntent;
-    private final Thread threadSendData = new Thread(new Runnable() {
-        @Override
-        public void run() {
-
-            long start = System.currentTimeMillis();
-            while (!MyHttpClientListAchatFilm.ifLoadFinished() &&
-                    System.currentTimeMillis() < (start + 100)
-                    ) {
-                try {
-                    Thread.sleep(50);
-                } catch (InterruptedException e) {
-                }
-            }
-
-            final Boolean validationLogin = MyHttpClientListAchatFilm.loadJsonData();
-
-            controlerMainActivity.getActivity().runOnUiThread(new Runnable() {
-                public void run() {
-                        /* Animation fonction login bon ou pas */
-                    if (validationLogin) {
-                        if (MyHttpClientListAchatFilm.ifCanSeeVideo()) {
-                            myIntent = new Intent(controlerMainActivity.getActivity(), VideoViewActivity.class);
-
-                               /* TODO MODIFIER POUR OBTENIR LE LIEN ENVOYER ET LANCE LA FENENTRE */
-                            myIntent.putExtra("video", User.getFilmChoisi().getLienFilm());
-                            User.getLocation().add(User.getFilmChoisi().getId());
-                            controlerMainActivity.getActivity().startActivity(myIntent);
-                        } else {
-                            ToolKit.showMessage(-1, "Vous ne diposez plus de jeton pour la location", controlerMainActivity.getActivity(), -1, -1);
-                        }
-                    }
-                }
-            });
-        }
-    });
+    private Thread threadSendData;
     /// Dialog Fragment sur la location
     private final DialogFragment dialog = new MyDialogFragment() {
         @Override
@@ -82,11 +48,50 @@ public class ListenerViewFilm {
 
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    MyHttpClientListAchatFilm listAchat = new MyHttpClientListAchatFilm();
-                    listAchat.setFilmId(User.getFilmChoisi().getId());
-                    listAchat.execute();
+
+                    final MyHttpClientListAchatFilm listAchat = new MyHttpClientListAchatFilm();
                     ToolKit.showMessage(-1, "Merci de patienter nous effectuons la demande.", controlerMainActivity.getActivity(), -1, -1);
-                    threadSendData.start();
+
+                    threadSendData = new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+
+                            long start = System.currentTimeMillis();
+                            while (!listAchat.ifLoadFinished() &&
+                                    System.currentTimeMillis() < (start + 100)) {
+                                try {
+                                    Thread.sleep(50);
+                                } catch (InterruptedException e) {
+                                }
+                            }
+
+                            controlerMainActivity.getActivity().runOnUiThread(new Runnable() {
+                                public void run() {
+                        /* Animation fonction login bon ou pas */
+                                    if (listAchat.ifCanSeeVideo()) {
+                                        String lienVideo = User.getLienFilmVisionne();
+                                        if (lienVideo.endsWith("mp4")) {
+                                            myIntent = new Intent(controlerMainActivity.getActivity(), VideoViewActivity.class);
+                                            myIntent.putExtra("video", User.getLienFilmVisionne());
+                                            controlerMainActivity.getActivity().startActivity(myIntent);
+                                        } else {
+                                            ToolKit.showMessage(-1, "Une erreur c'est produite (Contacter le service bibliotheque Format non MP4)", controlerMainActivity.getActivity(), -1, -1);
+                                        }
+                                    } else {
+                                        ToolKit.showMessage(-1, "Vous ne diposez plus de jeton pour la location", controlerMainActivity.getActivity(), -1, -1);
+                                    }
+                                }
+                            });
+                        }
+                    });
+
+                    try {
+                        threadSendData.start();
+                        listAchat.execute();
+
+                    } catch (IllegalThreadStateException e) {
+                    }
+
                 }
             });
             return alertDialogBuilder.create();
@@ -169,7 +174,13 @@ public class ListenerViewFilm {
 
                 switch (v.getId()) {
                     case R.id.Button_Entete_Visionner_Film:
-                        if (User.getFilmChoisi().getTarif() <= User.getJeton()) {
+                        boolean valide = false;
+                        for (Integer idFilm : User.getLocation()) {
+                            if (idFilm.equals(User.getFilmChoisi().getId())) {
+                                valide = true;
+                            }
+                        }
+                        if (User.getFilmChoisi().getTarif() <= User.getJeton() || valide) {
                             dialog.show(controlerMainActivity.getActivity().getFragmentManager(), "MyDialogFragmentTag");
                         } else {
                             ToolKit.showMessage(-1, "Vous ne diposez plus de jeton pour la location", controlerMainActivity.getActivity(), -1, -1);

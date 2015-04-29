@@ -35,7 +35,7 @@ public class AbstractTableViewListFilm extends BaseAdapter {
      * @param inTextViewResourceId int
      * @param inObjects            String[]
      */
-    public AbstractTableViewListFilm(ControlerMainActivity controlerMainActivity, int inTextViewResourceId, Integer limit) {
+    public AbstractTableViewListFilm(ControlerMainActivity controlerMainActivity) {
         this.mContext = controlerMainActivity.getActivity().getApplicationContext();
     }
 

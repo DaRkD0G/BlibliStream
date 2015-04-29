@@ -76,6 +76,9 @@ public class MonCompteArrayAdapter extends ArrayAdapter<Integer> {
                 //ToolKitanimateErrorLogin("Chargement, relancer votre demande.");
             }
 
+        } else {
+            return inflater.inflate(R.layout.blank_layout, parent,
+                    false);
         }
         return v;
     }

@@ -80,6 +80,7 @@ public class ControlerMainActivity {
 
                     notAllReadyAdd(inRidLayout);
                     ToolKit.animationThis(R.anim.animation_fadin, saveViewNow, activity.getBaseContext());
+
                     this.getActivity().setContentView(this.view);
                     this.instantListener = new ListenerViewAccueil(this);
 
@@ -125,12 +126,10 @@ public class ControlerMainActivity {
                     MonCompteArrayAdapter adapter = new MonCompteArrayAdapter(getActivity(), R.layout.view_rowtableview, location);
                     listView.setAdapter(adapter);
 
-                    listView.setOnItemClickListener(
-                            new AdapterView.OnItemClickListener() {
+                    listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
                                 @Override
-                                public void onItemClick(AdapterView<?> arg0, View view,
-                                                        int position, long id) {
+                                public void onItemClick(AdapterView<?> arg0, View view, int position, long id) {
 
                                     TextView textView = (TextView) view.findViewById(R.id.idFilm);
                                     String no = textView.getText().toString();       //this will get a string
@@ -183,6 +182,7 @@ public class ControlerMainActivity {
         } catch (NullPointerException e) {
             ToolKit.log("!! ERREUR VIEW NON EXISTANTE -> inRLayoutId !!");
         }
+
     }
 
     /**

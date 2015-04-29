@@ -13,18 +13,14 @@
         android:layout_height="0dp"
         android:layout_margin="5dp"
         android:layout_weight="30"
-        android:background="@android:drawable/dialog_holo_dark_frame"
-
-        android:orientation="vertical"
-
-        >
+        android:background="@android:drawable/dialog_holo_light_frame"
+        android:orientation="vertical">
 
         <RelativeLayout
 
             android:id="@+id/RelativeLayout_Film1"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent">
-
             <ImageView
                 android:id="@+id/icon2"
                 android:layout_width="fill_parent"
@@ -125,7 +121,6 @@
                 android:adjustViewBounds="true"
                 android:scaleType="centerCrop"
                 android:src="@drawable/bg_load"/>
-
             <ProgressBar
                 style="?android:attr/progressBarStyleLarge"
                 android:layout_width="62dp"
@@ -199,8 +194,6 @@
             android:id="@+id/RelativeLayout_Film3"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent">
-
-
             <ImageView
                 android:id="@+id/icon2"
                 android:layout_width="fill_parent"
@@ -214,7 +207,6 @@
                 android:adjustViewBounds="true"
                 android:scaleType="centerCrop"
                 android:src="@drawable/bg_load"/>
-
             <ProgressBar
                 style="?android:attr/progressBarStyleLarge"
                 android:layout_width="62dp"

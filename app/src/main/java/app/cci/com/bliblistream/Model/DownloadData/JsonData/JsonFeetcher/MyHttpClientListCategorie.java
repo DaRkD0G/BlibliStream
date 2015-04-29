@@ -31,8 +31,7 @@ public class MyHttpClientListCategorie extends AbstractMyHttpClient {
         super();
         this.setParams(
                 "http://yannickstephan.com/cci/categorie_true.json",
-                TYPEDEMANDE.GET_SET_URL_PARAM,
-                null
+                AbstractMyHttpClient.TYPEDEMANDE.GET_SET_URL_PARAM
         );
     }
 
@@ -111,15 +110,11 @@ public class MyHttpClientListCategorie extends AbstractMyHttpClient {
         try {
             // Creation du nombre de parametre
             List<NameValuePair> nameValuePairs;
-
-            nameValuePairs = new ArrayList<NameValuePair>(2);
+            nameValuePairs = new ArrayList<NameValuePair>();
             nameValuePairs.add(new BasicNameValuePair("params", "categories"));
-
-
             httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
             HttpResponse response = this.getHttpclient().execute(httppost);
             result = jsonResultToJsonObject(response);
-
 
         } catch (ClientProtocolException e) {
             ToolKit.log("[MyHttpClientListCategorie] Erreur -> PostByUrlParamAndReturn");

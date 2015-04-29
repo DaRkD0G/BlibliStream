@@ -22,7 +22,6 @@ public abstract class AbstractMyHttpClient {
 
     private HttpClient httpclient;
     private String url;
-    private Object objectClass;
     private HttpAsyncTask httpAsyncTask;
 
     /**
@@ -54,16 +53,18 @@ public abstract class AbstractMyHttpClient {
 
     }
 
+    public void restart() {
+        this.httpAsyncTask.isFinish = false;
+        this.httpclient = new DefaultHttpClient();
+        this.httpAsyncTask = new HttpAsyncTask();
+    }
+
     public HttpClient getHttpclient() {
         return httpclient;
     }
 
     public String getUrl() {
         return url;
-    }
-
-    public Object getObjectClass() {
-        return objectClass;
     }
 
     /**
@@ -73,9 +74,8 @@ public abstract class AbstractMyHttpClient {
      * @param uTypeDemande    Type de demande
      * @param uObjectsClass   Object à traiter
      */
-    public void setParams(String uUrlInformation, TYPEDEMANDE uTypeDemande, Object uObjectsClass) {
+    public void setParams(String uUrlInformation, TYPEDEMANDE uTypeDemande) {
         this.url = uUrlInformation;
-        this.objectClass = uObjectsClass;
         this.httpAsyncTask.setTypeDemande(uTypeDemande);
     }
 
@@ -167,6 +167,10 @@ public abstract class AbstractMyHttpClient {
 
     public boolean getIsFinish() {
         return this.httpAsyncTask.isFinish;
+    }
+
+    public boolean setIsFinish(Boolean value) {
+        return this.httpAsyncTask.isFinish = value;
     }
 
     public JSONObject getResult() throws NullPointerException {
@@ -268,6 +272,7 @@ public abstract class AbstractMyHttpClient {
          */
         @Override
         protected void onPostExecute(JSONObject result) {
+
             this.result = result;
             ToolKit.log("[AbstractMyHttpClient] ---------------------> Data Recetp");
             if (!loadJsonWeb()) {

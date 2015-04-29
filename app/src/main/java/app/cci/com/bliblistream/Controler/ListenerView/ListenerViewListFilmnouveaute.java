@@ -33,7 +33,7 @@ public class ListenerViewListFilmnouveaute {
         this.controlerMainActivity.getActivity().runOnUiThread(new Runnable() {
             public void run() {
                 AbstractTableViewListFilmNouveaute abstractTableViewListFilm = new AbstractTableViewListFilmNouveaute(controlerMainActivity,
-                        R.layout.view_rowtableview, 5) {
+                        R.layout.view_rowtableview) {
                 };
                 listView.setAdapter(abstractTableViewListFilm);
             }

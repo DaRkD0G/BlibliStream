@@ -127,9 +127,11 @@ public class ListenerViewLogin {
             } else {
                 User.setNom(name);
                 User.setPassword(pass);
-
-                MyHttpClientLogin.getInstance().execute();
-                this.checkValidationAndActiveTranstion();
+                try {
+                    MyHttpClientLogin.getInstance().execute();
+                    this.checkValidationAndActiveTranstion();
+                } catch (Exception e) {
+                }
             }
         } else {
             this.animateErrorLogin("Pas de connection à Internet.");
@@ -168,7 +170,7 @@ public class ListenerViewLogin {
                 /* Attente de la reponse */
                 /* Depassement delais reponse */
                 long start = System.currentTimeMillis();
-                while (!MyHttpClientLogin.ifLoadFinished() && System.currentTimeMillis() < (start + 10000)) {
+                while (!MyHttpClientLogin.ifLoadFinished() && System.currentTimeMillis() < (start + 1000)) {
 
                     try {
                         Thread.sleep(800);
@@ -184,6 +186,8 @@ public class ListenerViewLogin {
                         /* Animation fonction login bon ou pas */
                         if (CollectionFilm.getCollectionFilm().size() > 0 && CollectionCategorie.getCollectionCategorie().size() > 0) {
                             checkUiLoad(validationLogin);
+                        } else {
+                            checkUiLoad(false);
                         }
                     }
                 });
