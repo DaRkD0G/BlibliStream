@@ -59,9 +59,9 @@ public class ListenerViewAccueil {
                 /* Depassement delais reponse */
                 long start = System.currentTimeMillis();
                 while (CollectionFilm.getCollectionFilm().size() == 0 &&
-                        System.currentTimeMillis() < (start + 10000)) {
+                        System.currentTimeMillis() < (start + 1000)) {
                     try {
-                        Thread.sleep(800);
+                        Thread.sleep(100);
                     } catch (InterruptedException e) {
                     }
                 }

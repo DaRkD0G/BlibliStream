@@ -50,7 +50,6 @@ public class MyHttpClientListAchatFilm extends AbstractMyHttpClient {
         JSONObject jsonObject = null;
         try {
             jsonObject = this.getResult();
-            ToolKit.logObject(jsonObject);
             try {
                 Integer idUser = jsonObject.getInt("userId");
 

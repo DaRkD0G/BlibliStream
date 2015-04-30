@@ -58,9 +58,9 @@ public class ListenerViewFilm {
 
                             long start = System.currentTimeMillis();
                             while (!listAchat.ifLoadFinished() &&
-                                    System.currentTimeMillis() < (start + 100)) {
+                                    System.currentTimeMillis() < (start + 1000)) {
                                 try {
-                                    Thread.sleep(50);
+                                    Thread.sleep(100);
                                 } catch (InterruptedException e) {
                                 }
                             }

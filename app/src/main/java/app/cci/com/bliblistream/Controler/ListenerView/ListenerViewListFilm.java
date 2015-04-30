@@ -35,13 +35,6 @@ public class ListenerViewListFilm {
                 };
                 listView.setAdapter(abstractTableViewListFilm);
             }
-
-
-            // ImageView imageView = (ImageView) rowView.findViewById(R.id.icon);
-            // imageView.setImageResource(R.drawable.ic_launcher);
-                        /* Animation fonction login bon ou pas */
-            //checkUiLoad(validationLogin);
-
         });
 
         this.listView.setOnItemClickListener(

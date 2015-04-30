@@ -104,8 +104,6 @@ public class MyHttpClientLogin extends AbstractMyHttpClient {
                     }
                 }
                 User.setLocation(list);
-                /* TODO Detail JSON */
-                ToolKit.logObject(User.getInstance());
                 return true;
             } catch (JSONException e) {
                 return false;

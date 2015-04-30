@@ -164,6 +164,7 @@ public class ListenerViewLogin {
      */
     private void checkLoginInThread() {
 
+
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -173,13 +174,34 @@ public class ListenerViewLogin {
                 while (!MyHttpClientLogin.ifLoadFinished() && System.currentTimeMillis() < (start + 1000)) {
 
                     try {
-                        Thread.sleep(800);
+                        Thread.sleep(100);
                     } catch (InterruptedException e) {
                     }
                 }
                 final Boolean validationLogin = MyHttpClientLogin.loadJsonData();
                 /* Animation du login */
 
+                if (validationLogin) {
+                    controlerMainActivity.getActivity().runOnUiThread(new Runnable() {
+                        public void run() {
+                        /* Animation fonction login bon ou pas */
+                            if (CollectionFilm.getCollectionFilm().size() > 0 && CollectionCategorie.getCollectionCategorie().size() > 0) {
+                                checkUiLoad(true);
+                            } else {
+                                setEnableElement(true);
+                                animateErrorLogin("Verifier votre connection internet.");
+                                view3.setVisibility(View.INVISIBLE);
+                                ToolKit.animationThis(R.anim.animation_fadout, view3, controlerMainActivity.getActivity().getBaseContext());
+                            }
+                        }
+                    });
+                } else {
+                    controlerMainActivity.getActivity().runOnUiThread(new Runnable() {
+                        public void run() {
+                            checkUiLoad(false);
+                        }
+                    });
+                }
 
                 controlerMainActivity.getActivity().runOnUiThread(new Runnable() {
                     public void run() {
