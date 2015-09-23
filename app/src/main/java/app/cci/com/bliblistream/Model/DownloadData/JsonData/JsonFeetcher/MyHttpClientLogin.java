@@ -36,7 +36,7 @@ public class MyHttpClientLogin extends AbstractMyHttpClient {
     public MyHttpClientLogin() {
         super();
         this.setParams(
-                "http://yannickstephan.com/cci/connection_true.json",
+                "http://yannickstephan.com",
                 AbstractMyHttpClient.TYPEDEMANDE.GET_SET_URL_PARAM
         );
     }
@@ -110,6 +110,7 @@ public class MyHttpClientLogin extends AbstractMyHttpClient {
             }
 
         } catch (Exception e) {
+            ToolKit.log("ICI");
             return false;
         }
     }
@@ -127,8 +128,9 @@ public class MyHttpClientLogin extends AbstractMyHttpClient {
         try {
             // Creation du nombre de parametre
             List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-            nameValuePairs.add(new BasicNameValuePair("name", User.getNom()));
-            nameValuePairs.add(new BasicNameValuePair("password", User.getPassword()));
+            nameValuePairs.add(new BasicNameValuePair("param", "user"));
+            nameValuePairs.add(new BasicNameValuePair("login", User.getNom()));
+           // nameValuePairs.add(new BasicNameValuePair("password", User.getPassword()));
 
             httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
             HttpResponse response = this.getHttpclient().execute(httppost);

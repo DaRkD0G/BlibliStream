@@ -29,7 +29,7 @@ public class MyHttpClientListFilm extends AbstractMyHttpClient {
     public MyHttpClientListFilm() {
         super();
         this.setParams(
-                "http://yannickstephan.com/cci/collectionfilm_true.json",
+                "http://yannickstephan.com",
                 AbstractMyHttpClient.TYPEDEMANDE.GET_SET_URL_PARAM
         );
     }
@@ -74,10 +74,11 @@ public class MyHttpClientListFilm extends AbstractMyHttpClient {
                 @Override
                 public void run() {
                     try {
-                        JSONArray jsONArray = getResult().getJSONArray("films");
+                        ToolKit.log("1");
+                        JSONArray jsONArray = getResult().getJSONArray("film");
 
                         for (int i = 0; i < jsONArray.length(); i++) {
-
+                            ToolKit.log("2");
                             JSONObject c = jsONArray.getJSONObject(i);
 
                             ArrayList<Integer> collectionCategorie = new ArrayList<Integer>();
@@ -86,10 +87,11 @@ public class MyHttpClientListFilm extends AbstractMyHttpClient {
                             for (int index = 0; index < colCat.length(); ++index) {
                                 collectionCategorie.add(colCat.getInt(index));
                             }
-                            if (collectionCategorie.size() == 0) {
+                           /* if (collectionCategorie.size() == 0) {
                                 CollectionFilm.resetCollectionFilms();
                                 return;
-                            }
+                            }*/
+                            ToolKit.log("3");
                             Film film = new Film(
                                     c.getInt("id"),
                                     c.getString("titre"),
@@ -100,11 +102,11 @@ public class MyHttpClientListFilm extends AbstractMyHttpClient {
                                     c.getString("dateSortie"),
                                     collectionCategorie
                             );
-
+                            ToolKit.log("4");
                             CollectionFilm.getCollectionFilm().add(film);
 
                         }
-
+                        //ToolKit.log("val --->"+Integer.toString(CollectionFilm.getCollectionFilm().size()));
                         // MainActivity.barriere.countDown();
                     } catch (JSONException e) {
                         CollectionFilm.resetCollectionFilms();
@@ -113,6 +115,8 @@ public class MyHttpClientListFilm extends AbstractMyHttpClient {
                         CollectionFilm.resetCollectionFilms();
                         ToolKit.log("[MyHttpClientListFilm] Exception ListFilm LoadJSonWeb" + e.toString());
                     }
+
+
                 }
             });
             thread.start();
@@ -134,12 +138,11 @@ public class MyHttpClientListFilm extends AbstractMyHttpClient {
         try {
             List<NameValuePair> nameValuePairs;
             nameValuePairs = new ArrayList<NameValuePair>();
-            nameValuePairs.add(new BasicNameValuePair("params", "films"));
+            nameValuePairs.add(new BasicNameValuePair("param", "films"));
 
             httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
             HttpResponse response = this.getHttpclient().execute(httppost);
             result = jsonResultToJsonObject(response);
-
 
         } catch (ClientProtocolException e) {
             ToolKit.log("[MyHttpClientListFilm] Erreur -> PostByUrlParamAndReturn" + e.getStackTrace());

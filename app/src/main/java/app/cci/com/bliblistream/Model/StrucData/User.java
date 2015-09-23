@@ -38,7 +38,7 @@ public class User {
     /* ################################################################## */
 
     public static String getLienFilmVisionne() {
-        return lienFilmVisionne;
+        return "http://clips.vorwaerts-gmbh.de/VfE_html5.mp4";//lienFilmVisionne;
     }
 
     public static void setLienFilmVisionne(String lienFilmVisionne) {

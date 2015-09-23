@@ -30,7 +30,7 @@ public class MyHttpClientListCategorie extends AbstractMyHttpClient {
     public MyHttpClientListCategorie() {
         super();
         this.setParams(
-                "http://yannickstephan.com/cci/categorie_true.json",
+                "http://yannickstephan.com",
                 AbstractMyHttpClient.TYPEDEMANDE.GET_SET_URL_PARAM
         );
     }
@@ -111,7 +111,7 @@ public class MyHttpClientListCategorie extends AbstractMyHttpClient {
             // Creation du nombre de parametre
             List<NameValuePair> nameValuePairs;
             nameValuePairs = new ArrayList<NameValuePair>();
-            nameValuePairs.add(new BasicNameValuePair("params", "categories"));
+            nameValuePairs.add(new BasicNameValuePair("param", "categories"));
             httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
             HttpResponse response = this.getHttpclient().execute(httppost);
             result = jsonResultToJsonObject(response);

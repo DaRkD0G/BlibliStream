@@ -32,7 +32,7 @@ public class MyHttpClientListAchatFilm extends AbstractMyHttpClient {
     public MyHttpClientListAchatFilm() {
         super();
         this.setParams(
-                "http://yannickstephan.com/cci/locationfilm_true.json",
+                "http://yannickstephan.com/cci/script.php",
                 AbstractMyHttpClient.TYPEDEMANDE.GET_SET_URL_PARAM
         );
     }
@@ -97,14 +97,15 @@ public class MyHttpClientListAchatFilm extends AbstractMyHttpClient {
         try {
             List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
             nameValuePairs.add(new BasicNameValuePair("login", User.getNom()));
-            nameValuePairs.add(new BasicNameValuePair("password", User.getPassword()));
+            ToolKit.log("------>" + User.getNom());
+            // nameValuePairs.add(new BasicNameValuePair("password", User.getPassword()));
             nameValuePairs.add(new BasicNameValuePair("param", "location"));
-            nameValuePairs.add(new BasicNameValuePair("filmid", User.getFilmChoisi().getId().toString()));
+            nameValuePairs.add(new BasicNameValuePair("id", User.getFilmChoisi().getId().toString()));
 
             httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
             HttpResponse response = this.getHttpclient().execute(httppost);
             result = jsonResultToJsonObject(response);
-
+            ToolKit.log("------>"+result.toString());
         } catch (ClientProtocolException e) {
             ToolKit.log("Erreur -> PostByUrlParamAndReturn");
         } catch (IOException e) {

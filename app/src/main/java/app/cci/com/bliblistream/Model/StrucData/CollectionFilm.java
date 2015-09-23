@@ -2,6 +2,8 @@ package app.cci.com.bliblistream.Model.StrucData;
 
 import java.util.ArrayList;
 
+import app.cci.com.bliblistream.Outil.ToolKit;
+
 /**
  * Created by DaRk-_-D0G on 03/11/14.
  */
@@ -26,7 +28,9 @@ public class CollectionFilm {
      * @return ArrayList<Film>
      */
     public static ArrayList<Film> getCollectionFilm() {
+
         CollectionFilm instance = CollectionFilm.getInstance();
+
         return instance.collectionFilm;
     }
 

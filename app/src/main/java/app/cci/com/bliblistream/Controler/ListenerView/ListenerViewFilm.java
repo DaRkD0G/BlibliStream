@@ -41,7 +41,7 @@ public class ListenerViewFilm {
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(controlerMainActivity.getActivity());
             alertDialogBuilder.setTitle("Location de film");
-            alertDialogBuilder.setMessage("voulez vous louer ce film ? Pour " + User.getFilmChoisi().getTarif());
+            alertDialogBuilder.setMessage("Voulez-vous louer ce film ? Pour " + User.getFilmChoisi().getTarif());
 
             alertDialogBuilder.setPositiveButton("Non", null);
             alertDialogBuilder.setNegativeButton("Oui", new DialogInterface.OnClickListener() {
@@ -50,15 +50,14 @@ public class ListenerViewFilm {
                 public void onClick(DialogInterface dialog, int which) {
 
                     final MyHttpClientListAchatFilm listAchat = new MyHttpClientListAchatFilm();
-                    ToolKit.showMessage(-1, "Merci de patienter nous effectuons la demande.", controlerMainActivity.getActivity(), -1, -1);
+                    ToolKit.showMessage(-1, "Merci de patienter, \n nous effectuons la demande.", controlerMainActivity.getActivity(), -1, -1);
 
                     threadSendData = new Thread(new Runnable() {
                         @Override
                         public void run() {
 
                             long start = System.currentTimeMillis();
-                            while (!listAchat.ifLoadFinished() &&
-                                    System.currentTimeMillis() < (start + 1000)) {
+                            while (!listAchat.ifLoadFinished() &&  System.currentTimeMillis() < (start + 1000)) {
                                 try {
                                     Thread.sleep(100);
                                 } catch (InterruptedException e) {
@@ -75,7 +74,7 @@ public class ListenerViewFilm {
                                             myIntent.putExtra("video", User.getLienFilmVisionne());
                                             controlerMainActivity.getActivity().startActivity(myIntent);
                                         } else {
-                                            ToolKit.showMessage(-1, "Une erreur c'est produite (Contacter le service bibliotheque Format non MP4)", controlerMainActivity.getActivity(), -1, -1);
+                                            ToolKit.showMessage(-1, "Une erreur c'est produite (Contacter le service)", controlerMainActivity.getActivity(), -1, -1);
                                         }
                                     } else {
                                         ToolKit.showMessage(-1, "Vous ne diposez plus de jeton pour la location", controlerMainActivity.getActivity(), -1, -1);
@@ -87,7 +86,7 @@ public class ListenerViewFilm {
 
                     try {
                         threadSendData.start();
-                        listAchat.execute();
+                       listAchat.execute();
 
                     } catch (IllegalThreadStateException e) {
                     }

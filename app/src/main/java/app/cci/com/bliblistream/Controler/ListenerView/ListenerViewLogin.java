@@ -171,10 +171,11 @@ public class ListenerViewLogin {
                 /* Attente de la reponse */
                 /* Depassement delais reponse */
                 long start = System.currentTimeMillis();
-                while (!MyHttpClientLogin.ifLoadFinished() && System.currentTimeMillis() < (start + 1000)) {
+                while (!MyHttpClientLogin.ifLoadFinished() && System.currentTimeMillis() < (start + 10000)) {
 
                     try {
-                        Thread.sleep(100);
+                        Thread.sleep(1000);
+
                     } catch (InterruptedException e) {
                     }
                 }
