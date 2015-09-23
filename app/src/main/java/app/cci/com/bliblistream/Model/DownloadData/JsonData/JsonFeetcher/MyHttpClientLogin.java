@@ -130,7 +130,7 @@ public class MyHttpClientLogin extends AbstractMyHttpClient {
             List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
             nameValuePairs.add(new BasicNameValuePair("param", "user"));
             nameValuePairs.add(new BasicNameValuePair("login", User.getNom()));
-           // nameValuePairs.add(new BasicNameValuePair("password", User.getPassword()));
+            nameValuePairs.add(new BasicNameValuePair("password", User.getPassword()));
 
             httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
             HttpResponse response = this.getHttpclient().execute(httppost);

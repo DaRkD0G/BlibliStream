@@ -98,7 +98,7 @@ public class MyHttpClientListAchatFilm extends AbstractMyHttpClient {
             List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
             nameValuePairs.add(new BasicNameValuePair("login", User.getNom()));
             ToolKit.log("------>" + User.getNom());
-            // nameValuePairs.add(new BasicNameValuePair("password", User.getPassword()));
+            nameValuePairs.add(new BasicNameValuePair("password", User.getPassword()));
             nameValuePairs.add(new BasicNameValuePair("param", "location"));
             nameValuePairs.add(new BasicNameValuePair("id", User.getFilmChoisi().getId().toString()));
 
